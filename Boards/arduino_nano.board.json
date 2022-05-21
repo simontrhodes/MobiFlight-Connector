@@ -2,9 +2,9 @@
   "$schema": "./mfboard.schema.json",
   "AvrDudeSettings": {
     "Device": "atmega328p",
-    "BaudRate": "115200",
+    "BaudRate": "57600",
     "Programmer": "arduino",
-    "FirmwareBaseName": "mobiflight_uno",
+    "FirmwareBaseName": "mobiflight_nano",
     "Timeout": 15000
   },
   "Connection": {
@@ -17,28 +17,27 @@
     "MessageSize": 32
   },
   "HardwareIds": [
-    "^VID_2341&PID_0043",
-    "^VID_2341&PID_0243",
-    "^VID_2A03&PID_0043"
+    "^VID_067B&PID_2303",
+    "^VID_1A86&PID_7523",
+    "^VID_2341&PID_5058"
   ],
   "Info": {
     "CanInstallFirmware": true,
-    "FriendlyName": "Arduino Uno",
-    "LatestFirmwareVersion": "2.1.2",
-    "MobiFlightType": "MobiFlight Uno"
+    "FriendlyName": "Arduino Nano",
+    "LatestFirmwareVersion": "2.1.1",
+    "MobiFlightType": "MobiFlight Nano"
   },
   "ModuleLimits": {
-    "MaxAnalogInputs": 6,
-    "MaxButtons": 18,
+    "MaxAnalogInputs": 8,
+    "MaxButtons": 20,
     "MaxEncoders": 3,
     "MaxInputShifters":  2,
     "MaxLcdI2C": 2,
     "MaxLedSegments": 1,
-    "MaxOutputs": 18,
+    "MaxOutputs": 20,
     "MaxServos": 2,
     "MaxShifters": 2,
-    "MaxSteppers": 2,
-    "MaxDigInputMuxes": 1,
+    "MaxSteppers": 2
   },
   "Pins": [
     {
@@ -154,6 +153,20 @@
       "isPWM": false,
       "Name": "A5",
       "Pin": 19
+    },
+	{
+      "isAnalog": true,
+      "isI2C": true,
+      "isPWM": false,
+      "Name": "A6",
+      "Pin": 20
+    },
+	{
+      "isAnalog": true,
+      "isI2C": true,
+      "isPWM": false,
+      "Name": "A7",
+      "Pin": 21
     }
   ]
 }
