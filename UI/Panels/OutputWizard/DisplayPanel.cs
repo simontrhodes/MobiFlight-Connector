@@ -40,6 +40,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
         Panels.DisplayLedDisplayPanel displayLedDisplayPanel = new Panels.DisplayLedDisplayPanel();
         Panels.DisplayNothingSelectedPanel displayNothingSelectedPanel = new Panels.DisplayNothingSelectedPanel();
         Panels.LCDDisplayPanel displayLcdDisplayPanel = new Panels.LCDDisplayPanel();
+        Panels.ServoDriverPanel servoDriverPanel = new Panels.ServoDriverPanel();
         Panels.ServoPanel servoPanel = new Panels.ServoPanel();
         Panels.StepperPanel stepperPanel = new Panels.StepperPanel();
         Panels.DisplayShiftRegisterPanel displayShiftRegisterPanel = new Panels.DisplayShiftRegisterPanel();
@@ -90,6 +91,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 displayBcdPanel, 
                 displayLedDisplayPanel, 
                 displayNothingSelectedPanel,
+                servoDriverPanel,
                 servoPanel,
                 stepperPanel,
                 displayShiftRegisterPanel,
@@ -153,6 +155,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
                     case MobiFlightLedModule.TYPE:
                         displayLedDisplayPanel.syncFromConfig(config);
+                        break;
+
+                    case MobiFlightServoDriver.TYPE:
+                        servoDriverPanel.syncFromConfig(config);
                         break;
 
                     case MobiFlightServo.TYPE:
@@ -260,6 +266,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         displayLedDisplayPanel.syncToConfig(config);
                         break;
 
+                    case MobiFlightServoDriver.TYPE:
+                        servoDriverPanel.syncToConfig(config);
+                        break;
+
                     case MobiFlightServo.TYPE:
                         servoPanel.syncToConfig(config);
                         break;
@@ -339,6 +349,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
                             case DeviceType.Output:
                                 displayTypeComboBox.Items.Add("Pin");
                                 //displayTypeComboBox.Items.Add(ArcazeBcd4056.TYPE);
+                                break;
+
+                            case DeviceType.ServoDriver:
+                                displayTypeComboBox.Items.Add(DeviceType.ServoDriver.ToString("F"));
                                 break;
 
                             case DeviceType.Servo:
@@ -461,6 +475,12 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 displayLedDisplayPanel.Height = displayPanelHeight;
             }
 
+            else if ((sender as ComboBox).Text == DeviceType.ServoDriver.ToString("F"))
+            {
+                servoDriverPanel.Enabled = panelEnabled;
+                servoDriverPanel.Height = displayPanelHeight;
+            }
+
             else if ((sender as ComboBox).Text == DeviceType.Servo.ToString("F"))
             {
                 servoPanel.Enabled = panelEnabled;
@@ -498,6 +518,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
             List<ListItem> outputs = new List<ListItem>();
             List<ListItem> ledSegments = new List<ListItem>();
+            List<ListItem> servoDrivers = new List<ListItem>();
             List<ListItem> servos = new List<ListItem>();
             List<ListItem> stepper = new List<ListItem>();
             List<ListItem> lcdDisplays = new List<ListItem>();
@@ -515,6 +536,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
                     case DeviceType.Output:
                         outputs.Add(new ListItem() { Value = device.Name, Label = device.Name });
+                        break;
+
+                    case DeviceType.ServoDriver:
+                        servoDrivers.Add(new ListItem() { Value = device.Name, Label = device.Name });
                         break;
 
                     case DeviceType.Servo:
@@ -547,6 +572,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
             displayLedDisplayPanel.OnLedAddressChanged -= displayLedAddressComboBox_SelectedIndexChanged;
             displayLedDisplayPanel.OnLedAddressChanged += new EventHandler(displayLedAddressComboBox_SelectedIndexChanged);
             displayLedDisplayPanel.SetAddresses(ledSegments);
+
+            servoDriverPanel.SetAdresses(servoDrivers);
 
             servoPanel.SetAdresses(servos);
 

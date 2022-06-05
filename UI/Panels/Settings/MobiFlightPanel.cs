@@ -57,6 +57,7 @@ namespace MobiFlight.UI.Panels.Settings
             mfTreeViewImageList.Images.Add(DeviceType.Encoder.ToString(), MobiFlight.Properties.Resources.encoder);
             mfTreeViewImageList.Images.Add(DeviceType.Stepper.ToString(), MobiFlight.Properties.Resources.stepper);
             mfTreeViewImageList.Images.Add(DeviceType.Servo.ToString(), MobiFlight.Properties.Resources.servo);
+            mfTreeViewImageList.Images.Add(DeviceType.ServoDriver.ToString(), MobiFlight.Properties.Resources.servo);
             mfTreeViewImageList.Images.Add(DeviceType.Output.ToString(), MobiFlight.Properties.Resources.output);
             mfTreeViewImageList.Images.Add(DeviceType.LedModule.ToString(), MobiFlight.Properties.Resources.led7);
             mfTreeViewImageList.Images.Add(DeviceType.LcdDisplay.ToString(), MobiFlight.Properties.Resources.led7);
@@ -311,6 +312,11 @@ namespace MobiFlight.UI.Panels.Settings
                             (panel as MFServoPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
 
+                        case DeviceType.ServoDriver:
+                            panel = new MFServoDriverPanel(dev as MobiFlight.Config.ServoDriver, module.GetPins());
+                            (panel as MFServoDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            break;
+
                         case DeviceType.AnalogInput:
                             panel = new MFAnalogPanel(dev as MobiFlight.Config.AnalogInput, module.GetPins());
                             (panel as MFAnalogPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
@@ -446,6 +452,18 @@ namespace MobiFlight.UI.Panels.Settings
                         cfgItem = new MobiFlight.Config.Servo();
                         (cfgItem as MobiFlight.Config.Servo).DataPin = freePinList.ElementAt(0).Pin.ToString();
                         break;
+
+                    case "servoDriverToolStripMenuItem":
+                    case "addServoDriverToolStripMenuItem":
+                        if (statistics[MobiFlightServoDriver.TYPE] == tempModule.Board.ModuleLimits.MaxServoDrivers)
+                        {
+                            throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightServoDriver.TYPE, tempModule.Board.ModuleLimits.MaxServoDrivers);
+                        }
+                        
+                        cfgItem = new MobiFlight.Config.ServoDriver();
+                        // does not deal yet with these kind of pins because we use I2C
+                        break;
+                        
                     case "stepperToolStripMenuItem":
                     case "addStepperToolStripMenuItem":
                         if (statistics[MobiFlightStepper.TYPE] == tempModule.Board.ModuleLimits.MaxSteppers)
@@ -1143,6 +1161,11 @@ namespace MobiFlight.UI.Panels.Settings
             errorProvider1.SetError(
                     control,
                     "");
+        }
+
+        private void mfModuleSettingsContextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

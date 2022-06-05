@@ -17,6 +17,7 @@ namespace MobiFlight.Config
         [XmlElement(typeof(LedModule))]
         [XmlElement(typeof(Output))]
         [XmlElement(typeof(Servo))]
+        [XmlElement(typeof(ServoDriver))]
         [XmlElement(typeof(Stepper))]
         [XmlElement(typeof(LcdDisplay))]
         [XmlElement(typeof(AnalogInput))]
@@ -105,6 +106,11 @@ namespace MobiFlight.Config
 
                         case DeviceType.Servo:
                             currentItem = new MobiFlight.Config.Servo();
+                            currentItem.FromInternal(item + BaseDevice.End);
+                            break;
+
+                        case DeviceType.ServoDriver:
+                            currentItem = new MobiFlight.Config.ServoDriver();
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
 

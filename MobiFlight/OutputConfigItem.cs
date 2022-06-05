@@ -36,6 +36,7 @@ namespace MobiFlight
 		public OutputConfig.LcdDisplay  LcdDisplay                  { get; set; }
 		public List<string>         BcdPins                     { get; set; }
         public OutputConfig.Servo   Servo { get; set; }
+        public OutputConfig.ServoDriver ServoDriver { get; set; }
         public OutputConfig.Stepper Stepper { get; set; }
         public Interpolation        Interpolation              { get; set; }
         public OutputConfig.ShiftRegister ShiftRegister               { get; set; }
@@ -59,6 +60,7 @@ namespace MobiFlight
             LedModule = new OutputConfig.LedModule();
             LcdDisplay = new OutputConfig.LcdDisplay();
             Servo = new OutputConfig.Servo();
+            ServoDriver = new OutputConfig.ServoDriver();
             Stepper = new OutputConfig.Stepper() { CompassMode = false };
             BcdPins = new List<string>() { "A01", "A02", "A03", "A04", "A05" };
             ShiftRegister = new OutputConfig.ShiftRegister();
@@ -90,6 +92,8 @@ namespace MobiFlight
                 this.Stepper.Equals((obj as OutputConfigItem).Stepper) &&
                 //==
                 this.Servo.Equals((obj as OutputConfigItem).Servo) &&
+                //==
+                this.ServoDriver.Equals((obj as OutputConfigItem).ServoDriver) &&
                 //===
                 // TODO: I will ignore this, because it is a deprecated feature
                 // this.BcdPins.Equals((obj as OutputConfigItem).BcdPins) &&
@@ -181,6 +185,11 @@ namespace MobiFlight
                 else if (DisplayType == MobiFlightServo.TYPE)
                 {
                     Servo.ReadXml(reader);
+                }
+                else if (DisplayType == MobiFlightServoDriver.TYPE)
+                {
+                    if (ServoDriver == null) ServoDriver = new OutputConfig.ServoDriver();
+                    ServoDriver.ReadXml(reader);
                 }
                 else if (DisplayType == MobiFlightStepper.TYPE)
                 {
@@ -313,6 +322,10 @@ namespace MobiFlight
             {
                 Servo.WriteXml(writer);
             }
+            else if (DisplayType == DeviceType.ServoDriver.ToString("F"))
+            {
+                ServoDriver.WriteXml(writer);
+            }
             else if (DisplayType == DeviceType.Stepper.ToString("F"))
             {
                 Stepper.WriteXml(writer);
@@ -385,6 +398,7 @@ namespace MobiFlight
 
             clone.DisplayTrigger            = this.DisplayTrigger;
             clone.Servo                     = Servo.Clone() as OutputConfig.Servo;
+            clone.ServoDriver               = ServoDriver.Clone() as OutputConfig.ServoDriver;
             clone.Stepper                   = Stepper.Clone() as OutputConfig.Stepper;
 
             clone.ShiftRegister             = ShiftRegister.Clone() as OutputConfig.ShiftRegister;

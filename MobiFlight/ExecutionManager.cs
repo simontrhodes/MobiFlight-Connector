@@ -1033,6 +1033,14 @@ namespace MobiFlight
                         );
                         break;
 
+                    case MobiFlightServoDriver.TYPE:
+                        mobiFlightCache.setServoDriver(
+                            serial,
+                            cfg.ServoDriver.Address,
+                            value
+                        );
+                        break;
+
                     case MobiFlightServo.TYPE:
                         mobiFlightCache.setServo(
                             serial,
@@ -1447,6 +1455,10 @@ namespace MobiFlight
                     ExecuteDisplay(offCfg.Servo.Min, offCfg);
                     break;
 
+                case MobiFlightServoDriver.TYPE:
+                    ExecuteDisplay(offCfg.Servo.Min, offCfg);
+                    break;
+
                 case OutputConfig.LcdDisplay.Type:
                     offCfg.LcdDisplay.Lines.Clear();
                     offCfg.LcdDisplay.Lines.Add(new string(' ', 20 * 4));
@@ -1477,6 +1489,10 @@ namespace MobiFlight
             {
                 case MobiFlightStepper.TYPE:
                     ExecuteDisplay((Int16.Parse(cfg.Stepper.TestValue)).ToString(), cfg);
+                    break;
+
+                case MobiFlightServoDriver.TYPE:
+                    ExecuteDisplay("180", cfg);
                     break;
 
                 case MobiFlightServo.TYPE:

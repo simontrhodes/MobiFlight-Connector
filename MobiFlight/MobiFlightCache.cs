@@ -492,6 +492,24 @@ namespace MobiFlight
             return found?.Value;
         }
 
+        public void setServoDriver(string serial, string name, string value)
+        {
+            try
+            {
+                if (!Modules.ContainsKey(serial)) return;
+
+                MobiFlightModule module = Modules[serial];
+                int iValue;
+                if (!int.TryParse(value, out iValue)) return;
+
+                module.SetServoDriver(name, iValue);
+            }
+            catch (Exception e)
+            {
+                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_SettingServoDriver"), e);
+            }
+        }
+
         public void setServo(string serial, string address, string value, int min, int max, byte maxRotationPercent)
         {
             try

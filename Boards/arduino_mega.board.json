@@ -47,9 +47,10 @@
     "MaxLedSegments": 4,
     "MaxOutputs": 40,
     "MaxServos": 10,
+    "MaxServoDrivers": 4,
     "MaxShifters": 4,
     "MaxSteppers": 10,
-    "MaxInputMultiplexer": 2,
+    "MaxInputMultiplexer": 2
   },
   "Pins": [
     {
