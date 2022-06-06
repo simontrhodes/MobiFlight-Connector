@@ -37,7 +37,10 @@ namespace MobiFlight
 
         public CmdMessenger CmdMessenger { get; set; }
         public int PWMDriverNumber { get; set; }
-        public int NumberOfServos { get; set; }
+
+        public int PWMPin { get; set; }
+
+        public int NumberOfPWMPins { get; set; }
 
         public int inputLower { get; set; }
 
@@ -46,6 +49,8 @@ namespace MobiFlight
 
         public MobiFlightPWMDriver()
         {
+            inputLower = 0;
+            inputUpper = 179;
             outputLower = 0;
             outputUpper = 4095;
         }
@@ -56,7 +61,7 @@ namespace MobiFlight
             return (int)Math.Round((relVal * (outputUpper - outputLower)) + inputLower, 0);
         }
 
-        public void MoveToPosition(int servo, int value)
+        public void MoveToPosition(int PWMPin, int value)
         {
 
             if (!_initialized) Initialize();
@@ -65,9 +70,11 @@ namespace MobiFlight
             
             var command = new SendCommand((int)MobiFlightModule.Command.SetPWMDriver);
             command.AddArgument(PWMDriverNumber);
+            command.AddArgument(PWMPin);
             command.AddArgument(mappedValue);
             Log.Instance.log("Command: SetPWMDriver <" + (int)MobiFlightModule.Command.SetPWMDriver + "," +
                               PWMDriverNumber + "," +
+                              PWMPin + "," +
                               mappedValue + ";>", LogSeverity.Debug);
             // Send command
             CmdMessenger.SendCommand(command);
@@ -75,7 +82,7 @@ namespace MobiFlight
 
         public void Stop()
         {
-            for (int i = 0; i != NumberOfServos; i++)
+            for (int i = 0; i != NumberOfPWMPins; i++)
                 MoveToPosition(i, 0);
         }
     }

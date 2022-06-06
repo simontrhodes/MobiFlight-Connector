@@ -29,44 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PWMDriverPanel));
-            this.displayPinComoBoxLabel = new System.Windows.Forms.Label();
-            this.minValueTextBox = new System.Windows.Forms.TextBox();
-            this.maxValueTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label = new System.Windows.Forms.Label();
             this.PWMDriversAddressesComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.maxRotationPercentNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.maxRotationPercentNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // displayPinComoBoxLabel
+            // label
             // 
-            resources.ApplyResources(this.displayPinComoBoxLabel, "displayPinComoBoxLabel");
-            this.displayPinComoBoxLabel.Name = "displayPinComoBoxLabel";
-            // 
-            // minValueTextBox
-            // 
-            resources.ApplyResources(this.minValueTextBox, "minValueTextBox");
-            this.minValueTextBox.Name = "minValueTextBox";
-            // 
-            // maxValueTextBox
-            // 
-            resources.ApplyResources(this.maxValueTextBox, "maxValueTextBox");
-            this.maxValueTextBox.Name = "maxValueTextBox";
-            this.maxValueTextBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            this.label.ForeColor = System.Drawing.SystemColors.ControlText;
+            resources.ApplyResources(this.label, "label");
+            this.label.Name = "label";
+            this.label.Click += new System.EventHandler(this.label_Click);
             // 
             // PWMDriversAddressesComboBox
             // 
@@ -74,63 +46,22 @@
             this.PWMDriversAddressesComboBox.FormattingEnabled = true;
             resources.ApplyResources(this.PWMDriversAddressesComboBox, "PWMDriversAddressesComboBox");
             this.PWMDriversAddressesComboBox.Name = "PWMDriversAddressesComboBox";
-            this.PWMDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.servoAddressesComboBox_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // maxRotationPercentNumericUpDown
-            // 
-            resources.ApplyResources(this.maxRotationPercentNumericUpDown, "maxRotationPercentNumericUpDown");
-            this.maxRotationPercentNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.maxRotationPercentNumericUpDown.Name = "maxRotationPercentNumericUpDown";
-            this.maxRotationPercentNumericUpDown.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            this.PWMDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.PWMAddressesComboBox_SelectedIndexChanged);
             // 
             // PWMDriverPanel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.maxRotationPercentNumericUpDown);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label);
             this.Controls.Add(this.PWMDriversAddressesComboBox);
-            this.Controls.Add(this.maxValueTextBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.minValueTextBox);
-            this.Controls.Add(this.displayPinComoBoxLabel);
             this.Name = "PWMDriverPanel";
-            ((System.ComponentModel.ISupportInitialize)(this.maxRotationPercentNumericUpDown)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label displayPinComoBoxLabel;
-        public System.Windows.Forms.TextBox minValueTextBox;
-        public System.Windows.Forms.TextBox maxValueTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        
+        private System.Windows.Forms.Label label;
         public System.Windows.Forms.ComboBox PWMDriversAddressesComboBox;
-        private System.Windows.Forms.Label label3;
-        public System.Windows.Forms.NumericUpDown maxRotationPercentNumericUpDown;
-        private System.Windows.Forms.Label label4;
     }
 }

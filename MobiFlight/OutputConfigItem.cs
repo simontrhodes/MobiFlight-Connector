@@ -398,7 +398,7 @@ namespace MobiFlight
 
             clone.DisplayTrigger            = this.DisplayTrigger;
             clone.Servo                     = Servo.Clone() as OutputConfig.Servo;
-            clone.PWMDriver               = PWMDriver.Clone() as OutputConfig.PWMDriver;
+            clone.PWMDriver                 = PWMDriver.Clone() as OutputConfig.PWMDriver;
             clone.Stepper                   = Stepper.Clone() as OutputConfig.Stepper;
 
             clone.ShiftRegister             = ShiftRegister.Clone() as OutputConfig.ShiftRegister;

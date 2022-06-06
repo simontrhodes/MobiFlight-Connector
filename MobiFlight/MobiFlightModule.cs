@@ -650,7 +650,8 @@ namespace MobiFlight
             {
                 iLastValue = value;
             }
-            PWMDriverModules[name].MoveToPosition(value);
+            //TO DO TODO
+            PWMDriverModules[name].MoveToPosition(0,value);
             lastValue[key] = value.ToString();
 
             return true;

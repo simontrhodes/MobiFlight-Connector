@@ -1456,7 +1456,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay(offCfg.Servo.Min, offCfg);
+                    ExecuteDisplay("0", offCfg);
                     break;
 
                 case OutputConfig.LcdDisplay.Type:
@@ -1492,7 +1492,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay("180", cfg);
+                    ExecuteDisplay("4095", cfg);
                     break;
 
                 case MobiFlightServo.TYPE:

@@ -12,18 +12,25 @@ namespace MobiFlight.OutputConfig
     {
         public string Address { get; set; }
 
-        public String Servo { get; set; }
+        public String PWMPin { get; set; }
+
+        public String PWMMax { get; set; }
+
+        public String PWMMin { get; set; }
+
 
         public PWMDriver()
         {
             Address = "";
-            Servo = "";
+            PWMPin = "";
+            PWMMax = "4095";
+            PWMMax = "0";
         }
         public override bool Equals(object obj)
         {
             return
                 (obj != null) && (obj is PWMDriver) &&
-                (this.Servo == (obj as PWMDriver).Servo) &&
+                (this.PWMPin == (obj as PWMDriver).PWMPin) &&
                 (this.Address == (obj as PWMDriver).Address);
         }
 
@@ -35,9 +42,9 @@ namespace MobiFlight.OutputConfig
                 Address = reader["PWMDriverAddress"]; 
             }
 
-            if (reader["PWMDriverServo"] != null && reader["PWMDriverServo"] != "")
+            if (reader["PWMDriverPin"] != null && reader["PWMDriverPin"] != "")
             {
-                Servo = reader["PWMDriverServo"];
+                PWMPin = reader["PWMDriverPin"];
             }
 
         }
@@ -45,7 +52,7 @@ namespace MobiFlight.OutputConfig
         public void WriteXml(XmlWriter writer)
         {
             writer.WriteAttributeString("PWMDriverAddress", Address);
-            writer.WriteAttributeString("PWMDriverServo", Servo);
+            writer.WriteAttributeString("PWMDriverServo", PWMPin);
 
         }
 
@@ -53,7 +60,7 @@ namespace MobiFlight.OutputConfig
         {
             PWMDriver clone = new PWMDriver();
             clone.Address = this.Address;
-            clone.Servo = this.Servo;
+            clone.PWMPin = this.PWMPin;
             return clone;
         }
     }

@@ -14,19 +14,19 @@ namespace MobiFlight.UI.Panels
     public partial class PWMDriverPanel : UserControl
     {
 
-        private int ServoCount = 0;
+        private int PWMPortCount = 0;
         public PWMDriverPanel()
         {
             InitializeComponent();
         }
 
-        public DisplayPWMPortPanel()
-        {
-            InitializeComponent();
+        //public DisplayPWMPortPanel()
+        //{
+            //InitializeComponent();
 
             //displayPinPanel.SetPorts(new List<ListItem>());
             //displayPinPanel.WideStyle = true;
-        }
+        //}
 
         public void SetAdresses(List<ListItem> I2Caddresses)
         {
@@ -58,39 +58,30 @@ namespace MobiFlight.UI.Panels
             if (PWMDriversAddressesComboBox.SelectedValue != null)
             {
                 config.PWMDriver.Address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
-                //config.Servo.Min = minValueTextBox.Text;
-                //config.Servo.Max = maxValueTextBox.Text;
-                //config.Servo.MaxRotationPercent = maxRotationPercentNumericUpDown.Text;
+                
             }
 
             return config;
         }
 
-        private void servoAddressesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void PWMAddressesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if ((sender as ComboBox).SelectedValue == null) return;
         }
 
 
-        private void label1_Click(object sender, EventArgs e)
+        private void label_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         public void SetSelectedAddress(string value)
         {
             PWMDriversAddressesComboBox.SelectedValue = value;
         }
 
-       
-
         
-
-       
     }
 }

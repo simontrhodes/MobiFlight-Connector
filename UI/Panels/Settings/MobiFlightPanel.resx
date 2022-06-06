@@ -143,7 +143,7 @@
     <value>202, 22</value>
   </data>
   <data name="PWMDriverToolStripMenuItem.Text" xml:space="preserve">
-    <value>Servo Driver</value>
+    <value>PWM Driver</value>
   </data>
   <data name="stepperToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
@@ -421,7 +421,7 @@
     <value>202, 22</value>
   </data>
   <data name="addPWMDriverToolStripMenuItem.Text" xml:space="preserve">
-    <value>Servo Driver</value>
+    <value>PWM Driver</value>
   </data>
   <data name="addStepperToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
