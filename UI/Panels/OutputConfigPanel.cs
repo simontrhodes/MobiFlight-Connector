@@ -569,8 +569,8 @@ namespace MobiFlight.UI.Panels
                             case MobiFlightLcdDisplay.TYPE:
                                 row["OutputName"] = cfgItem.LcdDisplay.Address;
                                 break;
-                            case MobiFlightServoDriver.TYPE:
-                                row["OutputName"] = cfgItem.ServoDriver.Address;
+                            case MobiFlightPWMDriver.TYPE:
+                                row["OutputName"] = cfgItem.PWMDriver.Address;
                                 break;
                             case MobiFlightServo.TYPE:
                                 row["OutputName"] = cfgItem.Servo.Address;

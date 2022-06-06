@@ -169,7 +169,7 @@
         "MaxLedSegments",
         "MaxOutputs",
         "MaxServos",
-        "MaxServoDrivers",
+        "MaxPWMDrivers",
         "MaxSteppers",
         "MaxInputMultiplexer"
       ],
@@ -216,9 +216,9 @@
           "description": "Maximum number of servos supported by the board.",
           "type": "integer"
         },
-        "MaxServoDrivers": {
-          "$id": "#root/ModuleLimits/MaxServoDrivers",
-          "title": "Maxservodrivers",
+        "MaxPWMDrivers": {
+          "$id": "#root/ModuleLimits/MaxPWMDrivers",
+          "title": "MaxPWMDrivers",
           "description": "Maximum number of servo drivers supported by the board.",
           "type": "integer"
         },

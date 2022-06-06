@@ -57,7 +57,7 @@ namespace MobiFlight.UI.Panels.Settings
             mfTreeViewImageList.Images.Add(DeviceType.Encoder.ToString(), MobiFlight.Properties.Resources.encoder);
             mfTreeViewImageList.Images.Add(DeviceType.Stepper.ToString(), MobiFlight.Properties.Resources.stepper);
             mfTreeViewImageList.Images.Add(DeviceType.Servo.ToString(), MobiFlight.Properties.Resources.servo);
-            mfTreeViewImageList.Images.Add(DeviceType.ServoDriver.ToString(), MobiFlight.Properties.Resources.servo);
+            mfTreeViewImageList.Images.Add(DeviceType.PWMDriver.ToString(), MobiFlight.Properties.Resources.servo);
             mfTreeViewImageList.Images.Add(DeviceType.Output.ToString(), MobiFlight.Properties.Resources.output);
             mfTreeViewImageList.Images.Add(DeviceType.LedModule.ToString(), MobiFlight.Properties.Resources.led7);
             mfTreeViewImageList.Images.Add(DeviceType.LcdDisplay.ToString(), MobiFlight.Properties.Resources.led7);
@@ -312,9 +312,9 @@ namespace MobiFlight.UI.Panels.Settings
                             (panel as MFServoPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
 
-                        case DeviceType.ServoDriver:
-                            panel = new MFServoDriverPanel(dev as MobiFlight.Config.ServoDriver, module.GetPins());
-                            (panel as MFServoDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                        case DeviceType.PWMDriver:
+                            panel = new MFPWMDriverPanel(dev as MobiFlight.Config.PWMDriver, module.GetPins());
+                            (panel as MFPWMDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
 
                         case DeviceType.AnalogInput:
@@ -453,14 +453,14 @@ namespace MobiFlight.UI.Panels.Settings
                         (cfgItem as MobiFlight.Config.Servo).DataPin = freePinList.ElementAt(0).Pin.ToString();
                         break;
 
-                    case "servoDriverToolStripMenuItem":
-                    case "addServoDriverToolStripMenuItem":
-                        if (statistics[MobiFlightServoDriver.TYPE] == tempModule.Board.ModuleLimits.MaxServoDrivers)
+                    case "PWMDriverToolStripMenuItem":
+                    case "addPWMDriverToolStripMenuItem":
+                        if (statistics[MobiFlightPWMDriver.TYPE] == tempModule.Board.ModuleLimits.MaxPWMDrivers)
                         {
-                            throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightServoDriver.TYPE, tempModule.Board.ModuleLimits.MaxServoDrivers);
+                            throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightPWMDriver.TYPE, tempModule.Board.ModuleLimits.MaxPWMDrivers);
                         }
                         
-                        cfgItem = new MobiFlight.Config.ServoDriver();
+                        cfgItem = new MobiFlight.Config.PWMDriver();
                         // does not deal yet with these kind of pins because we use I2C
                         break;
                         

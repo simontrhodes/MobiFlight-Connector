@@ -492,7 +492,7 @@ namespace MobiFlight
             return found?.Value;
         }
 
-        public void setServoDriver(string serial, string name, string value)
+        public void setPWMDriver(string serial, string name, string value)
         {
             try
             {
@@ -502,11 +502,11 @@ namespace MobiFlight
                 int iValue;
                 if (!int.TryParse(value, out iValue)) return;
 
-                module.SetServoDriver(name, iValue);
+                module.SetPWMDriver(name, iValue);
             }
             catch (Exception e)
             {
-                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_SettingServoDriver"), e);
+                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_SettingPWMDriver"), e);
             }
         }
 

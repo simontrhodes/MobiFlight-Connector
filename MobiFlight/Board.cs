@@ -167,7 +167,7 @@ namespace MobiFlight
         /// <summary>
         /// Maximum number of servo drivers supported by the board.
         /// </summary>
-        public int MaxServoDrivers = 0;
+        public int MaxPWMDrivers = 0;
 
         /// <summary>
         /// Maximum number of output shifters supported by the board.

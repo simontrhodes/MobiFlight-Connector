@@ -37,7 +37,7 @@
             this.ledOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ledSegmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.servoDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PWMDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LcdDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShiftRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +69,7 @@
             this.addOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addLedModuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addServoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addServoDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPWMDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addStepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addLcdDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addShiftRegisterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,7 +139,7 @@
             this.ledOutputToolStripMenuItem,
             this.ledSegmentToolStripMenuItem,
             this.servoToolStripMenuItem,
-            this.servoDriverToolStripMenuItem,
+            this.PWMDriverToolStripMenuItem,
             this.stepperToolStripMenuItem,
             this.LcdDisplayToolStripMenuItem,
             this.ShiftRegisterToolStripMenuItem,
@@ -170,11 +170,11 @@
             resources.ApplyResources(this.servoToolStripMenuItem, "servoToolStripMenuItem");
             this.servoToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
             // 
-            // servoDriverToolStripMenuItem
+            // PWMDriverToolStripMenuItem
             // 
-            this.servoDriverToolStripMenuItem.Name = "servoDriverToolStripMenuItem";
-            resources.ApplyResources(this.servoDriverToolStripMenuItem, "servoDriverToolStripMenuItem");
-            this.servoDriverToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
+            this.PWMDriverToolStripMenuItem.Name = "PWMDriverToolStripMenuItem";
+            resources.ApplyResources(this.PWMDriverToolStripMenuItem, "PWMDriverToolStripMenuItem");
+            this.PWMDriverToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
             // 
             // stepperToolStripMenuItem
             // 
@@ -351,7 +351,7 @@
             this.addOutputToolStripMenuItem,
             this.addLedModuleToolStripMenuItem,
             this.addServoToolStripMenuItem,
-            this.addServoDriverToolStripMenuItem,
+            this.addPWMDriverToolStripMenuItem,
             this.addStepperToolStripMenuItem,
             this.addLcdDisplayToolStripMenuItem,
             this.addShiftRegisterToolStripMenuItem,
@@ -383,11 +383,11 @@
             resources.ApplyResources(this.addServoToolStripMenuItem, "addServoToolStripMenuItem");
             this.addServoToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
             // 
-            // addServoDriverToolStripMenuItem
+            // addPWMDriverToolStripMenuItem
             // 
-            this.addServoDriverToolStripMenuItem.Name = "addServoDriverToolStripMenuItem";
-            resources.ApplyResources(this.addServoDriverToolStripMenuItem, "addServoDriverToolStripMenuItem");
-            this.addServoDriverToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
+            this.addPWMDriverToolStripMenuItem.Name = "addPWMDriverToolStripMenuItem";
+            resources.ApplyResources(this.addPWMDriverToolStripMenuItem, "addPWMDriverToolStripMenuItem");
+            this.addPWMDriverToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
             // 
             // addStepperToolStripMenuItem
             // 
@@ -515,7 +515,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem addStepperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addServoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addServoDriverToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addPWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addLedModuleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addLcdDisplayToolStripMenuItem;
@@ -528,7 +528,7 @@
         private System.Windows.Forms.ToolStripMenuItem ledOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ledSegmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem servoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem servoDriverToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stepperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LcdDisplayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShiftRegisterToolStripMenuItem;

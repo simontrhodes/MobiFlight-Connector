@@ -9,21 +9,21 @@ using System.Windows.Forms;
 
 namespace MobiFlight.UI.Panels.Settings.Device
 {
-    public partial class MFServoDriverPanel : UserControl
+    public partial class MFPWMDriverPanel : UserControl
     {
        
         public event EventHandler Changed;
 
-        private MobiFlight.Config.ServoDriver config;
+        private MobiFlight.Config.PWMDriver config;
         bool initialized = false;
 
-        public MFServoDriverPanel()
+        public MFPWMDriverPanel()
         {
             InitializeComponent();
 
         }
 
-        public MFServoDriverPanel(MobiFlight.Config.ServoDriver config, List<MobiFlightPin> Pins) : this()
+        public MFPWMDriverPanel(MobiFlight.Config.PWMDriver config, List<MobiFlightPin> Pins) : this()
         {
             this.config = config;
             NameTextBox.Text = config.Name;

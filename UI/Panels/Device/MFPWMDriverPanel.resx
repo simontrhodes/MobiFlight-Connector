@@ -159,7 +159,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;AddressComboBox.Parent" xml:space="preserve">
-    <value>ServoDriverSettingsGroupBox</value>
+    <value>PWMDriverSettingsGroupBox</value>
   </data>
   <data name="&gt;&gt;AddressComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -189,37 +189,37 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>ServoDriverSettingsGroupBox</value>
+    <value>PWMDriverSettingsGroupBox</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ServoDriverSettingsGroupBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="PWMDriverSettingsGroupBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="ServoDriverSettingsGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="PWMDriverSettingsGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="ServoDriverSettingsGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="PWMDriverSettingsGroupBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>215, 60</value>
   </data>
-  <data name="ServoDriverSettingsGroupBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="PWMDriverSettingsGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="ServoDriverSettingsGroupBox.Text" xml:space="preserve">
+  <data name="PWMDriverSettingsGroupBox.Text" xml:space="preserve">
     <value>Address settings</value>
   </data>
-  <data name="&gt;&gt;ServoDriverSettingsGroupBox.Name" xml:space="preserve">
-    <value>ServoDriverSettingsGroupBox</value>
+  <data name="&gt;&gt;PWMDriverSettingsGroupBox.Name" xml:space="preserve">
+    <value>PWMDriverSettingsGroupBox</value>
   </data>
-  <data name="&gt;&gt;ServoDriverSettingsGroupBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriverSettingsGroupBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ServoDriverSettingsGroupBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriverSettingsGroupBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;ServoDriverSettingsGroupBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriverSettingsGroupBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="&gt;&gt;NameTextBox.Name" xml:space="preserve">
@@ -301,7 +301,7 @@
     <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MFServoDriverPanel</value>
+    <value>MFPWMDriverPanel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

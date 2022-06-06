@@ -1,6 +1,6 @@
 ﻿namespace MobiFlight.UI.Panels
 {
-    partial class ServoDriverPanel
+    partial class PWMDriverPanel
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServoDriverPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PWMDriverPanel));
             this.displayPinComoBoxLabel = new System.Windows.Forms.Label();
             this.minValueTextBox = new System.Windows.Forms.TextBox();
             this.maxValueTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.servoDriversAddressesComboBox = new System.Windows.Forms.ComboBox();
+            this.PWMDriversAddressesComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.maxRotationPercentNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -68,13 +68,13 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
-            // servoDriversAddressesComboBox
+            // PWMDriversAddressesComboBox
             // 
-            this.servoDriversAddressesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.servoDriversAddressesComboBox.FormattingEnabled = true;
-            resources.ApplyResources(this.servoDriversAddressesComboBox, "servoDriversAddressesComboBox");
-            this.servoDriversAddressesComboBox.Name = "servoDriversAddressesComboBox";
-            this.servoDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.servoAddressesComboBox_SelectedIndexChanged);
+            this.PWMDriversAddressesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PWMDriversAddressesComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.PWMDriversAddressesComboBox, "PWMDriversAddressesComboBox");
+            this.PWMDriversAddressesComboBox.Name = "PWMDriversAddressesComboBox";
+            this.PWMDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.servoAddressesComboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -101,7 +101,7 @@
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // ServoDriverPanel
+            // PWMDriverPanel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -109,12 +109,12 @@
             this.Controls.Add(this.maxRotationPercentNumericUpDown);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.servoDriversAddressesComboBox);
+            this.Controls.Add(this.PWMDriversAddressesComboBox);
             this.Controls.Add(this.maxValueTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.minValueTextBox);
             this.Controls.Add(this.displayPinComoBoxLabel);
-            this.Name = "ServoDriverPanel";
+            this.Name = "PWMDriverPanel";
             ((System.ComponentModel.ISupportInitialize)(this.maxRotationPercentNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -128,7 +128,7 @@
         public System.Windows.Forms.TextBox maxValueTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.ComboBox servoDriversAddressesComboBox;
+        public System.Windows.Forms.ComboBox PWMDriversAddressesComboBox;
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.NumericUpDown maxRotationPercentNumericUpDown;
         private System.Windows.Forms.Label label4;

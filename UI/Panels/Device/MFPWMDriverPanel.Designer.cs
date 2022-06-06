@@ -1,6 +1,6 @@
 ﻿namespace MobiFlight.UI.Panels.Settings.Device
 {
-    partial class MFServoDriverPanel
+    partial class MFPWMDriverPanel
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -25,7 +25,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox ServoDriverSettingsGroupBox;
+        private System.Windows.Forms.GroupBox PWMDriverSettingsGroupBox;
         private System.Windows.Forms.GroupBox NameGroupBox;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.Label label1;
@@ -36,25 +36,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MFServoDriverPanel));
-            this.ServoDriverSettingsGroupBox = new System.Windows.Forms.GroupBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MFPWMDriverPanel));
+            this.PWMDriverSettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.AddressComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameGroupBox = new System.Windows.Forms.GroupBox();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ServoDriverSettingsGroupBox.SuspendLayout();
+            this.PWMDriverSettingsGroupBox.SuspendLayout();
             this.NameGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
-            // ServoDriverSettingsGroupBox
+            // PWMDriverSettingsGroupBox
             // 
-            this.ServoDriverSettingsGroupBox.Controls.Add(this.AddressComboBox);
-            this.ServoDriverSettingsGroupBox.Controls.Add(this.label1);
-            resources.ApplyResources(this.ServoDriverSettingsGroupBox, "ServoDriverSettingsGroupBox");
-            this.ServoDriverSettingsGroupBox.Name = "ServoDriverSettingsGroupBox";
-            this.ServoDriverSettingsGroupBox.TabStop = false;
+            this.PWMDriverSettingsGroupBox.Controls.Add(this.AddressComboBox);
+            this.PWMDriverSettingsGroupBox.Controls.Add(this.label1);
+            resources.ApplyResources(this.PWMDriverSettingsGroupBox, "PWMDriverSettingsGroupBox");
+            this.PWMDriverSettingsGroupBox.Name = "PWMDriverSettingsGroupBox";
+            this.PWMDriverSettingsGroupBox.TabStop = false;
             // 
             // AddressComboBox
             // 
@@ -97,16 +97,16 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // MFServoDriverPanel
+            // MFPWMDriverPanel
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.Controls.Add(this.NameGroupBox);
-            this.Controls.Add(this.ServoDriverSettingsGroupBox);
-            this.Name = "MFServoDriverPanel";
-            this.ServoDriverSettingsGroupBox.ResumeLayout(false);
-            this.ServoDriverSettingsGroupBox.PerformLayout();
+            this.Controls.Add(this.PWMDriverSettingsGroupBox);
+            this.Name = "MFPWMDriverPanel";
+            this.PWMDriverSettingsGroupBox.ResumeLayout(false);
+            this.PWMDriverSettingsGroupBox.PerformLayout();
             this.NameGroupBox.ResumeLayout(false);
             this.NameGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();

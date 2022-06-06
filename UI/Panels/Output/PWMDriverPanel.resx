@@ -258,31 +258,31 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="servoDriversAddressesComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="PWMDriversAddressesComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>94, 0</value>
   </data>
-  <data name="servoDriversAddressesComboBox.MaximumSize" type="System.Drawing.Size, System.Drawing">
+  <data name="PWMDriversAddressesComboBox.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>122, 0</value>
   </data>
-  <data name="servoDriversAddressesComboBox.MinimumSize" type="System.Drawing.Size, System.Drawing">
+  <data name="PWMDriversAddressesComboBox.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>47, 0</value>
   </data>
-  <data name="servoDriversAddressesComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="PWMDriversAddressesComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
   </data>
-  <data name="servoDriversAddressesComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="PWMDriversAddressesComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <data name="&gt;&gt;servoDriversAddressesComboBox.Name" xml:space="preserve">
-    <value>servoDriversAddressesComboBox</value>
+  <data name="&gt;&gt;PWMDriversAddressesComboBox.Name" xml:space="preserve">
+    <value>PWMDriversAddressesComboBox</value>
   </data>
-  <data name="&gt;&gt;servoDriversAddressesComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriversAddressesComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;servoDriversAddressesComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriversAddressesComboBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;servoDriversAddressesComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriversAddressesComboBox.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -376,7 +376,7 @@
     <value>255, 93</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ServoDriverPanel</value>
+    <value>PWMDriverPanel</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

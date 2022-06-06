@@ -1033,10 +1033,10 @@ namespace MobiFlight
                         );
                         break;
 
-                    case MobiFlightServoDriver.TYPE:
-                        mobiFlightCache.setServoDriver(
+                    case MobiFlightPWMDriver.TYPE:
+                        mobiFlightCache.setPWMDriver(
                             serial,
-                            cfg.ServoDriver.Address,
+                            cfg.PWMDriver.Address,
                             value
                         );
                         break;
@@ -1455,7 +1455,7 @@ namespace MobiFlight
                     ExecuteDisplay(offCfg.Servo.Min, offCfg);
                     break;
 
-                case MobiFlightServoDriver.TYPE:
+                case MobiFlightPWMDriver.TYPE:
                     ExecuteDisplay(offCfg.Servo.Min, offCfg);
                     break;
 
@@ -1491,7 +1491,7 @@ namespace MobiFlight
                     ExecuteDisplay((Int16.Parse(cfg.Stepper.TestValue)).ToString(), cfg);
                     break;
 
-                case MobiFlightServoDriver.TYPE:
+                case MobiFlightPWMDriver.TYPE:
                     ExecuteDisplay("180", cfg);
                     break;
 

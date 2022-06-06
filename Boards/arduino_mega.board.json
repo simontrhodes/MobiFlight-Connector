@@ -47,7 +47,7 @@
     "MaxLedSegments": 4,
     "MaxOutputs": 40,
     "MaxServos": 10,
-    "MaxServoDrivers": 4,
+    "MaxPWMDrivers": 4,
     "MaxShifters": 4,
     "MaxSteppers": 10,
     "MaxInputMultiplexer": 2

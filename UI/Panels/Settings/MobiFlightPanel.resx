@@ -139,10 +139,10 @@
   <data name="servoToolStripMenuItem.Text" xml:space="preserve">
     <value>Servo</value>
   </data>
-  <data name="servoDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="PWMDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
   </data>
-  <data name="servoDriverToolStripMenuItem.Text" xml:space="preserve">
+  <data name="PWMDriverToolStripMenuItem.Text" xml:space="preserve">
     <value>Servo Driver</value>
   </data>
   <data name="stepperToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -417,10 +417,10 @@
   <data name="addServoToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="addServoDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="addPWMDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
   </data>
-  <data name="addServoDriverToolStripMenuItem.Text" xml:space="preserve">
+  <data name="addPWMDriverToolStripMenuItem.Text" xml:space="preserve">
     <value>Servo Driver</value>
   </data>
   <data name="addStepperToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -690,10 +690,10 @@
   <data name="&gt;&gt;servoToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;servoDriverToolStripMenuItem.Name" xml:space="preserve">
-    <value>servoDriverToolStripMenuItem</value>
+  <data name="&gt;&gt;PWMDriverToolStripMenuItem.Name" xml:space="preserve">
+    <value>PWMDriverToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;servoDriverToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;PWMDriverToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;stepperToolStripMenuItem.Name" xml:space="preserve">
@@ -870,10 +870,10 @@
   <data name="&gt;&gt;addServoToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;addServoDriverToolStripMenuItem.Name" xml:space="preserve">
-    <value>addServoDriverToolStripMenuItem</value>
+  <data name="&gt;&gt;addPWMDriverToolStripMenuItem.Name" xml:space="preserve">
+    <value>addPWMDriverToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;addServoDriverToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;addPWMDriverToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;addStepperToolStripMenuItem.Name" xml:space="preserve">

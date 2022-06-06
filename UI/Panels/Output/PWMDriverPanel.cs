@@ -11,30 +11,40 @@ using MobiFlight.UI.Panels.Config;
 
 namespace MobiFlight.UI.Panels
 {
-    public partial class ServoDriverPanel : UserControl
+    public partial class PWMDriverPanel : UserControl
     {
-        public ServoDriverPanel()
+
+        private int ServoCount = 0;
+        public PWMDriverPanel()
         {
             InitializeComponent();
         }
 
+        public DisplayPWMPortPanel()
+        {
+            InitializeComponent();
+
+            //displayPinPanel.SetPorts(new List<ListItem>());
+            //displayPinPanel.WideStyle = true;
+        }
+
         public void SetAdresses(List<ListItem> I2Caddresses)
         {
-            servoDriversAddressesComboBox.DataSource = new List<ListItem>(I2Caddresses);
-            servoDriversAddressesComboBox.DisplayMember = "Label";
-            servoDriversAddressesComboBox.ValueMember = "Value";
+            PWMDriversAddressesComboBox.DataSource = new List<ListItem>(I2Caddresses);
+            PWMDriversAddressesComboBox.DisplayMember = "Label";
+            PWMDriversAddressesComboBox.ValueMember = "Value";
 
             if (I2Caddresses.Count > 0)
-                servoDriversAddressesComboBox.SelectedIndex = 0;
+                PWMDriversAddressesComboBox.SelectedIndex = 0;
 
-            servoDriversAddressesComboBox.Enabled = I2Caddresses.Count > 0;
+            PWMDriversAddressesComboBox.Enabled = I2Caddresses.Count > 0;
         }
 
         public void syncFromConfig(OutputConfigItem config)
         {
-            if (config.ServoDriver.Address != null)
+            if (config.PWMDriver.Address != null)
             {
-                if (!ComboBoxHelper.SetSelectedItem(servoDriversAddressesComboBox, config.ServoDriver.Address))
+                if (!ComboBoxHelper.SetSelectedItem(PWMDriversAddressesComboBox, config.PWMDriver.Address))
                 {
                     // TODO: provide error message
                     Log.Instance.log("_syncConfigToForm : Exception on selecting item in Servo Address ComboBox", LogSeverity.Debug);
@@ -45,9 +55,9 @@ namespace MobiFlight.UI.Panels
 
         internal OutputConfigItem syncToConfig(OutputConfigItem config)
         {
-            if (servoDriversAddressesComboBox.SelectedValue != null)
+            if (PWMDriversAddressesComboBox.SelectedValue != null)
             {
-                config.ServoDriver.Address = servoDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
+                config.PWMDriver.Address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
                 //config.Servo.Min = minValueTextBox.Text;
                 //config.Servo.Max = maxValueTextBox.Text;
                 //config.Servo.MaxRotationPercent = maxRotationPercentNumericUpDown.Text;
@@ -74,7 +84,7 @@ namespace MobiFlight.UI.Panels
 
         public void SetSelectedAddress(string value)
         {
-            servoDriversAddressesComboBox.SelectedValue = value;
+            PWMDriversAddressesComboBox.SelectedValue = value;
         }
 
        

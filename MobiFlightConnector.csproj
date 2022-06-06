@@ -209,7 +209,7 @@
     <Compile Include="MobiFlight\Config\InputMultiplexer.cs" />
     <Compile Include="MobiFlight\Config\MultiplexerDriver.cs" />
     <Compile Include="MobiFlight\Config\InputShiftRegister.cs" />
-    <Compile Include="MobiFlight\Config\ServoDriver.cs" />
+    <Compile Include="MobiFlight\Config\PWMDriver.cs" />
     <Compile Include="MobiFlight\Config\ShiftRegister.cs" />
     <Compile Include="MobiFlight\Config\IConfigRefConfigItem.cs" />
     <Compile Include="MobiFlight\Config\AnalogInput.cs" />
@@ -235,7 +235,7 @@
     <Compile Include="MobiFlight\OutputConfig\Comparison.cs" />
     <Compile Include="MobiFlight\OutputConfig\FsuipcOffset.cs" />
     <Compile Include="MobiFlight\OutputConfig\LedModule.cs" />
-    <Compile Include="MobiFlight\OutputConfig\ServoDriver.cs" />
+    <Compile Include="MobiFlight\OutputConfig\PWMDriver.cs" />
     <Compile Include="MobiFlight\OutputConfig\ShiftRegister.cs" />
     <Compile Include="MobiFlight\OutputConfig\Pin.cs" />
     <Compile Include="MobiFlight\OutputConfig\Servo.cs" />
@@ -388,11 +388,11 @@
     <Compile Include="UI\Panels\Device\MFInputMultiplexerPanel.Designer.cs">
       <DependentUpon>MFInputMultiplexerPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Panels\Device\MFServoDriverPanel.cs">
+    <Compile Include="UI\Panels\Device\MFPWMDriverPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Panels\Device\MFServoDriverPanel.Designer.cs">
-      <DependentUpon>MFServoDriverPanel.cs</DependentUpon>
+    <Compile Include="UI\Panels\Device\MFPWMDriverPanel.Designer.cs">
+      <DependentUpon>MFPWMDriverPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Device\MFMultiplexerDriverSubPanel.cs">
       <SubType>UserControl</SubType>
@@ -460,11 +460,11 @@
     <Compile Include="UI\Panels\Output\DisplayShiftRegisterPanel.Designer.cs">
       <DependentUpon>DisplayShiftRegisterPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Panels\Output\ServoDriverPanel.cs">
+    <Compile Include="UI\Panels\Output\PWMDriverPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Panels\Output\ServoDriverPanel.Designer.cs">
-      <DependentUpon>ServoDriverPanel.cs</DependentUpon>
+    <Compile Include="UI\Panels\Output\PWMDriverPanel.Designer.cs">
+      <DependentUpon>PWMDriverPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Settings\ArcazePanel.cs">
       <SubType>UserControl</SubType>
@@ -571,7 +571,6 @@
     <Compile Include="MobiFlight\Config\Config.cs" />
     <Compile Include="MobiFlight\Config\Output.cs" />
     <Compile Include="MobiFlight\Config\Stepper.cs" />
-    <Compile Include="MobiFlight\Config\ServoDriver.cs" />
     <Compile Include="MobiFlight\Config\Servo.cs" />
     <Compile Include="MobiFlight\Config\LedModule.cs" />
     <Compile Include="UI\Forms\FirmwareUpdateProcess.cs">
@@ -592,7 +591,7 @@
     <Compile Include="MobiFlight\MobiFlightFirmwareUpdater.cs" />
     <Compile Include="MobiFlight\MobiFlightOutput.cs" />
     <Compile Include="MobiFlight\MobiFlightServo.cs" />
-    <Compile Include="MobiFlight\MobiFlightServoDriver.cs" />
+    <Compile Include="MobiFlight\MobiFlightPWMDriver.cs" />
     <Compile Include="MobiFlight\MobiFlightCache.cs" />
     <Compile Include="MobiFlight\MobiFlightModuleInfo.cs" />
     <Compile Include="MobiFlight\MobiFlightIOBasic.cs" />
@@ -1012,8 +1011,9 @@
       <DependentUpon>MFInputMultiplexerPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\Device\MFServoDriverPanel.resx">
-      <DependentUpon>MFServoDriverPanel.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Panels\Device\MFPWMDriverPanel.resx">
+      <DependentUpon>MFPWMDriverPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Device\MFMultiplexerDriverSubPanel.de.resx">
       <DependentUpon>MFMultiplexerDriverSubPanel.cs</DependentUpon>
@@ -1087,8 +1087,9 @@
     <EmbeddedResource Include="UI\Panels\Output\DisplayPinPanel.de.resx">
       <DependentUpon>DisplayPinPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\Output\ServoDriverPanel.resx">
-      <DependentUpon>ServoDriverPanel.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Panels\Output\PWMDriverPanel.resx">
+      <DependentUpon>PWMDriverPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Settings\ArcazePanel.de.resx">
       <DependentUpon>ArcazePanel.cs</DependentUpon>

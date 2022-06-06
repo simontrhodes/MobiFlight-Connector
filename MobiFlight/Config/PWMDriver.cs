@@ -4,13 +4,13 @@ using System.Xml.Serialization;
 
 namespace MobiFlight.Config
 {
-    public class ServoDriver : BaseDevice
+    public class PWMDriver : BaseDevice
     {
         const ushort _paramCount = 2;
         [XmlAttribute]
         public Byte I2CAddress = 0x40;
 
-        public ServoDriver() { Name = "ServoDriver"; _type = DeviceType.ServoDriver; }
+        public PWMDriver() { Name = "PWMDriver"; _type = DeviceType.PWMDriver; }
 
         override public String ToInternal()
         {
