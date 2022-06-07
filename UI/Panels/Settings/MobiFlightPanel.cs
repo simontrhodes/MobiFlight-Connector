@@ -330,7 +330,12 @@ namespace MobiFlight.UI.Panels.Settings
                             panel = new MFStepperPanel(dev as MobiFlight.Config.Stepper, module.GetPins());
                             (panel as MFStepperPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
-                            
+
+                        case DeviceType.PWMDriver:
+                            panel = new MFPWMDriverPanel(dev as MobiFlight.Config.PWMDriver, module.GetPins());
+                            (panel as MFPWMDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            break;
+
                         case DeviceType.Servo:
                             panel = new MFServoPanel(dev as MobiFlight.Config.Servo, module.GetPins());
                             (panel as MFServoPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
@@ -568,6 +573,18 @@ namespace MobiFlight.UI.Panels.Settings
                         cfgItem = new MobiFlight.Config.LcdDisplay();
                         // does not deal yet with these kind of pins because we use I2C
                         break;
+
+                    case "PWMDriverToolStripMenuItem":
+                    case "addPWMDriverToolStripMenuItem":
+                        if (statistics[MobiFlightPWMDriver.TYPE] == tempModule.Board.ModuleLimits.MaxLcdI2C)
+                        {
+                            throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightPWMDriver.TYPE, tempModule.Board.ModuleLimits.MaxPWMDrivers);
+                        }
+
+                        cfgItem = new MobiFlight.Config.PWMDriver();
+                        // does not deal yet with these kind of pins because we use I2C
+                        break;
+
 
                     case "ShiftRegisterToolStripMenuItem":
                     case "addShiftRegisterToolStripMenuItem":

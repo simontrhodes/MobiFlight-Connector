@@ -491,11 +491,11 @@
     <Compile Include="UI\Panels\Output\DisplayShiftRegisterPanel.Designer.cs">
       <DependentUpon>DisplayShiftRegisterPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Panels\Output\PWMDriverPanel.cs">
+    <Compile Include="UI\Panels\Output\DisplayPWMDriverPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Panels\Output\PWMDriverPanel.Designer.cs">
-      <DependentUpon>PWMDriverPanel.cs</DependentUpon>
+    <Compile Include="UI\Panels\Output\DisplayPWMDriverPanel.Designer.cs">
+      <DependentUpon>DisplayPWMDriverPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Settings\ArcazePanel.cs">
       <SubType>UserControl</SubType>
@@ -1130,8 +1130,8 @@
     <EmbeddedResource Include="UI\Panels\Output\DisplayPinPanel.de.resx">
       <DependentUpon>DisplayPinPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\Output\PWMDriverPanel.resx">
-      <DependentUpon>PWMDriverPanel.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Panels\Output\DisplayPWMDriverPanel.resx">
+      <DependentUpon>DisplayPWMDriverPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Settings\ArcazePanel.de.resx">

@@ -40,9 +40,9 @@ namespace MobiFlight.UI.Panels.OutputWizard
         Panels.DisplayLedDisplayPanel displayLedDisplayPanel = new Panels.DisplayLedDisplayPanel();
         Panels.DisplayNothingSelectedPanel displayNothingSelectedPanel = new Panels.DisplayNothingSelectedPanel();
         Panels.LCDDisplayPanel displayLcdDisplayPanel = new Panels.LCDDisplayPanel();
-        Panels.PWMDriverPanel pwmDriverPanel = new Panels.PWMDriverPanel();
         Panels.ServoPanel servoPanel = new Panels.ServoPanel();
         Panels.StepperPanel stepperPanel = new Panels.StepperPanel();
+        Panels.DisplayPWMDriverPanel displayPWMDriverPanel = new Panels.DisplayPWMDriverPanel();
         Panels.DisplayShiftRegisterPanel displayShiftRegisterPanel = new Panels.DisplayShiftRegisterPanel();
 
 
@@ -91,9 +91,9 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 displayBcdPanel, 
                 displayLedDisplayPanel, 
                 displayNothingSelectedPanel,
-                pwmDriverPanel,
                 servoPanel,
                 stepperPanel,
+                displayPWMDriverPanel,
                 displayShiftRegisterPanel,
                 displayLcdDisplayPanel
             };
@@ -157,16 +157,16 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         displayLedDisplayPanel.syncFromConfig(config);
                         break;
 
-                    case MobiFlightPWMDriver.TYPE:
-                        pwmDriverPanel.syncFromConfig(config);
-                        break;
-
                     case MobiFlightServo.TYPE:
                         servoPanel.syncFromConfig(config);
                         break;
 
                     case MobiFlightLcdDisplay.TYPE:
                         displayLcdDisplayPanel.syncFromConfig(config);
+                        break;
+
+                    case MobiFlightPWMDriver.TYPE:
+                        displayPWMDriverPanel.syncFromConfig(config);
                         break;
 
                     case MobiFlightShiftRegister.TYPE:
@@ -266,16 +266,16 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         displayLedDisplayPanel.syncToConfig(config);
                         break;
 
-                    case MobiFlightPWMDriver.TYPE:
-                        pwmDriverPanel.syncToConfig(config);
-                        break;
-
                     case MobiFlightServo.TYPE:
                         servoPanel.syncToConfig(config);
                         break;
 
                     case MobiFlightLcdDisplay.TYPE:
                         displayLcdDisplayPanel.syncToConfig(config);
+                        break;
+
+                    case MobiFlightPWMDriver.TYPE:
+                        displayPWMDriverPanel.syncToConfig(config);
                         break;
 
                     case MobiFlightShiftRegister.TYPE:
@@ -475,12 +475,6 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 displayLedDisplayPanel.Height = displayPanelHeight;
             }
 
-            else if ((sender as ComboBox).Text == DeviceType.PWMDriver.ToString("F"))
-            {
-                pwmDriverPanel.Enabled = panelEnabled;
-                pwmDriverPanel.Height = displayPanelHeight;
-            }
-
             else if ((sender as ComboBox).Text == DeviceType.Servo.ToString("F"))
             {
                 servoPanel.Enabled = panelEnabled;
@@ -498,6 +492,12 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 displayLcdDisplayPanel.Enabled = panelEnabled;
                 displayLcdDisplayPanel.AutoSize = true;
                 displayLcdDisplayPanel.Height = displayPanelHeight;
+            }
+
+            else if ((sender as ComboBox).Text == DeviceType.PWMDriver.ToString("F"))
+            {
+                displayPWMDriverPanel.Enabled = panelEnabled;
+                displayPWMDriverPanel.Height = displayPanelHeight;
             }
 
             else if ((sender as ComboBox).Text == DeviceType.ShiftRegister.ToString("F"))
@@ -573,11 +573,13 @@ namespace MobiFlight.UI.Panels.OutputWizard
             displayLedDisplayPanel.OnLedAddressChanged += new EventHandler(displayLedAddressComboBox_SelectedIndexChanged);
             displayLedDisplayPanel.SetAddresses(ledSegments);
 
-            pwmDriverPanel.SetAdresses(PWMDrivers);
-
             servoPanel.SetAdresses(servos);
 
             stepperPanel.SetAdresses(stepper);
+
+            //displayPWMDriverPanel.PWMDriversAddressesComboBox.SelectedIndexChanged -= PWMAddressesComboBox_SelectedIndexChanged;
+            //displayPWMDriverPanel.PWMDriversAddressesComboBox.SelectedIndexChanged += new EventHandler(PWMAddressesComboBox_SelectedIndexChanged);
+            displayPWMDriverPanel.SetAdresses(PWMDrivers);
 
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged -= shiftRegistersComboBox_selectedIndexChanged;
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged += new EventHandler(shiftRegistersComboBox_selectedIndexChanged);
@@ -684,6 +686,25 @@ namespace MobiFlight.UI.Panels.OutputWizard
             displayLedDisplayPanel.SetConnectors(connectors);
         }
 
+
+        private void PWMDriversAddressesComboBox(object sender, EventArgs e)
+
+        {
+            ComboBox cb = displayModuleNameComboBox;
+            String serial = SerialNumber.ExtractSerial(cb.SelectedItem.ToString());
+            MobiFlightModule module = _execManager.getMobiFlightModuleCache().GetModuleBySerial(serial);
+            bool pwmSupport = false;
+
+            int numModules = 0;
+            foreach (IConnectedDevice device in module.GetConnectedDevices())
+            {
+                if (device.Type != DeviceType.PWMDriver) continue;
+                if (device.Name != ((sender as ComboBox).SelectedItem as ListItem).Value) continue;
+                numModules = (device as MobiFlightPWMDriver).NumberOfPWMDrivers;
+            }
+            displayPWMDriverPanel.SetNumModules(numModules);
+        }
+
         private void shiftRegistersComboBox_selectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = displayModuleNameComboBox;
@@ -700,6 +721,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
             }
             displayShiftRegisterPanel.SetNumModules(numModules);
         }
+
+
 
         private void portComboBox_Validating(object sender, CancelEventArgs e)
         {

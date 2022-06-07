@@ -42,6 +42,8 @@ namespace MobiFlight
 
         public int NumberOfPWMPins { get; set; }
 
+        public int NumberOfPWMDrivers { get; set; }
+
         public int inputLower { get; set; }
 
         public int inputUpper { get; set; }
