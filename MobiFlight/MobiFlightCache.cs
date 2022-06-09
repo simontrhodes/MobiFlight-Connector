@@ -523,17 +523,21 @@ namespace MobiFlight
             return found?.Value;
         }
 
-        public void setPWMDriver(string serial, string name, string value)
+        public void setPWMDriver(string serial, string name, string value, string pwmPin)
         {
             try
             {
                 if (!Modules.ContainsKey(serial)) return;
 
                 MobiFlightModule module = Modules[serial];
+                
                 int iValue;
                 if (!int.TryParse(value, out iValue)) return;
+                
+                int iPwmpin;
+                if (!int.TryParse(pwmPin, out iPwmpin)) return;
 
-                module.SetPWMDriver(name, iValue);
+                module.SetPWMDriver(name, iPwmpin,  iValue);
             }
             catch (Exception e)
             {

@@ -14,12 +14,19 @@ namespace MobiFlight.UI.Panels
     public partial class DisplayPWMDriverPanel : UserControl
     {
 
-        private int PWMPortCount = 0;
+        private int PWMPortCount = 16;
+        private DisplayPinPanel displayPWMPinPanel;
+
         public DisplayPWMDriverPanel()
         {
             InitializeComponent();
-            displayPinPanel.SetPorts(new List<ListItem>());
-            displayPinPanel.WideStyle = true;
+            displayPWMPinPanel = new DisplayPinPanel();
+            displayPWMPinPanel.WideStyle = false;
+            displayPWMPinPanel.MultiSelectSupport = false;
+            displayPWMPinPanel.SetPins(SetPWMPinList());
+
+
+
         }
 
         
@@ -30,9 +37,10 @@ namespace MobiFlight.UI.Panels
             PWMDriversAddressesComboBox.ValueMember = "Value";
 
             if (I2Caddresses.Count > 0)
+            {
                 PWMDriversAddressesComboBox.SelectedIndex = 0;
-
-            PWMDriversAddressesComboBox.Enabled = I2Caddresses.Count > 0;
+                PWMDriversAddressesComboBox.Enabled = true;
+            }
         }
 
         public void syncFromConfig(OutputConfigItem config)
@@ -45,49 +53,45 @@ namespace MobiFlight.UI.Panels
                     Log.Instance.log("_syncConfigToForm : Exception on selecting item in Servo Address ComboBox", LogSeverity.Debug);
                 }
             }
-            UpdatePWMPinPinList();
+            //SetPWMPinList();
 
             if (config.PWMDriver.PWMPin != null)
             {
                 OutputConfigItem cfg = config.Clone() as OutputConfigItem;
                 cfg.Pin.DisplayPin = config.PWMDriver.PWMPin;
-                displayPinPanel.syncFromConfig(cfg);
+                //displayPinPanel.syncFromConfig(cfg);
             }
         }
 
         
 
-        private void UpdatePWMPinPinList()
+        private List<ListItem> SetPWMPinList()
         {
 
             List<ListItem> pwmpinList = new List<ListItem>();
-            for (int row = 1; row <= PWMPortCount; row++)
+            for (int port = 0; port < PWMPortCount; port++)
             {
-
-                for (int column = 1; column <= 8; column++)
+                    string itemNum = port.ToString();
+                pwmpinList.Add(new ListItem()
                 {
-                    string itemNum = (8 * (row - 1) + column - 1).ToString();
-                    pwmpinList.Add(new ListItem()
-                    {
-                        Label =
-                        MobiFlightPWMDriver.LABEL_PREFIX + " " + itemNum,
-                        Value = MobiFlightPWMDriver.LABEL_PREFIX + " " + itemNum
-                    });
-                }
+                    Label = itemNum,
+                    Value = itemNum
+                });
+
             }
-
-
-            displayPinPanel.SetPins(pwmpinList);
+            return pwmpinList;
+            
         }
 
         internal OutputConfigItem syncToConfig(OutputConfigItem config)
         {
-            if (PWMDriversAddressesComboBox.SelectedValue != null)
-            {
-                config.PWMDriver.Address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
-                
-            }
+            String address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
+            OutputConfigItem cfg = config.Clone() as OutputConfigItem;
+            cfg = displayPinPanel.syncToConfig(cfg);
+            String pin = cfg.Pin.DisplayPin;
 
+            config.PWMDriver.PWMPin = pin;
+            config.PWMDriver.Address = address + " (" + pin + ")";
             return config;
         }
 

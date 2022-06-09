@@ -636,7 +636,7 @@ namespace MobiFlight
             return true;
         }
 
-        public bool SetPWMDriver(string name, int value)
+        public bool SetPWMDriver(string name, int pwmPin,  int value)
         {
             String key = "PWMDriver_" + name;
 
@@ -650,8 +650,8 @@ namespace MobiFlight
             {
                 iLastValue = value;
             }
-            //TO DO TODO
-            PWMDriverModules[name].MoveToPosition(0,value);
+            
+            PWMDriverModules[name].MoveToPosition(pwmPin,value);
             lastValue[key] = value.ToString();
 
             return true;

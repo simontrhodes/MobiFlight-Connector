@@ -1062,6 +1062,7 @@ namespace MobiFlight
                         mobiFlightCache.setPWMDriver(
                             serial,
                             cfg.PWMDriver.Address,
+                            cfg.PWMDriver.PWMPin,
                             value
                         );
                         break;
