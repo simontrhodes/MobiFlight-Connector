@@ -38,7 +38,7 @@
             this.displayPinBrightnessTrackBar = new System.Windows.Forms.TrackBar();
             this.panel2 = new System.Windows.Forms.Panel();
             this.displayPinBrightnessLabel = new System.Windows.Forms.Label();
-            this.pwmPinPanel = new System.Windows.Forms.Panel();
+            this.PinPanel = new System.Windows.Forms.Panel();
             this.displayPwmCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.displayPinComboBox = new System.Windows.Forms.ComboBox();
@@ -54,7 +54,7 @@
             this.displayPinBrightnessLabelPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayPinBrightnessTrackBar)).BeginInit();
             this.panel2.SuspendLayout();
-            this.pwmPinPanel.SuspendLayout();
+            this.PinPanel.SuspendLayout();
             this.singlePinSelectFlowLayoutPanel.SuspendLayout();
             this.PinSelectContainer.SuspendLayout();
             this.MultiSelectPinSelectContainer.SuspendLayout();
@@ -72,6 +72,7 @@
             resources.GetString("displayPortComboBox.Items2")});
             resources.ApplyResources(this.displayPortComboBox, "displayPortComboBox");
             this.displayPortComboBox.Name = "displayPortComboBox";
+            this.displayPortComboBox.SelectedIndexChanged += new System.EventHandler(this.displayPortComboBox_SelectedIndexChanged_1);
             // 
             // displayPinBrightnessPanel
             // 
@@ -124,12 +125,12 @@
             resources.ApplyResources(this.displayPinBrightnessLabel, "displayPinBrightnessLabel");
             this.displayPinBrightnessLabel.Name = "displayPinBrightnessLabel";
             // 
-            // pwmPinPanel
+            // PinPanel
             // 
-            this.pwmPinPanel.Controls.Add(this.displayPwmCheckBox);
-            this.pwmPinPanel.Controls.Add(this.label1);
-            resources.ApplyResources(this.pwmPinPanel, "pwmPinPanel");
-            this.pwmPinPanel.Name = "pwmPinPanel";
+            this.PinPanel.Controls.Add(this.displayPwmCheckBox);
+            this.PinPanel.Controls.Add(this.label1);
+            resources.ApplyResources(this.PinPanel, "PinPanel");
+            this.PinPanel.Name = "PinPanel";
             // 
             // displayPwmCheckBox
             // 
@@ -152,6 +153,7 @@
             resources.GetString("displayPinComboBox.Items2")});
             resources.ApplyResources(this.displayPinComboBox, "displayPinComboBox");
             this.displayPinComboBox.Name = "displayPinComboBox";
+            this.displayPinComboBox.SelectedIndexChanged += new System.EventHandler(this.displayPinComboBox_SelectedIndexChanged_1);
             // 
             // singlePinSelectFlowLayoutPanel
             // 
@@ -209,7 +211,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.displayPinBrightnessPanel);
-            this.Controls.Add(this.pwmPinPanel);
+            this.Controls.Add(this.PinPanel);
             this.Controls.Add(this.PinSelectContainer);
             this.DoubleBuffered = true;
             this.Name = "DisplayPinPanel";
@@ -218,7 +220,7 @@
             this.displayPinBrightnessLabelPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayPinBrightnessTrackBar)).EndInit();
             this.panel2.ResumeLayout(false);
-            this.pwmPinPanel.ResumeLayout(false);
+            this.PinPanel.ResumeLayout(false);
             this.singlePinSelectFlowLayoutPanel.ResumeLayout(false);
             this.PinSelectContainer.ResumeLayout(false);
             this.PinSelectContainer.PerformLayout();
@@ -235,7 +237,7 @@
         public System.Windows.Forms.Panel displayPinBrightnessPanel;
         private System.Windows.Forms.Label displayPinBrightnessLabel;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel pwmPinPanel;
+        private System.Windows.Forms.Panel PinPanel;
         private System.Windows.Forms.CheckBox displayPwmCheckBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel displayPinBrightnessLabelPanel;

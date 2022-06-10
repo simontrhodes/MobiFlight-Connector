@@ -523,28 +523,7 @@ namespace MobiFlight
             return found?.Value;
         }
 
-        public void setPWMDriver(string serial, string name, string value, string pwmPin)
-        {
-            try
-            {
-                if (!Modules.ContainsKey(serial)) return;
-
-                MobiFlightModule module = Modules[serial];
-                
-                int iValue;
-                if (!int.TryParse(value, out iValue)) return;
-                
-                int iPwmpin;
-                if (!int.TryParse(pwmPin, out iPwmpin)) return;
-
-                module.SetPWMDriver(name, iPwmpin,  iValue);
-            }
-            catch (Exception e)
-            {
-                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_SettingPWMDriver"), e);
-            }
-        }
-
+        
         public void setServo(string serial, string address, string value, int min, int max, byte maxRotationPercent)
         {
             try
@@ -645,7 +624,30 @@ namespace MobiFlight
                 throw new MobiFlight.ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WritingDisplay"), e);
             }
         }
+        public void setPWMDriver(string serial, string PWMDriverName, string outputPin, string value)
+        {
+            if (serial == null)
+            {
+                throw new ConfigErrorException("ConfigErrorException_SerialNull");
+            };
 
+            if (outputPin == null)
+            {
+                throw new ConfigErrorException("ConfigErrorException_AddressNull");
+            }
+
+            try
+            {
+                if (!Modules.ContainsKey(serial)) return;
+
+                MobiFlightModule module = Modules[serial];
+                module.SetPWMDriver(PWMDriverName, outputPin, value);
+            }
+            catch (Exception e)
+            {
+                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WritePWMDriverOutput"), e);
+            }
+        }
         public void setShiftRegisterOutput(string serial, string shiftRegName, string outputPin, string value)
         {
             if (serial == null)

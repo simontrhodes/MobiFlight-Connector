@@ -338,10 +338,6 @@ namespace MobiFlight
                         device.Name = GenerateUniqueDeviceName(servoModules.Keys.ToArray(), device.Name);
                         servoModules.Add(device.Name, new MobiFlightServo() { CmdMessenger = _cmdMessenger, Name = device.Name, ServoNumber = servoModules.Count });
                         break;
-                    case DeviceType.PWMDriver:
-                        device.Name = GenerateUniqueDeviceName(PWMDriverModules.Keys.ToArray(), device.Name);
-                        PWMDriverModules.Add(device.Name, new MobiFlightPWMDriver() { CmdMessenger = _cmdMessenger, Name = device.Name, PWMDriverNumber = PWMDriverModules.Count });
-                        break;
                     case DeviceType.Output:
                         device.Name = GenerateUniqueDeviceName(outputs.Keys.ToArray(), device.Name);
                         outputs.Add(device.Name, new MobiFlightOutput() { CmdMessenger = _cmdMessenger, Name = device.Name, Pin = Int16.Parse((device as Config.Output).Pin) });
@@ -361,6 +357,11 @@ namespace MobiFlight
                     case DeviceType.AnalogInput:
                         device.Name = GenerateUniqueDeviceName(analogInputs.Keys.ToArray(), device.Name);
                         analogInputs.Add(device.Name, new MobiFlightAnalogInput() { Name = device.Name });
+                        break;
+                    case DeviceType.PWMDriver:
+                        device.Name = GenerateUniqueDeviceName(PWMDriverModules.Keys.ToArray(), device.Name);
+                        int.TryParse((device as Config.PWMDriver).NumModules, out submodules);
+                        PWMDriverModules.Add(device.Name, new MobiFlightPWMDriver() { CmdMessenger = _cmdMessenger, Name = device.Name, NumberOfPWMDrivers = submodules, PWMDriverNumber = PWMDriverModules.Count });
                         break;
                     case DeviceType.ShiftRegister:
                         device.Name = GenerateUniqueDeviceName(shiftRegisters.Keys.ToArray(), device.Name);
@@ -636,30 +637,6 @@ namespace MobiFlight
             return true;
         }
 
-        public bool SetPWMDriver(string name, int pwmPin,  int value)
-        {
-            String key = "PWMDriver_" + name;
-
-            int iLastValue;
-            if (lastValue.ContainsKey(key))
-            {
-                if (!KeepAliveNeeded() && lastValue[key] == value.ToString()) return false;
-                iLastValue = int.Parse(lastValue[key]);
-            }
-            else
-            {
-                iLastValue = value;
-            }
-            
-            PWMDriverModules[name].MoveToPosition(pwmPin,value);
-            lastValue[key] = value.ToString();
-
-            return true;
-
-            
-        }
-
-
         public bool SetStepper(string stepper, int value, int inputRevolutionSteps = -1)
         {
             String key = "STEPPER_" + stepper;
@@ -722,7 +699,22 @@ namespace MobiFlight
 
             return stepperModules[stepper];
         }
+        public bool SetPWMDriver(string moduleID, string outputPin, string value)
+        {
+            String key = "PWMDriver_" + moduleID + outputPin;
 
+            String cachedValue = value;
+
+            if (!KeepAliveNeeded() && lastValue.ContainsKey(key) &&
+                lastValue[key] == cachedValue) return false;
+
+            lastValue[key] = cachedValue;
+
+            PWMDriverModules[moduleID].MoveToPosition(outputPin, value);
+
+
+            return true;
+        }
         internal bool setShiftRegisterOutput(string moduleID, string outputPin, string value)
         {
             String key = "ShiftReg_" + moduleID + outputPin;
@@ -972,7 +964,7 @@ namespace MobiFlight
             return result;
         }
 
-        public List<MobiFlightPin> getPwmPins()
+        public List<MobiFlightPin> getPins()
         {
             return Board.Pins.FindAll(x => x.isPWM);
         }

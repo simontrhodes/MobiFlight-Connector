@@ -15,21 +15,42 @@ namespace MobiFlight.UI.Panels
     {
 
         private int PWMPortCount = 16;
-        private DisplayPinPanel displayPWMPinPanel;
+        public bool WideStyle = false;
 
         public DisplayPWMDriverPanel()
         {
             InitializeComponent();
-            displayPWMPinPanel = new DisplayPinPanel();
-            displayPWMPinPanel.WideStyle = false;
-            displayPWMPinPanel.MultiSelectSupport = false;
-            displayPWMPinPanel.SetPins(SetPWMPinList());
-
-
-
+            displayPinPanel.SetPorts(new List<ListItem>());
+            displayPinPanel.WideStyle = false;
         }
 
-        
+        public void syncFromConfig(OutputConfigItem config)
+        {
+            // pre-select display stuff
+            if (config.PWMDriver != null && config.PWMDriver.Address != null)
+            {
+                if (!ComboBoxHelper.SetSelectedItem(PWMDriversAddressesComboBox, config.PWMDriver.Address.ToString()))
+                {
+                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriversAddressesComboBox", LogSeverity.Debug);
+                }
+            }
+
+            UpdatePinList();
+
+            if (config.PWMDriver.Pin != null)
+            {
+                OutputConfigItem cfg = config.Clone() as OutputConfigItem;
+                cfg.Pin.DisplayPin = config.PWMDriver.Pin;
+                displayPinPanel.syncFromConfig(cfg);
+            }
+        }
+
+        public void UpdatePinList()
+        {
+            displayPinPanel.SetPins(SetPinList());
+        }
+
+
         public void SetAdresses(List<ListItem> I2Caddresses)
         {
             PWMDriversAddressesComboBox.DataSource = new List<ListItem>(I2Caddresses);
@@ -43,43 +64,24 @@ namespace MobiFlight.UI.Panels
             }
         }
 
-        public void syncFromConfig(OutputConfigItem config)
-        {
-            if (config.PWMDriver.Address != null)
-            {
-                if (!ComboBoxHelper.SetSelectedItem(PWMDriversAddressesComboBox, config.PWMDriver.Address))
-                {
-                    
-                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in Servo Address ComboBox", LogSeverity.Debug);
-                }
-            }
-            //SetPWMPinList();
-
-            if (config.PWMDriver.PWMPin != null)
-            {
-                OutputConfigItem cfg = config.Clone() as OutputConfigItem;
-                cfg.Pin.DisplayPin = config.PWMDriver.PWMPin;
-                //displayPinPanel.syncFromConfig(cfg);
-            }
-        }
-
+        
         
 
-        private List<ListItem> SetPWMPinList()
+        private List<ListItem> SetPinList()
         {
 
-            List<ListItem> pwmpinList = new List<ListItem>();
+            List<ListItem> PinList = new List<ListItem>();
             for (int port = 0; port < PWMPortCount; port++)
             {
                     string itemNum = port.ToString();
-                pwmpinList.Add(new ListItem()
+                PinList.Add(new ListItem()
                 {
                     Label = itemNum,
                     Value = itemNum
                 });
 
             }
-            return pwmpinList;
+            return PinList;
             
         }
 
@@ -90,8 +92,9 @@ namespace MobiFlight.UI.Panels
             cfg = displayPinPanel.syncToConfig(cfg);
             String pin = cfg.Pin.DisplayPin;
 
-            config.PWMDriver.PWMPin = pin;
-            config.PWMDriver.Address = address + " (" + pin + ")";
+            config.PWMDriver.Pin = pin;
+            //config.PWMDriver.Address = address + " (" + pin + ")";
+            config.PWMDriver.Address = address ;
             return config;
         }
 
@@ -101,12 +104,7 @@ namespace MobiFlight.UI.Panels
         }
 
 
-        private void label_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
+       
 
         public void SetSelectedAddress(string value)
         {
@@ -116,7 +114,9 @@ namespace MobiFlight.UI.Panels
         internal void SetNumModules(int num8bitRegisters)
         {
         //    this.RegisterCount = num8bitRegisters;
-            //UpdatePinList();
+            UpdatePinList();
         }
+
+       
     }
 }

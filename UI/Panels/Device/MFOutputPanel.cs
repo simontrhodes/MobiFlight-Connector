@@ -31,7 +31,7 @@ namespace MobiFlight.UI.Panels.Settings.Device
 
             ComboBoxHelper.BindMobiFlightFreePins(mfPinComboBox, Pins, output.Pin);
             textBox1.Text = output.Name;
-            mfPinLabel.Text = isPwmPin() ? "Pin (PWM)" : "Pin";
+            mfPinLabel.Text = isPin() ? "Pin (PWM)" : "Pin";
             initialized = true;
         }
 
@@ -44,7 +44,7 @@ namespace MobiFlight.UI.Panels.Settings.Device
                 Changed(output, new EventArgs());
         }
 
-        private bool isPwmPin()
+        private bool isPin()
         {
             bool result = false;
             byte bPin = byte.Parse(mfPinComboBox.SelectedItem.ToString());
@@ -54,7 +54,7 @@ namespace MobiFlight.UI.Panels.Settings.Device
 
         private void setValues()
         {
-            mfPinLabel.Text = isPwmPin() ? "Pin (PWM)" : "Pin";
+            mfPinLabel.Text = isPin() ? "Pin (PWM)" : "Pin";
             output.Pin = mfPinComboBox.SelectedItem.ToString();
             output.Name = textBox1.Text;
         }

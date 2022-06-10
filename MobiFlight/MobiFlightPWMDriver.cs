@@ -12,6 +12,7 @@ namespace MobiFlight
         public const string LABEL_PREFIX = "Output";
         public int outputLower;
         public int outputUpper;
+        public int NumModules = 16;
 
         private String _name = "PWMDriver";
         public String Name
@@ -38,9 +39,9 @@ namespace MobiFlight
         public CmdMessenger CmdMessenger { get; set; }
         public int PWMDriverNumber { get; set; }
 
-        public int PWMPin { get; set; }
+        public int Pin { get; set; }
 
-        public int NumberOfPWMPins { get; set; }
+        public int NumberOfPins { get; set; }
 
         public int NumberOfPWMDrivers { get; set; }
 
@@ -63,20 +64,23 @@ namespace MobiFlight
             return (int)Math.Round((relVal * (outputUpper - outputLower)) + inputLower, 0);
         }
 
-        public void MoveToPosition(int PWMPin, int value)
+        public void MoveToPosition(String Pin, String value)
         {
 
             if (!_initialized) Initialize();
 
-            int mappedValue = map(value, inputLower, inputUpper, outputLower, outputUpper);
+
+            int iValue = int.Parse(value);
+            int mappedValue = map(iValue, inputLower, inputUpper, outputLower, outputUpper);
+            
             
             var command = new SendCommand((int)MobiFlightModule.Command.SetPWMDriver);
-            command.AddArgument(PWMDriverNumber);
-            command.AddArgument(PWMPin);
+            command.AddArgument(this.PWMDriverNumber);
+            command.AddArgument(Pin);
             command.AddArgument(mappedValue);
             Log.Instance.log("Command: SetPWMDriver <" + (int)MobiFlightModule.Command.SetPWMDriver + "," +
                               PWMDriverNumber + "," +
-                              PWMPin + "," +
+                              Pin + "," +
                               mappedValue + ";>", LogSeverity.Debug);
             // Send command
             CmdMessenger.SendCommand(command);
@@ -84,8 +88,11 @@ namespace MobiFlight
 
         public void Stop()
         {
-            for (int i = 0; i != NumberOfPWMPins; i++)
-                MoveToPosition(i, 0);
+            //int i;
+            //int pin = 0;
+            //for (i = 0; i != NumberOfPins; i++)
+            //    pin = i.ToString;
+            //    MoveToPosition(pin, "0");
         }
     }
 }

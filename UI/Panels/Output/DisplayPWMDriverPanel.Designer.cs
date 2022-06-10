@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisplayPWMDriverPanel));
             this.pwmLabel = new System.Windows.Forms.Label();
             this.PWMDriversAddressesComboBox = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -43,21 +44,23 @@
             this.pwmLabel.Name = "pwmLabel";
             this.pwmLabel.Size = new System.Drawing.Size(92, 18);
             this.pwmLabel.TabIndex = 0;
-            this.pwmLabel.Text = "PWM Driver";
+            this.pwmLabel.Text = "Shift Register";
             this.pwmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+
             // 
             // PWMDriversAddressesComboBox
             // 
             this.PWMDriversAddressesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PWMDriversAddressesComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.PWMDriversAddressesComboBox, "PWMDriversAddressesComboBox");
+            this.PWMDriversAddressesComboBox.Name = "PWMDriversAddressesComboBox";
+            this.PWMDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.PWMAddressesComboBox_SelectedIndexChanged);
             this.PWMDriversAddressesComboBox.Location = new System.Drawing.Point(101, 7);
             this.PWMDriversAddressesComboBox.MaximumSize = new System.Drawing.Size(134, 0);
             this.PWMDriversAddressesComboBox.MinimumSize = new System.Drawing.Size(35, 0);
-            this.PWMDriversAddressesComboBox.SelectedIndexChanged += new System.EventHandler(this.PWMAddressesComboBox_SelectedIndexChanged);
-            this.PWMDriversAddressesComboBox.Name = "PWMDriversAddressesComboBox";
             this.PWMDriversAddressesComboBox.Size = new System.Drawing.Size(134, 21);
             this.PWMDriversAddressesComboBox.TabIndex = 66;
-
+            
             // 
             // panel1
             // 
@@ -69,6 +72,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(371, 36);
             this.panel1.TabIndex = 68;
+
             // 
             // displayPinPanel
             // 

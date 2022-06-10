@@ -1058,14 +1058,7 @@ namespace MobiFlight
                         );
                         break;
 
-                    case MobiFlightPWMDriver.TYPE:
-                        mobiFlightCache.setPWMDriver(
-                            serial,
-                            cfg.PWMDriver.Address,
-                            cfg.PWMDriver.PWMPin,
-                            value
-                        );
-                        break;
+                    
 
                     case MobiFlightServo.TYPE:
                         mobiFlightCache.setServo(
@@ -1086,6 +1079,19 @@ namespace MobiFlight
                             GetRefs(cfg.ConfigRefs)
                             );
                         break;
+
+                    case MobiFlightPWMDriver.TYPE:
+
+                        string outputValuePWMDriver = value;
+
+                        mobiFlightCache.setPWMDriver(
+                            serial,
+                            cfg.PWMDriver.Address,
+                            cfg.PWMDriver.Pin,
+                            outputValuePWMDriver
+                        );
+                        break;
+
 
                     case MobiFlightShiftRegister.TYPE:
                         if (serial != null)

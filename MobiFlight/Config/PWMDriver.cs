@@ -9,6 +9,8 @@ namespace MobiFlight.Config
         const ushort _paramCount = 2;
         [XmlAttribute]
         public Byte I2CAddress = 0x40;
+        [XmlAttribute]
+        public String NumModules = "16";
 
         public PWMDriver() { Name = "PWMDriver"; _type = DeviceType.PWMDriver; }
 
