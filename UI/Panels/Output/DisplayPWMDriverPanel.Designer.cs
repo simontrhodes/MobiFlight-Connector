@@ -44,7 +44,7 @@
             this.pwmLabel.Name = "pwmLabel";
             this.pwmLabel.Size = new System.Drawing.Size(92, 18);
             this.pwmLabel.TabIndex = 0;
-            this.pwmLabel.Text = "Shift Register";
+            this.pwmLabel.Text = "PWM Driver";
             this.pwmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 
             // 
@@ -81,6 +81,7 @@
             this.displayPinPanel.Name = "displayPinPanel";
             this.displayPinPanel.Size = new System.Drawing.Size(371, 238);
             this.displayPinPanel.TabIndex = 67;
+
             // 
             // DisplayPWMDriverPanel
             // 

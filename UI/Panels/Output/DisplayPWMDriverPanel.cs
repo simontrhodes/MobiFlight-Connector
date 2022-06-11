@@ -22,6 +22,7 @@ namespace MobiFlight.UI.Panels
             InitializeComponent();
             displayPinPanel.SetPorts(new List<ListItem>());
             displayPinPanel.WideStyle = false;
+
         }
 
         public void syncFromConfig(OutputConfigItem config)
@@ -101,6 +102,7 @@ namespace MobiFlight.UI.Panels
         private void PWMAddressesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if ((sender as ComboBox).SelectedValue == null) return;
+            UpdatePinList();
         }
 
 
