@@ -53,15 +53,15 @@ namespace MobiFlight
         public MobiFlightPWMDriver()
         {
             inputLower = 0;
-            inputUpper = 179;
-            outputLower = 0;
-            outputUpper = 4095;
+            inputUpper = 59;
+            outputLower = 400;
+            outputUpper = 2200;
         }
 
         private int map(int value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
             float relVal = (value - inputLower) / (float)(inputUpper - inputLower);
-            return (int)Math.Round((relVal * (outputUpper - outputLower)) + inputLower, 0);
+            return (int)Math.Round((relVal * (outputUpper - outputLower)) + outputLower, 0);
         }
 
         public void MoveToPosition(String Pin, String value)

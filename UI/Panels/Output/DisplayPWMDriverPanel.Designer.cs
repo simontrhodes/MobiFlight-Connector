@@ -33,7 +33,7 @@
             this.pwmLabel = new System.Windows.Forms.Label();
             this.PWMDriversAddressesComboBox = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.displayPinPanel = new MobiFlight.UI.Panels.DisplayPinPanel();
+            this.displayPWMPinPanel = new MobiFlight.UI.Panels.DisplayPWMPinPanel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,13 +74,13 @@
             this.panel1.TabIndex = 68;
 
             // 
-            // displayPinPanel
+            // displayPWMPinPanel
             // 
-            this.displayPinPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.displayPinPanel.Location = new System.Drawing.Point(0, 36);
-            this.displayPinPanel.Name = "displayPinPanel";
-            this.displayPinPanel.Size = new System.Drawing.Size(371, 238);
-            this.displayPinPanel.TabIndex = 67;
+            this.displayPWMPinPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.displayPWMPinPanel.Location = new System.Drawing.Point(0, 36);
+            this.displayPWMPinPanel.Name = "displayPWMPinPanel";
+            this.displayPWMPinPanel.Size = new System.Drawing.Size(371, 238);
+            this.displayPWMPinPanel.TabIndex = 67;
 
             // 
             // DisplayPWMDriverPanel
@@ -88,7 +88,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Controls.Add(this.displayPinPanel);
+            this.Controls.Add(this.displayPWMPinPanel);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "DisplayPWMDriverPanel";
@@ -103,7 +103,7 @@
         private System.Windows.Forms.Label pwmLabel;
         public System.Windows.Forms.ComboBox PWMDriversAddressesComboBox;
         private System.Windows.Forms.Panel panel1;
-        private DisplayPinPanel displayPinPanel;
+        private DisplayPWMPinPanel displayPWMPinPanel;
         
         
     }

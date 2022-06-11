@@ -159,126 +159,6 @@
   <data name="&gt;&gt;displayPortComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Name" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Parent" xml:space="preserve">
-    <value>displayPinBrightnessPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
-    <value>panel2</value>
-  </data>
-  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
-    <value>displayPinBrightnessPanel</value>
-  </data>
-  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="displayPinBrightnessPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="displayPinBrightnessPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 161</value>
-  </data>
-  <data name="displayPinBrightnessPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>373, 71</value>
-  </data>
-  <data name="displayPinBrightnessPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessPanel.Name" xml:space="preserve">
-    <value>displayPinBrightnessPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessDimLabel.Name" xml:space="preserve">
-    <value>displayPinBrightnessDimLabel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessDimLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessDimLabel.Parent" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessDimLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessMediumLabel.Name" xml:space="preserve">
-    <value>displayPinBrightnessMediumLabel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessMediumLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessMediumLabel.Parent" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessMediumLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessBrightLabel.Name" xml:space="preserve">
-    <value>displayPinBrightnessBrightLabel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessBrightLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessBrightLabel.Parent" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessBrightLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessTrackBar.Name" xml:space="preserve">
-    <value>displayPinBrightnessTrackBar</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessTrackBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessTrackBar.Parent" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessTrackBar.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="displayPinBrightnessLabelPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="displayPinBrightnessLabelPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 0</value>
-  </data>
-  <data name="displayPinBrightnessLabelPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 71</value>
-  </data>
-  <data name="displayPinBrightnessLabelPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Name" xml:space="preserve">
-    <value>displayPinBrightnessLabelPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Parent" xml:space="preserve">
-    <value>displayPinBrightnessPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabelPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="displayPinBrightnessDimLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -417,6 +297,48 @@
   <data name="&gt;&gt;displayPinBrightnessTrackBar.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="displayPinBrightnessLabelPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="displayPinBrightnessLabelPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 0</value>
+  </data>
+  <data name="displayPinBrightnessLabelPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>277, 71</value>
+  </data>
+  <data name="displayPinBrightnessLabelPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Name" xml:space="preserve">
+    <value>displayPinBrightnessLabelPanel</value>
+  </data>
+  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;displayPinBrightnessLabelPanel.Parent" xml:space="preserve">
+    <value>displayPinBrightnessPanel</value>
+  </data>
+  <data name="&gt;&gt;displayPinBrightnessLabelPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="displayPinBrightnessLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="displayPinBrightnessLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 3</value>
+  </data>
+  <data name="displayPinBrightnessLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="displayPinBrightnessLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="displayPinBrightnessLabel.Text" xml:space="preserve">
+    <value>Brightness</value>
+  </data>
+  <data name="displayPinBrightnessLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
   <data name="&gt;&gt;displayPinBrightnessLabel.Name" xml:space="preserve">
     <value>displayPinBrightnessLabel</value>
   </data>
@@ -453,89 +375,29 @@
   <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="displayPinBrightnessLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="displayPinBrightnessPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="displayPinBrightnessLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 3</value>
+  <data name="displayPinBrightnessPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 161</value>
   </data>
-  <data name="displayPinBrightnessLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
+  <data name="displayPinBrightnessPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 71</value>
   </data>
-  <data name="displayPinBrightnessLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="displayPinBrightnessPanel.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
-  <data name="displayPinBrightnessLabel.Text" xml:space="preserve">
-    <value>Brightness</value>
+  <data name="&gt;&gt;displayPinBrightnessPanel.Name" xml:space="preserve">
+    <value>displayPinBrightnessPanel</value>
   </data>
-  <data name="displayPinBrightnessLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabel.Name" xml:space="preserve">
-    <value>displayPinBrightnessLabel</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabel.Parent" xml:space="preserve">
-    <value>panel2</value>
-  </data>
-  <data name="&gt;&gt;displayPinBrightnessLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;displayPwmCheckBox.Name" xml:space="preserve">
-    <value>displayPwmCheckBox</value>
-  </data>
-  <data name="&gt;&gt;displayPwmCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;displayPwmCheckBox.Parent" xml:space="preserve">
-    <value>PinPanel</value>
-  </data>
-  <data name="&gt;&gt;displayPwmCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>PinPanel</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PinPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="PinPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 129</value>
-  </data>
-  <data name="PinPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 1, 2, 1</value>
-  </data>
-  <data name="PinPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 32</value>
-  </data>
-  <data name="PinPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>373, 32</value>
-  </data>
-  <data name="PinPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;PinPanel.Name" xml:space="preserve">
-    <value>PinPanel</value>
-  </data>
-  <data name="&gt;&gt;PinPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;displayPinBrightnessPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PinPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;displayPinBrightnessPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;PinPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;displayPinBrightnessPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="displayPwmCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -592,6 +454,36 @@
     <value>PinPanel</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PinPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="PinPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 129</value>
+  </data>
+  <data name="PinPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 1, 2, 1</value>
+  </data>
+  <data name="PinPanel.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>0, 32</value>
+  </data>
+  <data name="PinPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 32</value>
+  </data>
+  <data name="PinPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;PinPanel.Name" xml:space="preserve">
+    <value>PinPanel</value>
+  </data>
+  <data name="&gt;&gt;PinPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PinPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;PinPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="displayPinComboBox.Items" xml:space="preserve">
@@ -783,6 +675,24 @@
   <data name="&gt;&gt;PinSelectPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 7</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Select Pins</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopRight</value>
+  </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
   </data>
@@ -842,36 +752,6 @@
   </data>
   <data name="&gt;&gt;PinSelectContainer.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 7</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 13</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Select Pins</value>
-  </data>
-  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>TopRight</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>LabelPinSelectContainer</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

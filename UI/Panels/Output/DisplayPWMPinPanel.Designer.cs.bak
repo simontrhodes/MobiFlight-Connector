@@ -1,0 +1,138 @@
+﻿namespace MobiFlight.UI.Panels
+{
+    partial class DisplayPWMPinPanel
+    {
+        /// <summary> 
+        /// Erforderliche Designervariable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Verwendete Ressourcen bereinigen.
+        /// </summary>
+        /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Vom Komponenten-Designer generierter Code
+
+        /// <summary> 
+        /// Erforderliche Methode für die Designerunterstützung. 
+        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisplayPWMPinPanel));
+
+            this.PinPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.singlePinSelectFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.PinSelectContainer = new System.Windows.Forms.Panel();
+            this.PinSelectPanel = new System.Windows.Forms.Panel();
+            this.LabelPinSelectContainer = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.PinPanel.SuspendLayout();
+            this.singlePinSelectFlowLayoutPanel.SuspendLayout();
+            this.PinSelectContainer.SuspendLayout();
+
+            this.PinSelectPanel.SuspendLayout();
+            this.LabelPinSelectContainer.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // displayPWMPortComboBox
+            // 
+            this.displayPWMPortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.displayPWMPortComboBox.FormattingEnabled = true;
+            this.displayPWMPortComboBox.Items.AddRange(new object[] {
+           
+            resources.ApplyResources(this.displayPWMPortComboBox, "displayPWMPortComboBox");
+            this.displayPWMPortComboBox.Name = "displayPWMPortComboBox";
+            this.displayPWMPortComboBox.SelectedIndexChanged += new System.EventHandler(this.displayPWMPortComboBox_SelectedIndexChanged_1);
+
+            // 
+            // PinPanel
+            // 
+            this.PinPanel.Controls.Add(this.label1);
+            resources.ApplyResources(this.PinPanel, "PinPanel");
+            this.PinPanel.Name = "PinPanel";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // singlePinSelectFlowLayoutPanel
+            // 
+            this.singlePinSelectFlowLayoutPanel.Controls.Add(this.displayPWMPortComboBox);
+            this.singlePinSelectFlowLayoutPanel.Controls.Add(this.displayPinComboBox);
+            resources.ApplyResources(this.singlePinSelectFlowLayoutPanel, "singlePinSelectFlowLayoutPanel");
+            this.singlePinSelectFlowLayoutPanel.Name = "singlePinSelectFlowLayoutPanel";
+            // 
+            // PinSelectContainer
+            // 
+            resources.ApplyResources(this.PinSelectContainer, "PinSelectContainer");
+            this.PinSelectContainer.Controls.Add(this.PinSelectPanel);
+            this.PinSelectContainer.Controls.Add(this.LabelPinSelectContainer);
+            this.PinSelectContainer.Name = "PinSelectContainer";
+
+            // PinSelectPanel
+            // 
+
+            this.PinSelectPanel.Controls.Add(this.singlePinSelectFlowLayoutPanel);
+            resources.ApplyResources(this.PinSelectPanel, "PinSelectPanel");
+            this.PinSelectPanel.Name = "PinSelectPanel";
+
+            // 
+            // LabelPinSelectContainer
+            // 
+            this.LabelPinSelectContainer.Controls.Add(this.label3);
+            resources.ApplyResources(this.LabelPinSelectContainer, "LabelPinSelectContainer");
+            this.LabelPinSelectContainer.Name = "LabelPinSelectContainer";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // DisplayPWMPinPanel
+            // 
+            resources.ApplyResources(this, "$this");
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.PinPanel);
+            this.Controls.Add(this.PinSelectContainer);
+            this.DoubleBuffered = true;
+            this.Name = "DisplayPWMPinPanel";
+
+            this.PinPanel.ResumeLayout(false);
+            this.singlePinSelectFlowLayoutPanel.ResumeLayout(false);
+            this.PinSelectContainer.ResumeLayout(false);
+            this.PinSelectContainer.PerformLayout();
+
+            this.PinSelectPanel.ResumeLayout(false);
+            this.LabelPinSelectContainer.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel PinPanel;
+
+        private System.Windows.Forms.Label label1;
+
+
+        private System.Windows.Forms.FlowLayoutPanel singlePinSelectFlowLayoutPanel;
+
+        private System.Windows.Forms.Panel PinSelectContainer;
+
+        private System.Windows.Forms.Panel LabelPinSelectContainer;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel PinSelectPanel;
+    }
+}

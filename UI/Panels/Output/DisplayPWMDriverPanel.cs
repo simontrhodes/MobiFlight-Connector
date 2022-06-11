@@ -14,14 +14,14 @@ namespace MobiFlight.UI.Panels
     public partial class DisplayPWMDriverPanel : UserControl
     {
 
-        private int PWMPortCount = 16;
+        private int PWMPinCount = 16;
         public bool WideStyle = false;
 
         public DisplayPWMDriverPanel()
         {
             InitializeComponent();
-            displayPinPanel.SetPorts(new List<ListItem>());
-            displayPinPanel.WideStyle = false;
+            
+           
 
         }
 
@@ -42,13 +42,13 @@ namespace MobiFlight.UI.Panels
             {
                 OutputConfigItem cfg = config.Clone() as OutputConfigItem;
                 cfg.Pin.DisplayPin = config.PWMDriver.Pin;
-                displayPinPanel.syncFromConfig(cfg);
+                displayPWMPinPanel.syncFromConfig(cfg);
             }
         }
 
         public void UpdatePinList()
         {
-            displayPinPanel.SetPins(SetPinList());
+            displayPWMPinPanel.SetPins(SetPinList());
         }
 
 
@@ -72,9 +72,9 @@ namespace MobiFlight.UI.Panels
         {
 
             List<ListItem> PinList = new List<ListItem>();
-            for (int port = 0; port < PWMPortCount; port++)
+            for (int pin = 0; pin < PWMPinCount; pin++)
             {
-                    string itemNum = port.ToString();
+                string itemNum = pin.ToString();
                 PinList.Add(new ListItem()
                 {
                     Label = itemNum,
@@ -90,7 +90,7 @@ namespace MobiFlight.UI.Panels
         {
             String address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
             OutputConfigItem cfg = config.Clone() as OutputConfigItem;
-            cfg = displayPinPanel.syncToConfig(cfg);
+            cfg = displayPWMPinPanel.syncToConfig(cfg);
             String pin = cfg.Pin.DisplayPin;
 
             config.PWMDriver.Pin = pin;

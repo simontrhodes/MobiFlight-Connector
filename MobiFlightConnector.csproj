@@ -473,11 +473,19 @@
     <Compile Include="UI\Panels\OutputConfigPanel.Designer.cs">
       <DependentUpon>OutputConfigPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Panels\OutputWizard\DisplayPanel.cs">
+    <Compile Include="..\..\..\..\Desktop\DisplayPanel.cs">
+      <SubType>UserControl</SubType>
+      <Link>UI\Panels\OutputWizard\DisplayPanel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\Desktop\DisplayPanel.Designer.cs">
+      <DependentUpon>DisplayPanel.cs</DependentUpon>
+      <Link>UI\Panels\OutputWizard\DisplayPanel.Designer.cs</Link>
+    </Compile>
+    <Compile Include="UI\Panels\Output\DisplayPWMPinPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Panels\OutputWizard\DisplayPanel.Designer.cs">
-      <DependentUpon>DisplayPanel.cs</DependentUpon>
+    <Compile Include="UI\Panels\Output\DisplayPWMPinPanel.Designer.cs">
+      <DependentUpon>DisplayPWMPinPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Output\PinSelectPanel.cs">
       <SubType>UserControl</SubType>
@@ -1107,19 +1115,26 @@
       <DependentUpon>OutputConfigPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\OutputWizard\DisplayPanel.de.resx">
+    <EmbeddedResource Include="..\..\..\..\Desktop\DisplayPanel.de.resx">
       <DependentUpon>DisplayPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+      <Link>UI\Panels\OutputWizard\DisplayPanel.de.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\OutputWizard\DisplayPanel.fr-DJ.resx">
+    <EmbeddedResource Include="..\..\..\..\Desktop\DisplayPanel.fr-DJ.resx">
       <DependentUpon>DisplayPanel.cs</DependentUpon>
+      <Link>UI\Panels\OutputWizard\DisplayPanel.fr-DJ.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Panels\OutputWizard\DisplayPanel.resx">
+    <EmbeddedResource Include="..\..\..\..\Desktop\DisplayPanel.resx">
       <DependentUpon>DisplayPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+      <Link>UI\Panels\OutputWizard\DisplayPanel.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\DisplayLedDisplayPanel.de.resx">
       <DependentUpon>DisplayLedDisplayPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Output\DisplayPWMPinPanel.resx">
+      <DependentUpon>DisplayPWMPinPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\PinSelectPanel.resx">
       <DependentUpon>PinSelectPanel.cs</DependentUpon>

@@ -1,0 +1,158 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MobiFlight.UI.Panels
+{
+    public partial class DisplayPWMPinPanel : UserControl
+    {
+        public bool WideStyle = false;
+        public bool MultiSelectSupport = false;
+        private MobiFlightModule Module;
+
+        public DisplayPinPanel()
+        {
+            InitializeComponent();
+            displayPortComboBox.SelectedIndexChanged += displayPortComboBox_SelectedIndexChanged;
+
+            MultiPinSelectPanel.Visible = false;
+            singlePinSelectFlowLayoutPanel.Visible = true;
+            PinSelectContainer.Height = singlePinSelectFlowLayoutPanel.Height;
+        }
+
+        public void SetSelectedPort(string value)
+        {
+            displayPortComboBox.SelectedValue = value;
+        }
+
+        public void SetSelectedPin(string value)
+        {
+            displayPinComboBox.SelectedValue = value;
+        }
+
+
+        internal void EnablePWMSelect(bool enable)
+        {
+            //PinPanel.Visible = Module.getPins().Contains((byte)(item as MobiFlightOutput).Pin);
+            PinPanel.Visible = enable;
+        }
+
+        public void SetPorts(List<ListItem> ports)
+        {
+            displayPortComboBox.DataSource = new List<ListItem>(ports);
+            displayPortComboBox.DisplayMember = "Label";
+            displayPortComboBox.ValueMember = "Value";
+            if (ports.Count>0)
+                displayPortComboBox.SelectedIndex = 0;
+
+            // disable all the arcaze specific stuff
+            // when there are no ports, because then
+            // we are in the context of MobiFlight
+            displayPinBrightnessPanel.Visible = displayPinBrightnessPanel.Enabled = displayPortComboBox.Visible = displayPortComboBox.Enabled = ports.Count > 0;
+            
+        }
+        internal void SetPins(List<ListItem> pins)
+        {
+            displayPinComboBox.DataSource = new List<ListItem>(pins);
+            displayPinComboBox.DisplayMember = "Label";
+            displayPinComboBox.ValueMember = "Value";
+
+            if (pins.Count > 0)
+                displayPinComboBox.SelectedIndex = 0;
+
+            displayPinComboBox.Enabled = pins.Count > 0;
+            displayPinComboBox.Width = WideStyle ? displayPinComboBox.MaximumSize.Width : displayPinComboBox.MinimumSize.Width;
+
+
+            MultiPinSelectPanel?.SetPins(pins);
+        }
+        private void displayPortComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (sender as ComboBox);
+            
+            // enable setting only for ports higher than B
+            // and set selected item to previous item if divider has been chosen
+            // to ensure correct values
+            if ((cb.SelectedItem as ListItem).Value == "-----")
+            {
+                cb.SelectedIndex -= 1;
+                return;
+            }
+
+            displayPinBrightnessPanel.Enabled = cb.SelectedIndex > 2;
+        }
+
+        internal void syncFromConfig(OutputConfigItem config)
+        {
+
+            String serial = config.DisplaySerial;
+            if (serial != null && serial.Contains('/'))
+            {
+                serial = serial.Split('/')[1].Trim();
+            }
+
+            if (config.Pin.DisplayPin != null && config.Pin.DisplayPin != "")
+            {
+                string port = "";
+                string pin = config.Pin.DisplayPin;
+
+               
+                    port = config.Pin.DisplayPin.Substring(0, 1);
+                    pin = config.Pin.DisplayPin.Substring(1);
+
+     
+
+                // preselect normal pin drop downs
+                if (!ComboBoxHelper.SetSelectedItem(displayPortComboBox, port)) { /* TODO: provide error message */ }
+                if (!ComboBoxHelper.SetSelectedItem(displayPinComboBox, pin)) { /* TODO: provide error message */ }
+
+
+               
+            }
+        }
+
+       
+
+        virtual internal OutputConfigItem syncToConfig(OutputConfigItem config)
+        {
+            config.Pin.DisplayPin = displayPortComboBox.Text + displayPinComboBox.Text;
+            
+            
+
+            return config;
+        }
+
+        internal void SetModule(MobiFlightModule module)
+        {
+            Module = module;
+        }
+
+        private void displayPinComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Module != null)
+            {
+                String pin = (sender as ComboBox).SelectedItem.ToString();
+                foreach (var item in Module.GetConnectedDevices(pin))
+                {
+                    PinPanel.Enabled = PinPanel.Visible = Module.getPins()
+                                                .Find(x => x.Pin == (byte)(item as MobiFlightOutput).Pin) != null;
+                    return;
+                }
+            }
+        }
+
+       
+
+        private void displayPortComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void displayPinComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
