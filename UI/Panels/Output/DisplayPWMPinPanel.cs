@@ -15,13 +15,10 @@ namespace MobiFlight.UI.Panels
             InitializeComponent();
             singlePinSelectFlowLayoutPanel.Visible = true;
             PinSelectContainer.Height = singlePinSelectFlowLayoutPanel.Height;
+            panel1.Visible = true;
         }
 
-        public void SetSelectedPin(string value)
-        {
-            displayPWMPinComboBox.SelectedValue = value;
-        }
-
+       
        
         internal void SetPins(List<ListItem> pins)
         {
@@ -35,13 +32,9 @@ namespace MobiFlight.UI.Panels
             displayPWMPinComboBox.Enabled = pins.Count > 0;
             displayPWMPinComboBox.Width = displayPWMPinComboBox.MinimumSize.Width;
 
-
-
         }
 
-
-
-        internal void syncFromConfig(OutputConfigItem config)
+            internal void syncFromConfig(OutputConfigItem config)
         {
 
             String serial = config.DisplaySerial;
@@ -49,26 +42,31 @@ namespace MobiFlight.UI.Panels
             {
                 serial = serial.Split('/')[1].Trim();
             }
-            if (config.Pin.DisplayPin != null && config.Pin.DisplayPin != "")
+            if (config.PWMDriver.Pin != null && config.PWMDriver.Pin != "")
             {
-                string pin = config.Pin.DisplayPin;
+                string pin = config.PWMDriver.Pin;
 
                 if (!ComboBoxHelper.SetSelectedItem(displayPWMPinComboBox, pin)) { /* TODO: provide error message */ }
+                SimLower.Text = config.PWMDriver.SimLower;
+                SimUpper.Text = config.PWMDriver.SimUpper;
+                PWMLower.Text = config.PWMDriver.PWMLower;
+                PWMUpper.Text = config.PWMDriver.PWMUpper;
             }
         }
        
 
         virtual internal OutputConfigItem syncToConfig(OutputConfigItem config)
         {
-            config.Pin.DisplayPin = displayPWMPinComboBox.Text;
+            config.PWMDriver.Pin = displayPWMPinComboBox.Text;
+            config.PWMDriver.SimLower = SimLower.Text;
+            config.PWMDriver.SimUpper = SimUpper.Text;
+            config.PWMDriver.PWMLower = PWMLower.Text;
+            config.PWMDriver.PWMUpper = PWMUpper.Text;
+
             return config;
         }
 
-        internal void SetModule(MobiFlightModule module)
-        {
-            Module = module;
-        }
-
+       
        
 
         private void displayPWMPinComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -79,5 +77,12 @@ namespace MobiFlight.UI.Panels
                 
             }
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+       
     }
 }

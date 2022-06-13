@@ -21,8 +21,6 @@ namespace MobiFlight.UI.Panels
         {
             InitializeComponent();
             
-           
-
         }
 
         public void syncFromConfig(OutputConfigItem config)
@@ -41,7 +39,7 @@ namespace MobiFlight.UI.Panels
             if (config.PWMDriver.Pin != null)
             {
                 OutputConfigItem cfg = config.Clone() as OutputConfigItem;
-                cfg.Pin.DisplayPin = config.PWMDriver.Pin;
+                cfg.PWMDriver.Pin = config.PWMDriver.Pin;
                 displayPWMPinPanel.syncFromConfig(cfg);
             }
         }
@@ -49,6 +47,7 @@ namespace MobiFlight.UI.Panels
         public void UpdatePinList()
         {
             displayPWMPinPanel.SetPins(SetPinList());
+            
         }
 
 
@@ -89,13 +88,9 @@ namespace MobiFlight.UI.Panels
         internal OutputConfigItem syncToConfig(OutputConfigItem config)
         {
             String address = PWMDriversAddressesComboBox.SelectedValue.ToString().Split(',').ElementAt(0);
-            OutputConfigItem cfg = config.Clone() as OutputConfigItem;
-            cfg = displayPWMPinPanel.syncToConfig(cfg);
-            String pin = cfg.Pin.DisplayPin;
 
-            config.PWMDriver.Pin = pin;
-            //config.PWMDriver.Address = address + " (" + pin + ")";
-            config.PWMDriver.Address = address ;
+            config = displayPWMPinPanel.syncToConfig(config);
+            config.PWMDriver.Address = address;
             return config;
         }
 
@@ -119,6 +114,9 @@ namespace MobiFlight.UI.Panels
             UpdatePinList();
         }
 
-       
+        private void displayPWMPinPanel_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

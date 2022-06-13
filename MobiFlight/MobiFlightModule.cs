@@ -699,7 +699,8 @@ namespace MobiFlight
 
             return stepperModules[stepper];
         }
-        public bool SetPWMDriver(string moduleID, string outputPin, string value)
+
+                public bool SetPWMDriver(string moduleID, string outputPin, string value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
             String key = "PWMDriver_" + moduleID + outputPin;
 
@@ -710,7 +711,9 @@ namespace MobiFlight
 
             lastValue[key] = cachedValue;
 
-            PWMDriverModules[moduleID].MoveToPosition(outputPin, value);
+            //PWMDriverModules[moduleID].SetLimits(outputPin, inputLower, inputUpper, outputLower, outputUpper);
+
+            PWMDriverModules[moduleID].SetPWMDriver(outputPin, value, inputLower, inputUpper, outputLower, outputUpper);
 
 
             return true;

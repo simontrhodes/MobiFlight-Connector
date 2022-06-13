@@ -570,7 +570,7 @@ namespace MobiFlight.UI.Panels
                                 row["OutputName"] = cfgItem.LcdDisplay.Address;
                                 break;
                             case MobiFlightPWMDriver.TYPE:
-                                row["OutputName"] = cfgItem.PWMDriver.Address + " (" + cfgItem.PWMDriver.Pin + ")"; ;
+                                row["OutputName"] = cfgItem.PWMDriver.Address + ":" + cfgItem.PWMDriver.Pin; ;
                                 break;
                             case MobiFlightServo.TYPE:
                                 row["OutputName"] = cfgItem.Servo.Address;

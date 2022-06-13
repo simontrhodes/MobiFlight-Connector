@@ -14,24 +14,34 @@ namespace MobiFlight.OutputConfig
 
         public String Pin { get; set; }
 
-        public String PWMMax { get; set; }
+        public String SimLower { get; set; }
 
-        public String PWMMin { get; set; }
+        public String SimUpper { get; set; }
+
+        public String PWMLower { get; set; }
+
+        public String PWMUpper { get; set; }
 
 
         public PWMDriver()
         {
             Address = "";
             Pin = "";
-            PWMMax = "4095";
-            PWMMax = "0";
+            SimLower = "";
+            SimUpper = "";
+            PWMLower = "";
+            PWMUpper = "";
         }
         public override bool Equals(object obj)
         {
             return
-                (obj != null) && (obj is PWMDriver) &&
-                (this.Pin == (obj as PWMDriver).Pin) &&
-                (this.Address == (obj as PWMDriver).Address);
+                (obj != null) &&  (obj is PWMDriver) &&
+                (this.Pin ==      (obj as PWMDriver).Pin) &&
+                (this.Address ==  (obj as PWMDriver).Address) &&
+                (this.SimLower == (obj as PWMDriver).SimLower) &&
+                (this.SimUpper == (obj as PWMDriver).SimUpper) &&
+                (this.PWMLower == (obj as PWMDriver).PWMLower) &&
+                (this.PWMUpper == (obj as PWMDriver).PWMUpper);
         }
 
         public void ReadXml(XmlReader reader)
@@ -39,12 +49,32 @@ namespace MobiFlight.OutputConfig
             // ignore empty values
             if (reader["PWMDriverAddress"] != null && reader["PWMDriverAddress"] != "")
             {
-                Address = reader["PWMDriverAddress"]; 
+                Address = reader["PWMDriverAddress"];
             }
 
             if (reader["PWMDriverPin"] != null && reader["PWMDriverPin"] != "")
             {
                 Pin = reader["PWMDriverPin"];
+            }
+
+            if (reader["PWMDriverSimLower"] != null && reader["PWMDriverSimLower"] != "")
+            { 
+                SimLower = reader["PWMDriverSimLower"];
+            }
+
+            if (reader["PWMDriverSimUpper"] != null && reader["PWMDriverSimUpper"] != "")
+            {
+                SimUpper = reader["PWMDriverSimUpper"];
+            }
+
+            if (reader["PWMDriverPWMLower"] != null && reader["PWMDriverPWMLower"] != "")
+            {
+                PWMLower = reader["PWMDriverPWMLower"];
+            }
+
+            if (reader["PWMDriverPWMUpper"] != null && reader["PWMDriverPWMUpper"] != "")
+            {
+                PWMUpper = reader["PWMDriverPWMUpper"];
             }
 
         }
@@ -53,6 +83,10 @@ namespace MobiFlight.OutputConfig
         {
             writer.WriteAttributeString("PWMDriverAddress", Address);
             writer.WriteAttributeString("PWMDriverPin", Pin);
+            writer.WriteAttributeString("PWMDriverSimLower", SimLower);
+            writer.WriteAttributeString("PWMDriverSimUpper", SimUpper);
+            writer.WriteAttributeString("PWMDriverPWMLower", PWMLower);
+            writer.WriteAttributeString("PWMDriverPWMUpper", PWMUpper);
 
         }
 
@@ -61,6 +95,10 @@ namespace MobiFlight.OutputConfig
             PWMDriver clone = new PWMDriver();
             clone.Address = this.Address;
             clone.Pin = this.Pin;
+            clone.SimLower = this.SimLower;
+            clone.SimUpper = this.SimUpper;
+            clone.PWMLower = this.PWMLower;
+            clone.PWMUpper = this.PWMUpper;
             return clone;
         }
     }

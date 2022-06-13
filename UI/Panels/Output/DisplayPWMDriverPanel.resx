@@ -204,28 +204,28 @@
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="displayPinPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="displayPWMPinPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="displayPinPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="displayPWMPinPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 36</value>
   </data>
-  <data name="displayPinPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="displayPWMPinPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>371, 238</value>
   </data>
-  <data name="displayPinPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="displayPWMPinPanel.TabIndex" type="System.Int32, mscorlib">
     <value>67</value>
   </data>
-  <data name="&gt;&gt;displayPinPanel.Name" xml:space="preserve">
-    <value>displayPinPanel</value>
+  <data name="&gt;&gt;displayPWMPinPanel.Name" xml:space="preserve">
+    <value>displayPWMPinPanel</value>
   </data>
-  <data name="&gt;&gt;displayPinPanel.Type" xml:space="preserve">
-    <value>MobiFlight.UI.Panels.DisplayPinPanel, MFConnector, Version=9.4.0.3, Culture=neutral, PublicKeyToken=null</value>
+  <data name="&gt;&gt;displayPWMPinPanel.Type" xml:space="preserve">
+    <value>MobiFlight.UI.Panels.DisplayPWMPinPanel, MFConnector, Version=9.4.0.3, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;displayPinPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;displayPWMPinPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;displayPinPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;displayPWMPinPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

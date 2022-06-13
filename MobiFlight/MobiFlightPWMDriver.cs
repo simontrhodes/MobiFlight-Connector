@@ -10,18 +10,15 @@ namespace MobiFlight
     {
         public const string TYPE = "PWMDriver";
         public const string LABEL_PREFIX = "Output";
-        public int outputLower;
-        public int outputUpper;
-        public int NumModules = 16;
-
+        protected bool _initialized = false;
+        private int[][] range = new int[16][];
+        
         private String _name = "PWMDriver";
         public String Name
         {
             get { return _name; }
             set { _name = value; }
         }
-
-        protected bool _initialized = false;
 
         private DeviceType _type = DeviceType.PWMDriver;
         public DeviceType Type
@@ -40,59 +37,55 @@ namespace MobiFlight
         public int PWMDriverNumber { get; set; }
 
         public int Pin { get; set; }
-
-        public int NumberOfPins { get; set; }
-
+        
         public int NumberOfPWMDrivers { get; set; }
-
-        public int inputLower { get; set; }
-
-        public int inputUpper { get; set; }
 
 
         public MobiFlightPWMDriver()
         {
-            inputLower = 0;
-            inputUpper = 59;
-            outputLower = 400;
-            outputUpper = 2200;
+            
         }
+
+        //public void setPinRange(int pin, int inputLower, int inputUpper, int outputLower, int outputUpper)
+        //{
+        //    range[pin] = new int[] { inputLower, inputUpper, outputLower, outputUpper };
+        //    
+        //}
 
         private int map(int value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
+            if ((inputLower == outputLower) && (outputLower == outputUpper)) return value;
             float relVal = (value - inputLower) / (float)(inputUpper - inputLower);
             return (int)Math.Round((relVal * (outputUpper - outputLower)) + outputLower, 0);
         }
 
-        public void MoveToPosition(String Pin, String value)
+        public void SetPWMDriver(String Pin, String value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
-
             if (!_initialized) Initialize();
 
-
             int iValue = int.Parse(value);
-            int mappedValue = map(iValue, inputLower, inputUpper, outputLower, outputUpper);
-            
-            
+            int iPin = int.Parse(Pin);
+
+            int outputValue = map(iValue, inputLower, inputUpper, outputLower, outputUpper);
+
+        
             var command = new SendCommand((int)MobiFlightModule.Command.SetPWMDriver);
             command.AddArgument(this.PWMDriverNumber);
             command.AddArgument(Pin);
-            command.AddArgument(mappedValue);
+            command.AddArgument(outputValue);
+            // Send command
             Log.Instance.log("Command: SetPWMDriver <" + (int)MobiFlightModule.Command.SetPWMDriver + "," +
                               PWMDriverNumber + "," +
                               Pin + "," +
-                              mappedValue + ";>", LogSeverity.Debug);
+                              outputValue + ";>", LogSeverity.Debug);
             // Send command
             CmdMessenger.SendCommand(command);
         }
 
         public void Stop()
         {
-            //int i;
-            //int pin = 0;
-            //for (i = 0; i != NumberOfPins; i++)
-            //    pin = i.ToString;
-            //    MoveToPosition(pin, "0");
+                          
+            
         }
     }
 }

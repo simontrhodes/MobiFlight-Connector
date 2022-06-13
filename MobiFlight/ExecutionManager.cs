@@ -1088,7 +1088,11 @@ namespace MobiFlight
                             serial,
                             cfg.PWMDriver.Address,
                             cfg.PWMDriver.Pin,
-                            outputValuePWMDriver
+                            outputValuePWMDriver,
+                            int.Parse(cfg.PWMDriver.SimLower),
+                            int.Parse(cfg.PWMDriver.SimUpper),
+                            int.Parse(cfg.PWMDriver.PWMLower),
+                            int.Parse(cfg.PWMDriver.PWMUpper)
                         );
                         break;
 
@@ -1493,7 +1497,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay("0", offCfg);
+                    ExecuteDisplay(cfg.PWMDriver.SimLower, offCfg);
                     break;
 
                 case OutputConfig.LcdDisplay.Type:
@@ -1529,7 +1533,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay("4095", cfg);
+                    ExecuteDisplay(cfg.PWMDriver.SimUpper,cfg);
                     break;
 
                 case MobiFlightServo.TYPE:
