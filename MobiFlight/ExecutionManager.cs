@@ -1533,7 +1533,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay(cfg.PWMDriver.SimUpper,cfg);
+                    ExecuteDisplay(cfg.PWMDriver.SimUpper, cfg);
                     break;
 
                 case MobiFlightServo.TYPE:

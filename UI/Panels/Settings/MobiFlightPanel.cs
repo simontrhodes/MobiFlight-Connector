@@ -576,7 +576,7 @@ namespace MobiFlight.UI.Panels.Settings
 
                     case "PWMDriverToolStripMenuItem":
                     case "addPWMDriverToolStripMenuItem":
-                        if (statistics[MobiFlightPWMDriver.TYPE] == tempModule.Board.ModuleLimits.MaxLcdI2C)
+                        if (statistics[MobiFlightPWMDriver.TYPE] == tempModule.Board.ModuleLimits.MaxPWMDrivers)
                         {
                             throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightPWMDriver.TYPE, tempModule.Board.ModuleLimits.MaxPWMDrivers);
                         }

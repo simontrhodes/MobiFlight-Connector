@@ -22,6 +22,8 @@ namespace MobiFlight.OutputConfig
 
         public String PWMUpper { get; set; }
 
+        public String MoveValue { get; set; }
+
 
         public PWMDriver()
         {
@@ -29,8 +31,9 @@ namespace MobiFlight.OutputConfig
             Pin = "";
             SimLower = "";
             SimUpper = "";
-            PWMLower = "";
-            PWMUpper = "";
+            PWMLower = "1000";
+            PWMUpper = "2000";
+            MoveValue = "1500";
         }
         public override bool Equals(object obj)
         {
@@ -41,7 +44,8 @@ namespace MobiFlight.OutputConfig
                 (this.SimLower == (obj as PWMDriver).SimLower) &&
                 (this.SimUpper == (obj as PWMDriver).SimUpper) &&
                 (this.PWMLower == (obj as PWMDriver).PWMLower) &&
-                (this.PWMUpper == (obj as PWMDriver).PWMUpper);
+                (this.PWMUpper == (obj as PWMDriver).PWMUpper) &&
+                (this.MoveValue == (obj as PWMDriver).MoveValue);
         }
 
         public void ReadXml(XmlReader reader)
@@ -77,6 +81,10 @@ namespace MobiFlight.OutputConfig
                 PWMUpper = reader["PWMDriverPWMUpper"];
             }
 
+            if (reader["PWMDriverMoveValue"] != null && reader["PWMDriverMoveValue"] != "")
+            {
+                MoveValue = reader["PWMDriverMoveValue"];
+            }
         }
 
         public void WriteXml(XmlWriter writer)
@@ -87,7 +95,7 @@ namespace MobiFlight.OutputConfig
             writer.WriteAttributeString("PWMDriverSimUpper", SimUpper);
             writer.WriteAttributeString("PWMDriverPWMLower", PWMLower);
             writer.WriteAttributeString("PWMDriverPWMUpper", PWMUpper);
-
+            writer.WriteAttributeString("PWMDriverMoveValue", MoveValue);
         }
 
         public object Clone()
@@ -99,6 +107,7 @@ namespace MobiFlight.OutputConfig
             clone.SimUpper = this.SimUpper;
             clone.PWMLower = this.PWMLower;
             clone.PWMUpper = this.PWMUpper;
+            clone.MoveValue = this.MoveValue;
             return clone;
         }
     }

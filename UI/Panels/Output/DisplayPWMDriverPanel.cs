@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using MobiFlight.Base;
-using MobiFlight.UI.Panels.Config;
 
 namespace MobiFlight.UI.Panels
 {
     public partial class DisplayPWMDriverPanel : UserControl
     {
+
+        public event EventHandler<MoveTriggeredEventArgs> OnMoveTriggered;
 
         private int PWMPinCount = 16;
         public bool WideStyle = false;
@@ -20,7 +16,13 @@ namespace MobiFlight.UI.Panels
         public DisplayPWMDriverPanel()
         {
             InitializeComponent();
-            
+            displayPWMPinPanel.OnMoveTriggered += DisplayPWMPinPanel_OnMoveTriggered;
+        }
+
+
+        void DisplayPWMPinPanel_OnMoveTriggered(object sender, MoveTriggeredEventArgs e)
+        {
+                OnMoveTriggered(this, e);
         }
 
         public void syncFromConfig(OutputConfigItem config)
@@ -30,7 +32,7 @@ namespace MobiFlight.UI.Panels
             {
                 if (!ComboBoxHelper.SetSelectedItem(PWMDriversAddressesComboBox, config.PWMDriver.Address.ToString()))
                 {
-                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriversAddressesComboBox", LogSeverity.Debug);
+                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriversAddressesComboBox", LogSeverity.Error);
                 }
             }
 
@@ -47,7 +49,6 @@ namespace MobiFlight.UI.Panels
         public void UpdatePinList()
         {
             displayPWMPinPanel.SetPins(SetPinList());
-            
         }
 
 
@@ -64,8 +65,6 @@ namespace MobiFlight.UI.Panels
             }
         }
 
-        
-        
 
         private List<ListItem> SetPinList()
         {
@@ -99,9 +98,6 @@ namespace MobiFlight.UI.Panels
             if ((sender as ComboBox).SelectedValue == null) return;
             UpdatePinList();
         }
-
-
-       
 
         public void SetSelectedAddress(string value)
         {

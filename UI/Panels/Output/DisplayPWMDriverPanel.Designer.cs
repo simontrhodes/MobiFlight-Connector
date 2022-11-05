@@ -60,18 +60,22 @@
             // displayPWMPinPanel
             // 
             resources.ApplyResources(this.displayPWMPinPanel, "displayPWMPinPanel");
+            this.displayPWMPinPanel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.displayPWMPinPanel.Name = "displayPWMPinPanel";
             this.displayPWMPinPanel.Load += new System.EventHandler(this.displayPWMPinPanel_Load);
             // 
             // DisplayPWMDriverPanel
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.displayPWMPinPanel);
             this.Controls.Add(this.panel1);
+			this.MinimumSize = new System.Drawing.Size(225, 162);
             this.Name = "DisplayPWMDriverPanel";
             this.panel1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(385, 269);
+			this.ResumeLayout(false);
 
         }
 
@@ -81,7 +85,5 @@
         public System.Windows.Forms.ComboBox PWMDriversAddressesComboBox;
         private System.Windows.Forms.Panel panel1;
         private DisplayPWMPinPanel displayPWMPinPanel;
-        
-        
     }
 }

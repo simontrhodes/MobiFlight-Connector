@@ -46,12 +46,6 @@ namespace MobiFlight
             
         }
 
-        //public void setPinRange(int pin, int inputLower, int inputUpper, int outputLower, int outputUpper)
-        //{
-        //    range[pin] = new int[] { inputLower, inputUpper, outputLower, outputUpper };
-        //    
-        //}
-
         private int map(int value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
             if ((inputLower == outputLower) && (outputLower == outputUpper)) return value;

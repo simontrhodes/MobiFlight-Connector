@@ -197,10 +197,22 @@ namespace MobiFlight.Tests
 
             Assert.AreEqual(o.LedModule.DisplayLedDigits[0], c.LedModule.DisplayLedDigits[0], "clone: DisplayLedDigits not the same");
             Assert.AreEqual(o.LedModule.DisplayLedDecimalPoints[0], c.LedModule.DisplayLedDecimalPoints[0], "clone: DisplayLedDecimalPoints not the same");
+
+            Assert.AreEqual(o.PWMDriver.Address, c.PWMDriver.Address, "clone: PWMDriveroAddress not the same");
+            Assert.AreEqual(o.PWMDriver.Pin, c.PWMDriver.Pin, "clone: PWMDriveroPin not the same");
+            Assert.AreEqual(o.PWMDriver.SimLower, c.PWMDriver.SimLower, "clone: PWMDriverSimLower not the same");
+            Assert.AreEqual(o.PWMDriver.SimUpper, c.PWMDriver.SimUpper, "clone: PWMDriverSimUpper not the same");
+            Assert.AreEqual(o.PWMDriver.PWMLower, c.PWMDriver.PWMLower, "clone: PWMDriverPWMLower not the same");
+            Assert.AreEqual(o.PWMDriver.PWMUpper, c.PWMDriver.PWMUpper, "clone: PWMDriverPWMUpper not the same");
+            Assert.AreEqual(o.PWMDriver.MoveValue, c.PWMDriver.MoveValue, "clone: PWMDriverMoveValue not the same");
+
+
             Assert.AreEqual(o.Servo.Address, c.Servo.Address, "clone: ServoAddress not the same");
             Assert.AreEqual(o.Servo.Max, c.Servo.Max, "clone: ServoMax not the same");
             Assert.AreEqual(o.Servo.Min, c.Servo.Min, "clone: ServoMin not the same");
             Assert.AreEqual(o.Servo.MaxRotationPercent, c.Servo.MaxRotationPercent, "clone: ServoMaxRotationPercent not the same");
+
+
 
             Assert.AreEqual(o.Stepper.Address, c.Stepper.Address, "clone: StepperAddress not the same");
             Assert.AreEqual(o.Stepper.InputRev, c.Stepper.InputRev, "clone: StepperInputRev not the same");
@@ -267,6 +279,14 @@ namespace MobiFlight.Tests
 
             o.Preconditions = new PreconditionList();
             o.Preconditions.Add(new Precondition() { PreconditionLabel = "Test", PreconditionType = "config", PreconditionRef = "Ref123", PreconditionOperand = "op123", PreconditionValue = "val123", PreconditionLogic = "AND" });
+
+            o.PWMDriver.Address = "0x40";
+            o.PWMDriver.Pin = "0";
+            o.PWMDriver.SimLower = "400";
+            o.PWMDriver.SimUpper = "2200";
+            o.PWMDriver.PWMLower = "1";
+            o.PWMDriver.PWMUpper = "100";
+            o.PWMDriver.MoveValue = "50";
 
             o.Servo.Address = "A2";
             o.Servo.Max = "11";

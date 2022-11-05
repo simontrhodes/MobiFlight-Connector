@@ -638,9 +638,7 @@ namespace MobiFlight
 
             try
             {
-                
-
-               MobiFlightModule module = Modules[serial];
+                MobiFlightModule module = Modules[serial];
                 module.SetPWMDriver(PWMDriverName, outputPin, value, inputLower, inputUpper, outputLower, outputUpper);
             }
             catch (Exception e)
