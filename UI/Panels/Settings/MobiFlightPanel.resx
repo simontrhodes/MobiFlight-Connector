@@ -497,6 +497,15 @@
   <data name="addShiftRegisterToolStripMenuItem.Text" xml:space="preserve">
     <value>Shift Register</value>
   </data>
+	<data name="PWMDriverToolStripMenuItem.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+		<value>None</value>
+	</data>
+	<data name="PWMDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+		<value>202, 22</value>
+	</data>
+	<data name="PWMDriverToolStripMenuItem.Text" xml:space="preserve">
+    <value>PWM Driver</value>
+  </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 6</value>
   </data>
@@ -882,6 +891,12 @@
     <value>ShiftRegisterToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;ShiftRegisterToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+	<data name="&gt;&gt;addPWMDriverToolStripMenuItem.Name" xml:space="preserve">
+    <value>addPWMDriverToolStripMenuItem</value>
+  </data>
+	<data name="&gt;&gt;addPWMDriverToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">

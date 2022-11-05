@@ -85,7 +85,7 @@ namespace MobiFlight
             AnalogChange,           // 28
             InputShiftRegisterChange, // 29
             InputMultiplexerChange, // 30
-            SetPWMDriver          // 31
+            SetPWMDriver,          // 31
             DebugPrint=0xFF         // 255 for Debug Print from Firmware to log/terminal
         };
 

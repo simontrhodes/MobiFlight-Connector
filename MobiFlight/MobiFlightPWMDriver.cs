@@ -9,6 +9,7 @@ namespace MobiFlight
     public class MobiFlightPWMDriver : IConnectedDevice
     {
         public const string TYPE = "PWMDriver";
+
         public const string LABEL_PREFIX = "Output";
         protected bool _initialized = false;
         private int[][] range = new int[16][];

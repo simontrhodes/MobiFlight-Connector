@@ -349,7 +349,7 @@ namespace MobiFlight
             {
                 Servo.WriteXml(writer);
             }
-            else if (DisplayType == DeviceType.PWMDriver.TYPE)
+            else if (DisplayType == MobiFlightPWMDriver.TYPE)
             {
                 PWMDriver.WriteXml(writer);
             }
