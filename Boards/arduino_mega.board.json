@@ -5,6 +5,7 @@
     "BaudRate": "115200",
     "Programmer": "wiring",
     "FirmwareBaseName": "mobiflight_mega",
+    "ResetFirmwareFile": "reset.arduino_mega_1_0_2.hex",
     "Timeout": 15000
   },
   "Connection": {
@@ -13,13 +14,12 @@
     "ForceResetOnFirmwareUpdate": false,
     "DelayAfterFirmwareUpdate": 0,
     "DtrEnable": true,
-    "MessageSize": 64,
+    "MessageSize": 90,
     "EEPROMSize": 1496
   },
   "HardwareIds": [
     "^VID_2341&PID_0010",
     "^VID_2341&PID_0042",
-    "^VID_2341&PID_0001",
     "^VID_8087&PID_0024",
     "^VID_1A86&PID_7523",
     "^VID_2A03&PID_0042",
@@ -30,12 +30,13 @@
     "^VID_2341&PID_0242",
     "^VID_10C4&PID_EA60",
     "^VID_2341&PID_0044",
-    "^VID_3343&PID_0042"
+    "^VID_3343&PID_0042",
+    "^VID_04D9&PID_B534"
   ],
   "Info": {
     "CanInstallFirmware": true,
     "DelayAfterFirmwareUpdate": 0,
-    "LatestFirmwareVersion": "2.2.0",
+    "LatestFirmwareVersion": "2.3.0",
     "FriendlyName": "Arduino Mega 2560",
     "MobiFlightType": "MobiFlight Mega"
   },
@@ -51,7 +52,7 @@
     "MaxPWMDrivers": 4,
     "MaxShifters": 4,
     "MaxSteppers": 10,
-    "MaxInputMultiplexer": 2
+    "MaxInputMultiplexer": 4
   },
   "Pins": [
     {

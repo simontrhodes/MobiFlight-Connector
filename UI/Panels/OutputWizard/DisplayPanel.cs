@@ -1,5 +1,6 @@
 ﻿using MobiFlight.Base;
 using MobiFlight.InputConfig;
+using MobiFlight.UI.Panels.Settings.Device;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -128,7 +129,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
             OutputTypeComboBox.SelectedIndex = (config.DisplayType == "InputAction") ? 1 : 0;
 
-            if (OutputTypeComboBox.SelectedIndex == 0)
+            if (OutputTypeIsDisplay())
             {
                 if (config.DisplaySerial != null && config.DisplaySerial != "")
                 {
@@ -138,10 +139,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
                     }
                 }
 
-                if (!ComboBoxHelper.SetSelectedItem(displayTypeComboBox, config.DisplayType))
+                if (!ComboBoxHelper.SetSelectedItemByValue(displayTypeComboBox, config.DisplayType))
                 {
                     // TODO: provide error message
-                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in Display Type ComboBox", LogSeverity.Debug);
+                    Log.Instance.log($"{GetType().Name}.syncFromConfig: Exception on selecting item in Display Type ComboBox {config.DisplayType}", LogSeverity.Debug);
                 }
 
                 switch (config.DisplayType)
@@ -179,7 +180,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
             else
             {
                 AnalogInputConfig analogInputConfig = new AnalogInputConfig();
-                analogInputConfig.onChange = config.AnalogInputConfig?.onChange;                    ;
+                analogInputConfig.onChange = config.AnalogInputConfig?.onChange;
                 analogPanel1.syncFromConfig(analogInputConfig);
 
                 ButtonInputConfig buttonInputConfig = new ButtonInputConfig();
@@ -190,6 +191,16 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 InputTypeButtonRadioButton.Checked = config.AnalogInputConfig?.onChange == null;
                 InputTypeAnalogRadioButton.Checked = config.AnalogInputConfig?.onChange != null;
             }
+        }
+
+        private bool OutputTypeIsDisplay()
+        {
+            return OutputTypeComboBox.SelectedIndex == 0;
+        }
+
+        private bool OutputTypeIsInputAction()
+        {
+            return OutputTypeComboBox.SelectedIndex == 1;
         }
 
         private void StepperPanel_OnStepperSelected(object sender, StepperConfigChangedEventArgs e)
@@ -245,8 +256,11 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
         internal void syncToConfig()
         {
-            if (OutputTypeComboBox.SelectedIndex == 0) { 
-                config.DisplayType = displayTypeComboBox.Text;
+            if (OutputTypeIsDisplay()) 
+            {
+                if (displayTypeComboBox.SelectedItem == null) return;
+
+                config.DisplayType = (displayTypeComboBox.SelectedItem as ListItem).Value;
                 config.DisplayTrigger = "normal";
                 config.DisplaySerial = displayModuleNameComboBox.SelectedItem.ToString();
 
@@ -283,7 +297,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         break;
                 }
             }
-            else { 
+            else if (OutputTypeIsInputAction())
+            { 
                 config.DisplayType = "InputAction";
 
                 if (analogPanel1.Enabled)
@@ -309,31 +324,39 @@ namespace MobiFlight.UI.Panels.OutputWizard
 #endif
             // check which extension type is available to current serial
             ComboBox cb = (sender as ComboBox);
+            List<ListItem> deviceTypeOptions = new List<ListItem>();
+            displayTypeComboBox.DataSource = null;
+            displayTypeComboBox.Items.Clear();
+
+            // disable test button
+            // in case that no display is selected
+            String rawSerial = cb.SelectedItem.ToString();
+            String serial = SerialNumber.ExtractSerial(rawSerial);
+
+            displayTypeComboBox.Enabled = groupBoxDisplaySettings.Enabled = testSettingsGroupBox.Enabled = (serial != "");
+
 
             try
             {
-                // disable test button
-                // in case that no display is selected
-                String rawSerial = cb.SelectedItem.ToString();
-                String serial = SerialNumber.ExtractSerial(rawSerial);
-
-                displayTypeComboBox.Enabled = groupBoxDisplaySettings.Enabled = testSettingsGroupBox.Enabled = (serial != "");
+                
                 // serial is empty if no module is selected (on init of form)
                 //if (serial == "") return;                
-
+                if (serial.IndexOf(Joystick.SerialPrefix) == 0)
+                {
+                    deviceTypeOptions.Add(new ListItem() { Value = MobiFlightOutput.TYPE, Label = "LED / Output" });
+                }
                 // update the available types depending on the 
                 // type of module
-                if (serial.IndexOf("SN") != 0)
+                else if (serial.IndexOf("SN") != 0)
                 {
-                    displayTypeComboBox.Items.Clear();
-                    displayTypeComboBox.Items.Add("Pin");
-                    displayTypeComboBox.Items.Add(ArcazeLedDigit.TYPE);
-                    displayTypeComboBox.Items.Add(MobiFlightShiftRegister.TYPE);
-                    //displayTypeComboBox.Items.Add(ArcazeBcd4056.TYPE);
+                    deviceTypeOptions.Add(new ListItem() { Value = MobiFlightOutput.TYPE, Label = "LED / Output" } );
+                    deviceTypeOptions.Add(new ListItem() { Value = ArcazeLedDigit.TYPE, Label = ArcazeLedDigit.TYPE } );
+                    deviceTypeOptions.Add(new ListItem() { Value = MobiFlightShiftRegister.TYPE, Label = MobiFlightShiftRegister.TYPE } );
                 }
+                // update the available types depending on the 
+                // type of module
                 else
                 {
-                    displayTypeComboBox.Items.Clear();
                     MobiFlightModule module = _execManager.getMobiFlightModuleCache().GetModuleBySerial(serial);
                     foreach (DeviceType devType in module.GetConnectedOutputDeviceTypes())
                     {
@@ -343,35 +366,35 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         switch (devType)
                         {
                             case DeviceType.LedModule:
-                                displayTypeComboBox.Items.Add(ArcazeLedDigit.TYPE);
+                                deviceTypeOptions.Add(new ListItem() { Value = ArcazeLedDigit.TYPE, Label = ArcazeLedDigit.TYPE });
                                 break;
 
                             case DeviceType.Output:
-                                displayTypeComboBox.Items.Add("Pin");
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightOutput.TYPE, Label = "LED / Output" });
                                 //displayTypeComboBox.Items.Add(ArcazeBcd4056.TYPE);
                                 break;
                             case DeviceType.PWMDriver:
                                 displayTypeComboBox.Items.Add(DeviceType.PWMDriver.ToString("F"));
                                 break;
                             case DeviceType.Servo:
-                                displayTypeComboBox.Items.Add(DeviceType.Servo.ToString("F"));
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightServo.TYPE, Label = MobiFlightServo.TYPE });
                                 break;
 
                             case DeviceType.Stepper:
-                                displayTypeComboBox.Items.Add(DeviceType.Stepper.ToString("F"));
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightStepper.TYPE, Label = MobiFlightStepper.TYPE });
                                 break;
 
                             case DeviceType.LcdDisplay:
-                                displayTypeComboBox.Items.Add(DeviceType.LcdDisplay.ToString("F"));
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightLcdDisplay.TYPE, Label = MobiFlightLcdDisplay.TYPE });
                                 break;
 
                             case DeviceType.ShiftRegister:
-                                displayTypeComboBox.Items.Add(MobiFlightShiftRegister.TYPE);
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightShiftRegister.TYPE, Label = MobiFlightShiftRegister.TYPE });
                                 break;
                         }
                     }
 
-                    if (displayTypeComboBox.Items.Count == 0 && this.Visible)
+                    if (deviceTypeOptions.Count == 0 && this.Visible)
                     {
                         if (MessageBox.Show(
                                 i18n._tr("uiMessageSelectedModuleDoesNotContainAnyOutputDevices"),
@@ -391,6 +414,10 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         }
                     }
                 }
+
+                displayTypeComboBox.DataSource = deviceTypeOptions;
+                displayTypeComboBox.ValueMember = "Value";
+                displayTypeComboBox.DisplayMember = "Label";
 
                 // config can be null
                 // because module information is set
@@ -425,10 +452,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
             try
             {
                 bool panelEnabled = true;
-                // get the deviceinfo for the current arcaze
                 ComboBox cb = displayModuleNameComboBox;
                 String serial = SerialNumber.ExtractSerial(cb.SelectedItem.ToString());
-
 #if ARCAZE
                 if (arcazeFirmware.ContainsKey(serial))
                 {
@@ -436,9 +461,13 @@ namespace MobiFlight.UI.Panels.OutputWizard
                 }
                 else
 #endif
-                if (serial.IndexOf("SN") == 0)
+                if (SerialNumber.IsMobiFlightSerial(serial))
                 {
                     panelEnabled = InitializeMobiFlightDisplays(cb, serial);
+                }
+                else if (SerialNumber.IsJoystickSerial(serial))
+                {
+                    panelEnabled = InitializeJoystickDisplays(cb, serial);
                 }
 
                 ShowActiveDisplayPanel(sender, serial, panelEnabled);
@@ -453,50 +482,74 @@ namespace MobiFlight.UI.Panels.OutputWizard
             }
         }
 
+        private bool InitializeJoystickDisplays(ComboBox cb, string serial)
+        {
+            Joystick joystick = _execManager.GetJoystickManager().GetJoystickBySerial(serial);
+
+            displayPinPanel.SetModule(null);
+            displayPinPanel.displayPinBrightnessPanel.Visible = false;
+            displayPinPanel.displayPinBrightnessPanel.Enabled = false;
+
+            List<ListItem> outputs = new List<ListItem>();
+            foreach (var device in joystick.GetAvailableOutputDevices())
+                outputs.Add(new ListItem() { Value = device.Label, Label = device.Label });
+
+            displayPinPanel.WideStyle = true;
+            displayPinPanel.EnablePWMSelect(false);
+            displayPinPanel.SetPorts(new List<ListItem>());
+            displayPinPanel.SetPins(outputs);
+
+            return true;
+        }
+
         private void ShowActiveDisplayPanel(object sender, string serial, bool panelEnabled)
         {
-            if ((sender as ComboBox).Text == "Pin")
+            var SelectedItemValue = ((sender as ComboBox).SelectedItem as ListItem)?.Value;
+            if (SelectedItemValue == null) return;
+
+            if (SelectedItemValue == "Pin" ||
+                SelectedItemValue == MobiFlightOutput.TYPE)
             {
                 displayPinPanel.Enabled = panelEnabled;
                 displayPinPanel.Height = displayPanelHeight;
             } 
             
-            else if ((sender as ComboBox).Text == ArcazeBcd4056.TYPE)
+            else if (SelectedItemValue == ArcazeBcd4056.TYPE)
             {
                 displayBcdPanel.Enabled = panelEnabled;
                 displayBcdPanel.Height = displayPanelHeight;
             }
 
-            else if ((sender as ComboBox).Text == ArcazeLedDigit.TYPE)
+            else if (SelectedItemValue == ArcazeLedDigit.TYPE)
             {
                 displayLedDisplayPanel.Enabled = panelEnabled;
                 displayLedDisplayPanel.Height = displayPanelHeight;
             }
 
-            else if ((sender as ComboBox).Text == DeviceType.Servo.ToString("F"))
+            else if (SelectedItemValue == DeviceType.Servo.ToString("F"))
             {
                 servoPanel.Enabled = panelEnabled;
                 servoPanel.Height = displayPanelHeight;
             }
 
-            else if ((sender as ComboBox).Text == DeviceType.Stepper.ToString("F"))
+            else if (SelectedItemValue == DeviceType.Stepper.ToString("F"))
             {
                 stepperPanel.Enabled = panelEnabled;
                 stepperPanel.Height = displayPanelHeight;
             }
 
-            else if ((sender as ComboBox).Text == DeviceType.LcdDisplay.ToString("F"))
+            else if (SelectedItemValue == DeviceType.LcdDisplay.ToString("F"))
             {
                 displayLcdDisplayPanel.Enabled = panelEnabled;
                 displayLcdDisplayPanel.AutoSize = true;
                 displayLcdDisplayPanel.Height = displayPanelHeight;
             }
-            else if ((sender as ComboBox).Text == DeviceType.PWMDriver.ToString("F"))
+            else if (SelectedItemValue == DeviceType.PWMDriver.ToString("F"))
             {
                 displayPWMDriverPanel.Enabled = panelEnabled;
                 displayPWMDriverPanel.Height = displayPanelHeight;
             }
-            else if ((sender as ComboBox).Text == DeviceType.ShiftRegister.ToString("F"))
+            else if (SelectedItemValue == DeviceType.ShiftRegister.ToString("F"))
             {
                 displayShiftRegisterPanel.Enabled = panelEnabled;
                 displayShiftRegisterPanel.Height = displayPanelHeight;
@@ -523,7 +576,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
             foreach (IConnectedDevice device in module.GetConnectedDevices())
             {
-                Log.Instance.log("displayTypeComboBox_SelectedIndexChanged: Adding connected device: " + device.Type.ToString() + ", " + device.Name, LogSeverity.Debug);
+                Log.Instance.log("InitializeMobiFlightDisplays: Adding connected device: " + device.Type.ToString() + ", " + device.Name, LogSeverity.Debug);
                 switch (device.Type)
                 {
                     case DeviceType.LedModule:
@@ -805,12 +858,12 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
         private void OutputTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DisplayTypePanel.Visible = OutputTypeComboBox.SelectedIndex == 0;
-            groupBoxDisplaySettings.Visible = OutputTypeComboBox.SelectedIndex == 0;
-            testSettingsGroupBox.Visible = OutputTypeComboBox.SelectedIndex == 0;
+            DisplayTypePanel.Visible = OutputTypeIsDisplay();
+            groupBoxDisplaySettings.Visible = OutputTypeIsDisplay();
+            testSettingsGroupBox.Visible = OutputTypeIsDisplay();
 
-            InputActionTypePanel.Visible = OutputTypeComboBox.SelectedIndex == 1;
-            inputActionGroupBox.Visible = OutputTypeComboBox.SelectedIndex == 1;
+            InputActionTypePanel.Visible = OutputTypeIsInputAction();
+            inputActionGroupBox.Visible = OutputTypeIsInputAction();
         }
 
         private void InputTypeButtonRadioButton_CheckedChanged(object sender, EventArgs e)

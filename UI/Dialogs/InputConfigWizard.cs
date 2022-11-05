@@ -248,7 +248,7 @@ namespace MobiFlight.UI.Dialogs
             if (!ComboBoxHelper.SetSelectedItem(inputTypeComboBox, config.Name))
             {
                 // TODO: provide error message
-                Log.Instance.log("_syncConfigToForm : Exception on selecting item in Display Type ComboBox", LogSeverity.Debug);
+                Log.Instance.log($"{GetType().Name}:_syncConfigToForm : Exception on selecting item in Display Type ComboBox", LogSeverity.Debug);
             }
 
             preconditionPanel.syncFromConfig(config);
@@ -655,6 +655,11 @@ namespace MobiFlight.UI.Dialogs
         private void InputConfigWizard_Shown(object sender, EventArgs e)
         {
             IsShown = true;
+        }
+
+        private void InputConfigWizard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            groupBoxInputSettings.Dispose();
         }
     }
 }

@@ -5,7 +5,8 @@
     "Device": "atmega32u4",
     "FirmwareBaseName": "mobiflight_micro",
     "Programmer": "avr109",
-    "Timeout": 15000
+    "Timeout": 15000,
+    "ResetFirmwareFile": "reset.arduino_promicro_1_0_2.hex"
   },
   "Connection": {
     "ConnectionDelay": 1250,
@@ -14,7 +15,7 @@
     "EEPROMSize": 440,
     "ExtraConnectionRetry": false,
     "ForceResetOnFirmwareUpdate": true,
-    "MessageSize": 32
+    "MessageSize": 64
   },
   "HardwareIds": [
     "^VID_1B4F&PID_9206",
@@ -24,7 +25,7 @@
   "Info": {
     "CanInstallFirmware": true,
     "FriendlyName": "Arduino Micro Pro",
-    "LatestFirmwareVersion": "2.2.0",
+    "LatestFirmwareVersion": "2.3.0",
     "MobiFlightType": "MobiFlight Micro"
   },
   "ModuleLimits": {
@@ -39,7 +40,7 @@
     "MaxPWMDrivers": 1,
     "MaxShifters": 2,
     "MaxSteppers": 3,
-    "MaxInputMultiplexer": 1
+    "MaxInputMultiplexer": 3
   },
   "Pins": [
     {

@@ -164,18 +164,8 @@ namespace MobiFlight.UI.Dialogs
                 });
             }
 
-
-            foreach (IModuleInfo module in _execManager.getMobiFlightModuleCache().getModuleInfo())
-            {
-                DisplayModuleList.Add(new ListItem()
-                {
-                    Value = module.Name + "/ " + module.Serial,
-                    Label = $"{module.Name} ({module.Port})"
-                });
-
-                // Not yet supported for pins
-                // preconditionPinSerialComboBox.Items.Add(module.Name + "/ " + module.Serial);
-            }
+            _AddMobiFlightModules(DisplayModuleList);
+            _AddJoysticks(DisplayModuleList);
 
             displayPanel1.SetArcazeSettings(arcazeFirmware, moduleSettings);
             displayPanel1.SetModules(DisplayModuleList);
@@ -188,8 +178,17 @@ namespace MobiFlight.UI.Dialogs
         /// </summary>
         public void initWithoutArcazeCache()
         {
-            List<ListItem> DisplayModuleList = new List<ListItem>();
+            var DisplayModuleList = new List<ListItem>();
             
+            _AddMobiFlightModules(DisplayModuleList);
+            _AddJoysticks(DisplayModuleList);            
+
+            displayPanel1.SetModules(DisplayModuleList);
+        }
+#endif
+
+        protected void _AddMobiFlightModules(List<ListItem> DisplayModuleList)
+        {
             foreach (IModuleInfo module in _execManager.getMobiFlightModuleCache().getModuleInfo())
             {
                 DisplayModuleList.Add(new ListItem()
@@ -201,10 +200,25 @@ namespace MobiFlight.UI.Dialogs
                 // Not yet supported for pins
                 // preconditionPinSerialComboBox.Items.Add(module.Name + "/ " + module.Serial);
             }
-
-            displayPanel1.SetModules(DisplayModuleList);
         }
-#endif
+
+        protected void _AddJoysticks(List<ListItem> DisplayModuleList)
+        {
+            foreach (Joystick joystick in _execManager.GetJoystickManager().GetJoysticks())
+            {
+                if (joystick.GetAvailableOutputDevices().Count == 0) continue;
+
+                DisplayModuleList.Add(new ListItem()
+                {
+                    Value = joystick.Name + " / " + joystick.Serial,
+                    Label = $"{joystick.Name}"
+                });
+
+                // Not yet supported for pins
+                // preconditionPinSerialComboBox.Items.Add(module.Name + "/ " + module.Serial);
+            }
+        }
+
         /// <summary>
         /// sync the values from config with the config wizard form
         /// </summary>
@@ -234,13 +248,16 @@ namespace MobiFlight.UI.Dialogs
             if (!ComboBoxHelper.SetSelectedItem(comparisonOperandComboBox, config.Comparison.Operand))
             {
                 // TODO: provide error message
-                Log.Instance.log("_syncConfigToForm : Exception on selecting item in Comparison ComboBox", LogSeverity.Debug);
+                Log.Instance.log($"{GetType().Name}._syncComparisonTabFromConfig: Exception on selecting item in Comparison ComboBox", LogSeverity.Debug);
             }
             comparisonIfValueTextBox.Text = config.Comparison.IfValue;
             comparisonElseValueTextBox.Text = config.Comparison.ElseValue;
 
-            interpolationCheckBox.Checked = config.Interpolation.Active;
-            interpolationPanel1.syncFromConfig(config.Interpolation);
+            if (config.Interpolation!=null)
+            {
+                interpolationCheckBox.Checked = config.Interpolation.Active;
+                interpolationPanel1.syncFromConfig(config.Interpolation);
+            }
         }
 
         private void _syncFsuipcTabFromConfig(OutputConfigItem config)
@@ -283,8 +300,14 @@ namespace MobiFlight.UI.Dialogs
             // refactor!!!
             comparisonPanel_syncToConfig();
 
-            config.Interpolation.Active = interpolationCheckBox.Checked;
-            interpolationPanel1.syncToConfig(config.Interpolation);
+            if(interpolationPanel1.Save) {
+                // backward compatibility until we have refactored the 
+                // multipliers in the UI
+                if (config.Interpolation == null) { config.Interpolation = new Modifier.Interpolation(); }
+                config.Interpolation.Active = interpolationCheckBox.Checked;
+                interpolationPanel1.syncToConfig(config.Interpolation);
+            }
+
             displayPanel1.syncToConfig();
             preconditionPanel.syncToConfig(config);
 
@@ -408,6 +431,10 @@ namespace MobiFlight.UI.Dialogs
         private void ConfigWizard_FormClosing(object sender, FormClosingEventArgs e)
         {
             _execManager.GetSimConnectCache().LVarListUpdated -= ConfigWizard_LVarListUpdated;
+            // actively trigger dispose
+            // to be able to clean up hubHopPreset Instances
+            // to prevent memory leak.
+            simConnectPanel1.Dispose();
         }
 
         private void _testModeStart()

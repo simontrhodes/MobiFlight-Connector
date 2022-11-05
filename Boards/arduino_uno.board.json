@@ -5,7 +5,8 @@
     "BaudRate": "115200",
     "Programmer": "arduino",
     "FirmwareBaseName": "mobiflight_uno",
-    "Timeout": 15000
+    "Timeout": 15000,
+    "ResetFirmwareFile": "reset.arduino_uno_1_0_2.hex"
   },
   "Connection": {
     "ConnectionDelay": 1750,
@@ -14,13 +15,21 @@
     "EEPROMSize": 286,
     "ExtraConnectionRetry": true,
     "ForceResetOnFirmwareUpdate": false,
-    "MessageSize": 32
+    "MessageSize": 64
   },
-  "HardwareIds": [ "^VID_2341&PID_0043", "^VID_2A03&PID_0043", "^VID_2341&PID_0243" ],
+  "HardwareIds": [
+    "^VID_2341&PID_0043",
+    "^VID_2A03&PID_0043",
+    "^VID_2341&PID_0243",
+    "^VID_2341&PID_0001",
+    "^VID_1A86&PID_7523",
+    "^VID_0403&PID_6001",
+    "^VID_0403\\+PID_6001\\+.+"
+  ],
   "Info": {
     "CanInstallFirmware": true,
     "FriendlyName": "Arduino Uno",
-    "LatestFirmwareVersion": "2.2.0",
+    "LatestFirmwareVersion": "2.3.0",
     "MobiFlightType": "MobiFlight Uno"
   },
   "ModuleLimits": {
@@ -35,7 +44,7 @@
     "MaxPWMDrivers": 2,
     "MaxShifters": 2,
     "MaxSteppers": 2,
-    "MaxInputMultiplexer": 1
+    "MaxInputMultiplexer": 3
   },
   "Pins": [
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MobiFlight.HubHop
 {
-    public class Msfs2020HubhopPreset
+public class Msfs2020HubhopPreset
     {
         public String path;
         public String vendor;
@@ -20,6 +20,8 @@ namespace MobiFlight.HubHop
         public String label { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public HubHopType presetType;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public HubHopAction? codeType;
         public int version;
         public String status;
         public String description;
@@ -30,18 +32,45 @@ namespace MobiFlight.HubHop
         public int score;
         public String id { get; set; }
     }
+
+    public class Msfs2020HubhopPresetListSingleton
+    {
+        public static Msfs2020HubhopPresetList Instance { get; } = new Msfs2020HubhopPresetList();
+    }
+
+    public class XplaneHubhopPresetListSingleton
+    {
+        public static Msfs2020HubhopPresetList Instance { get; } = new Msfs2020HubhopPresetList();
+    }
+
     public class Msfs2020HubhopPresetList
     {
         public List<Msfs2020HubhopPreset> Items = new List<Msfs2020HubhopPreset>();
+        String LoadedFile = null;
+
+        public void Clear()
+        {
+            if (Items != null)
+            {
+                for (int i = 0; i != Items.Count; i++)
+                {
+                    Items[i] = null;
+                }
+                Items = null;
+            }
+            LoadedFile = null;
+        }
 
         public void Load(String Msfs2020HubhopPreset)
         {
-            Items.Clear();
+            if (LoadedFile == Msfs2020HubhopPreset) return;
+
+            Clear();
             try
             {
-                var presets = JsonConvert.DeserializeObject<List<Msfs2020HubhopPreset>>
-                                (File.ReadAllText(Msfs2020HubhopPreset), new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });  ;
-                Items.AddRange(presets);
+                Items = JsonConvert.DeserializeObject<List<Msfs2020HubhopPreset>>
+                                (File.ReadAllText(Msfs2020HubhopPreset), new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                LoadedFile = Msfs2020HubhopPreset;
             }
             catch (Exception ex)
             {
@@ -85,7 +114,7 @@ namespace MobiFlight.HubHop
         {
             List<Msfs2020HubhopPreset> temp;
 
-            temp = Items.FindAll(x => (x.presetType & presetType) > 0);
+                temp = Items.FindAll(x => (x.presetType & presetType) > 0);
             
             if (selectedVendor != null)
                 temp = temp.FindAll(x => x.vendor == selectedVendor);

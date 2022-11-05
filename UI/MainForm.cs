@@ -22,6 +22,8 @@ using MobiFlight.UpdateChecker;
 using MobiFlight.Base;
 using Microsoft.ApplicationInsights.DataContracts;
 using MobiFlight.xplane;
+using MobiFlight.HubHop;
+using System.Threading.Tasks;
 
 namespace MobiFlight.UI
 {
@@ -113,6 +115,7 @@ namespace MobiFlight.UI
             startupPanel.Visible = true;
             menuStrip.Enabled = false;
             toolStrip1.Enabled = false;
+            startupPanel.Dock = DockStyle.Fill;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -156,9 +159,6 @@ namespace MobiFlight.UI
 
             execManager.getMobiFlightModuleCache().ModuleConnecting += MainForm_ModuleConnected;
 
-            execManager.OfflineMode = Properties.Settings.Default.OfflineMode;
-
-            if (execManager.OfflineMode) OfflineModeIconToolStripStatusLabel.Image = Properties.Resources.lightbulb_on;
             FsuipcToolStripMenuItem.Image = Properties.Resources.warning;
             simConnectToolStripMenuItem.Image = Properties.Resources.warning;
 
@@ -222,9 +222,10 @@ namespace MobiFlight.UI
         {
             int i = Properties.Settings.Default.Started;
             WelcomeDialog wd = new WelcomeDialog();
+            wd.WebsiteUrl = $"https://github.com/MobiFlight/MobiFlight-Connector/releases/tag/{CurrentVersion()}";
             wd.ReleaseNotesClicked += (sender, e) =>
             {
-                Process.Start("https://www.mobiflight.com/en/download.html#Release_Notes");
+                Process.Start($"https://github.com/MobiFlight/MobiFlight-Connector/releases/tag/{CurrentVersion()}");
             };
 
             wd.StartPosition = FormStartPosition.CenterParent;
@@ -361,6 +362,8 @@ namespace MobiFlight.UI
 
             foreach (MobiFlightModuleInfo moduleInfo in modules)
             {
+                if (moduleInfo.Type == "Ignored") continue;
+
                 if (moduleInfo.Board.Info.CanInstallFirmware && !moduleInfo.HasMfFirmware())
                 {
                     modulesForFlashing.Add(moduleInfo);
@@ -503,14 +506,6 @@ namespace MobiFlight.UI
                 execManager.SetPollInterval((int)e.NewValue);
             }
 
-            if (e.SettingName == "OfflineMode")
-            {
-                execManager.OfflineMode = (bool)e.NewValue;
-                execManager.ReconnectSim();
-                if (execManager.OfflineMode) OfflineModeIconToolStripStatusLabel.Image = Properties.Resources.lightbulb_on;
-                else OfflineModeIconToolStripStatusLabel.Image = Properties.Resources.lightbulb;
-            }
-
             if (e.SettingName == "CommunityFeedback")
             {
                 AppTelemetry.Instance.Enabled = Properties.Settings.Default.CommunityFeedback;
@@ -629,12 +624,8 @@ namespace MobiFlight.UI
         private bool RunIsAvailable()
         {
             return 
-                   // Offline Mode Or Sim available
-                   (execManager.OfflineMode || execManager.SimConnected()) &&
-                   // Hardware available
-                   (execManager.ModulesConnected() || execManager.GetJoystickManager().JoysticksConnected()) && 
-                   // We are not already running
-                   !execManager.IsStarted() && !execManager.TestModeIsStarted();
+                // We are not already running
+                !execManager.IsStarted() && !execManager.TestModeIsStarted();
         }
 
         /// <summary>
@@ -1225,6 +1216,16 @@ namespace MobiFlight.UI
             if (serials.Count == 0) return;
             if (configFile == null) return;
 
+            foreach (OutputConfigItem item in configFile.GetOutputConfigItems())
+            {
+                if (item.DisplaySerial.Contains(Joystick.SerialPrefix) &&
+                    !serials.Contains(item.DisplaySerial) &&
+                    !NotConnectedJoysticks.Contains(item.DisplaySerial))
+                {
+                    NotConnectedJoysticks.Add(item.DisplaySerial);
+                }
+            }
+
             foreach (InputConfigItem item in configFile.GetInputConfigItems())
             {
                 if (item.ModuleSerial.Contains(Joystick.SerialPrefix) &&
@@ -1312,6 +1313,14 @@ namespace MobiFlight.UI
             {
                 return VersionBeta + " (BETA)";
             }
+
+            return Version;
+        }
+
+        public static String CurrentVersion()
+        {
+            if (VersionBeta.Split('.')[3] != "0")
+                return VersionBeta;
 
             return Version;
         }
@@ -1681,30 +1690,53 @@ namespace MobiFlight.UI
         private void downloadLatestEventsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WasmModuleUpdater updater = new WasmModuleUpdater();
+            ProgressForm progressForm = new ProgressForm();
+            Control MainForm = this;
 
-            if (!updater.AutoDetectCommunityFolder())
-            {
-                TimeoutMessageDialog.Show(
-                   i18n._tr("uiMessageWasmUpdateCommunityFolderNotFound"),
-                   i18n._tr("uiMessageWasmUpdater"),
-                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            updater.DownloadAndInstallProgress += progressForm.OnProgressUpdated;
+            var t = new Task(() => {
+                    if (!updater.AutoDetectCommunityFolder())
+                    {
+                        Log.Instance.log(
+                            i18n._tr("uiMessageWasmUpdateCommunityFolderNotFound"),
+                            LogSeverity.Error
+                        );
+                        return;
+                    }
 
-            if (updater.InstallWasmEvents())
+                    if (updater.InstallWasmEvents())
+                    {
+                        Msfs2020HubhopPresetListSingleton.Instance.Clear();
+                        XplaneHubhopPresetListSingleton.Instance.Clear();
+                        progressForm.DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+                        progressForm.DialogResult = DialogResult.No;
+                        Log.Instance.log(
+                            i18n._tr("uiMessageWasmEventsInstallationError"),
+                            LogSeverity.Error
+                        );
+                    }
+                }
+            );
+
+            t.Start();
+            if (progressForm.ShowDialog() == DialogResult.OK)
             {
                 TimeoutMessageDialog.Show(
                    i18n._tr("uiMessageWasmEventsInstallationSuccessful"),
                    i18n._tr("uiMessageWasmUpdater"),
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
+            } else
             {
                 TimeoutMessageDialog.Show(
-                   i18n._tr("uiMessageWasmEventsInstallationError"),
-                   i18n._tr("uiMessageWasmUpdater"),
-                   MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                    i18n._tr("uiMessageWasmEventsInstallationError"),
+                    i18n._tr("uiMessageWasmUpdater"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+
+            progressForm.Dispose();
         }
 
         private void openDiscordServer_Click(object sender, EventArgs e)
@@ -1725,6 +1757,24 @@ namespace MobiFlight.UI
         private void HubHopToolStripButton_Click(object sender, EventArgs e)
         {
             Process.Start("https://hubhop.mobiflight.com/");
+        }
+
+        private void releaseNotesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start($"https://github.com/MobiFlight/MobiFlight-Connector/releases/tag/{CurrentVersion()}");
+        }
+
+        private void inputsTabControl_TabIndexChanged(object sender, EventArgs e)
+        {
+            if (inputsTabControl.SelectedIndex == 0)
+            {
+                OutputTabPage.ImageKey = "mf-output.png";
+                InputTabPage.ImageKey = "mf-input-inactive.png";
+            } else
+            {
+                OutputTabPage.ImageKey = "mf-output-inactive.png";
+                InputTabPage.ImageKey = "mf-input.png";
+            }
         }
     }
 

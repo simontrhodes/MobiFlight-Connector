@@ -57,6 +57,7 @@
             this.updateFirmwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.regenerateSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.ignoreCOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dontIgnoreCOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +66,8 @@
             this.mobiflightSettingsToolStrip = new System.Windows.Forms.ToolStrip();
             this.uploadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addDeviceToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.addOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,6 +93,7 @@
             this.FwAutoInstallCheckBox = new System.Windows.Forms.CheckBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.CompatibleBoardScanToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.UpdateFirmwareToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.mfConfiguredModulesGroupBox.SuspendLayout();
             this.mfModuleSettingsContextMenuStrip.SuspendLayout();
             this.mobiflightSettingsToolStrip.SuspendLayout();
@@ -135,6 +137,7 @@
             this.updateFirmwareToolStripMenuItem,
             this.regenerateSerialToolStripMenuItem,
             this.reloadConfigToolStripMenuItem,
+            this.resetBoardToolStripMenuItem,
             this.toolStripMenuItem5,
             this.ignoreCOMPortToolStripMenuItem,
             this.dontIgnoreCOMPortToolStripMenuItem});
@@ -294,6 +297,12 @@
             resources.ApplyResources(this.reloadConfigToolStripMenuItem, "reloadConfigToolStripMenuItem");
             this.reloadConfigToolStripMenuItem.Click += new System.EventHandler(this.reloadConfigToolStripMenuItem_Click);
             // 
+            // resetBoardToolStripMenuItem
+            // 
+            this.resetBoardToolStripMenuItem.Name = "resetBoardToolStripMenuItem";
+            resources.ApplyResources(this.resetBoardToolStripMenuItem, "resetBoardToolStripMenuItem");
+            this.resetBoardToolStripMenuItem.Click += new System.EventHandler(this.resetBoardToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
@@ -328,17 +337,17 @@
             this.mobiflightSettingsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uploadToolStripButton,
             this.toolStripSeparator1,
-            this.openToolStripButton,
             this.saveToolStripButton,
+            this.openToolStripButton,
             this.toolStripSeparator2,
             this.addDeviceToolStripDropDownButton,
             this.removeDeviceToolStripButton,
-            this.toolStripSeparator4});
+            this.toolStripSeparator4,
+            this.UpdateFirmwareToolStripButton});
             this.mobiflightSettingsToolStrip.Name = "mobiflightSettingsToolStrip";
             // 
             // uploadToolStripButton
             // 
-            this.uploadToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.uploadToolStripButton.Image = global::MobiFlight.Properties.Resources.export1;
             resources.ApplyResources(this.uploadToolStripButton, "uploadToolStripButton");
             this.uploadToolStripButton.Name = "uploadToolStripButton";
@@ -359,11 +368,17 @@
             // 
             // saveToolStripButton
             // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.saveToolStripButton.Image = global::MobiFlight.Properties.Resources.disk_blue;
             resources.ApplyResources(this.saveToolStripButton, "saveToolStripButton");
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.Image = global::MobiFlight.Properties.Resources.folder;
+            resources.ApplyResources(this.openToolStripButton, "openToolStripButton");
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -522,6 +537,12 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // UpdateFirmwareToolStripButton
+            // 
+            this.UpdateFirmwareToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.UpdateFirmwareToolStripButton, "UpdateFirmwareToolStripButton");
+            this.UpdateFirmwareToolStripButton.Name = "UpdateFirmwareToolStripButton";
+            // 
             // MobiFlightPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -607,5 +628,7 @@
         private System.Windows.Forms.ToolStripMenuItem dontIgnoreCOMPortToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PWMDriverToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetBoardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton UpdateFirmwareToolStripButton;
     }
 }

@@ -129,7 +129,7 @@
     <value>4, 5, 4, 5</value>
   </data>
   <data name="preconditionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>574, 567</value>
+    <value>658, 623</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="preconditionPanel.TabIndex" type="System.Int32, mscorlib">
@@ -139,7 +139,7 @@
     <value>preconditionPanel</value>
   </data>
   <data name="&gt;&gt;preconditionPanel.Type" xml:space="preserve">
-    <value>MobiFlight.UI.Panels.Config.PreconditionPanel, MFConnector, Version=9.3.2.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>MobiFlight.UI.Panels.Config.PreconditionPanel, MFConnector, Version=9.5.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;preconditionPanel.Parent" xml:space="preserve">
     <value>preconditionTabPage</value>
@@ -154,7 +154,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="preconditionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>580, 573</value>
+    <value>664, 629</value>
   </data>
   <data name="preconditionTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -196,7 +196,7 @@
     <value>configRefPanel</value>
   </data>
   <data name="&gt;&gt;configRefPanel.Type" xml:space="preserve">
-    <value>MobiFlight.UI.Panels.Config.ConfigRefPanel, MFConnector, Version=9.3.2.1, Culture=neutral, PublicKeyToken=null</value>
+    <value>MobiFlight.UI.Panels.Config.ConfigRefPanel, MFConnector, Version=9.5.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;configRefPanel.Parent" xml:space="preserve">
     <value>configRefTabPage</value>
@@ -493,7 +493,7 @@
     <value>0, 0</value>
   </data>
   <data name="tabControlFsuipc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>588, 599</value>
+    <value>672, 655</value>
   </data>
   <data name="tabControlFsuipc.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -517,7 +517,7 @@
     <value>0, 0</value>
   </data>
   <data name="MainPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>588, 599</value>
+    <value>672, 655</value>
   </data>
   <data name="MainPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -541,7 +541,7 @@
     <value>NoControl</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>438, 0</value>
+    <value>522, 0</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 28</value>
@@ -571,7 +571,7 @@
     <value>NoControl</value>
   </data>
   <data name="cancelButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>513, 0</value>
+    <value>597, 0</value>
   </data>
   <data name="cancelButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 28</value>
@@ -598,10 +598,10 @@
     <value>Bottom</value>
   </data>
   <data name="ButtonPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 599</value>
+    <value>0, 655</value>
   </data>
   <data name="ButtonPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>588, 28</value>
+    <value>672, 28</value>
   </data>
   <data name="ButtonPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -628,7 +628,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>588, 627</value>
+    <value>672, 683</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
