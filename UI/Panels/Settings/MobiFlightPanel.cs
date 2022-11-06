@@ -11,6 +11,7 @@ using System.Web.UI.Design.WebControls;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
+
 namespace MobiFlight.UI.Panels.Settings
 {
     public partial class MobiFlightPanel : UserControl
@@ -510,11 +511,26 @@ namespace MobiFlight.UI.Panels.Settings
             try
             {
                 cfgItem = null;
+                
                 tempModule = getVirtualModuleFromTree();
                 if (tempModule == null) return;
                 tempModule.LoadConfig();
                 Dictionary<String, int> statistics = tempModule.GetConnectedDevicesStatistics();
                 List<MobiFlightPin> freePinList = getVirtualModuleFromTree().GetFreePins();
+
+                // For I2C devices.
+                // Check and see if any I2CPins exist in the board definition file. 
+                var availableI2Cpins = tempModule.Board.Pins.FindAll(x => x.isI2C);
+
+                // Fix for issue #900. Check for any I2C pins that might already be in use by
+                // other modules configured for the device.
+                var pinsInUse = getVirtualModuleFromTree().GetPins(false, true).Where(x => x.Used);
+
+                // Check and see if the first I2C pin that's in use
+                // since that's sufficient to later throw an error and tell the user what to do.
+                // Trying to write an error message that works for one or more in use I2C pins
+                // is way more trouble than it's worth.
+                var firstInUseI2CPin = availableI2Cpins.Find(x => pinsInUse?.Contains(x) ?? false);
 
                 switch ((sender as ToolStripMenuItem).Name)
                 {
@@ -622,25 +638,13 @@ namespace MobiFlight.UI.Panels.Settings
                             throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightLcdDisplay.TYPE, tempModule.Board.ModuleLimits.MaxLcdI2C);
                         }
 
-                        // Check and see if any I2CPins exist in the board definition file. If not then there's no way to add an LCD device
-                        // so throw an error.
-                        var availableI2Cpins = tempModule.Board.Pins.FindAll(x => x.isI2C);
-
+                        //If no I2C pins available then there's no way to add an LCD device so throw an error.
                         if (!(availableI2Cpins?.Any() ?? false))
                         {
                             throw new I2CPinsNotDefinedException(MobiFlightLcdDisplay.TYPE);
                         }
 
-                        // Fix for issue #900. Check for any I2C pins that might already be in use by
-                        // other modules configured for the device.
-                        var pinsInUse = getVirtualModuleFromTree().GetPins(false, true).Where(x => x.Used);
-
-                        // Check and see if any I2C pins are in use. This only looks for the first I2C pin that's
-                        // in use since that's sufficient to throw an error and tell the user what to do. Trying to
-                        // write an error message that works for one or more in use I2C pins is way more trouble
-                        // than it's worth.
-                        var firstInUseI2CPin = availableI2Cpins.Find(x => pinsInUse?.Contains(x) ?? false);
-
+                        // Throw an error if any I2C pins are in use.
                         if (firstInUseI2CPin != null)
                         {
                             throw new I2CPinInUseException(MobiFlightLcdDisplay.TYPE, firstInUseI2CPin);
@@ -656,8 +660,19 @@ namespace MobiFlight.UI.Panels.Settings
                             throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightPWMDriver.TYPE, tempModule.Board.ModuleLimits.MaxPWMDrivers);
                         }
 
+                        //If no I2C pins available then there's no way to add an PWMDriver device so throw an error.
+                        if (!(availableI2Cpins?.Any() ?? false))
+                        {
+                            throw new I2CPinsNotDefinedException(MobiFlightPWMDriver.TYPE);
+                        }
+
+                        // Throw an error if any I2C pins are in use.
+                        if (firstInUseI2CPin != null)
+                        {
+                            throw new I2CPinInUseException(MobiFlightPWMDriver.TYPE, firstInUseI2CPin);
+                        }
+                        
                         cfgItem = new MobiFlight.Config.PWMDriver();
-                        // does not deal yet with these kind of pins because we use I2C
                         break;
 
 

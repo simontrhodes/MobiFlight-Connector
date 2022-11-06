@@ -47,7 +47,7 @@ namespace MobiFlight
         InputShiftRegister,  // 12
         MultiplexerDriver,   // 13  Not a proper device, but index required for update events
         InputMultiplexer, 	 // 15
-        PWMDriver          // 16
+        PWMDriver            // 16
     }
 
     public class MobiFlightModule : IModule, IOutputModule
@@ -85,7 +85,7 @@ namespace MobiFlight
             AnalogChange,           // 28
             InputShiftRegisterChange, // 29
             InputMultiplexerChange, // 30
-            SetPWMDriver,          // 31
+            SetPWMDriver,           // 31
             DebugPrint=0xFF         // 255 for Debug Print from Firmware to log/terminal
         };
 
@@ -608,8 +608,6 @@ namespace MobiFlight
             return true;
         }
 
-
-
         public bool SetServo(string servoAddress, int value, int min, int max, byte maxRotationPercent)
         {
             String key = "SERVO_" + servoAddress;
@@ -1123,6 +1121,21 @@ namespace MobiFlight
                 String deviceName = device.Name;
                 switch (device.Type)
                 {
+                    case DeviceType.PWMDriver:
+                    case DeviceType.LcdDisplay:
+                        if (ExcludeI2CDevices)
+                        {
+                            continue;
+                        }
+
+                        // Statically add correct I2C pins
+                        foreach (MobiFlightPin pin in Board.Pins.FindAll(x => x.isI2C))
+                        {
+                            if (usedPins.Contains(Convert.ToByte(pin.Pin))) continue;
+                            usedPins.Add(Convert.ToByte(pin.Pin));
+                        }
+                        break;
+
                     case DeviceType.LedModule:
                         usedPins.Add(Convert.ToByte((device as LedModule).ClkPin));
                         usedPins.Add(Convert.ToByte((device as LedModule).ClsPin));
@@ -1144,15 +1157,6 @@ namespace MobiFlight
                         usedPins.Add(Convert.ToByte((device as Servo).DataPin));
                         break;
 
-                    case DeviceType.PWMDriver:
-                        // Statically add correct I2C pins
-                        foreach (MobiFlightPin pin in Board.Pins.FindAll(x => x.isI2C))
-                        {
-                            if (usedPins.Contains(Convert.ToByte(pin.Pin))) continue;
-                            usedPins.Add(Convert.ToByte(pin.Pin));
-                        }
-                        break;
-
                     case DeviceType.Button:
                         usedPins.Add(Convert.ToByte((device as Button).Pin));
                         break;
@@ -1166,20 +1170,6 @@ namespace MobiFlight
                         usedPins.Add(Convert.ToByte((device as InputShiftRegister).ClockPin));
                         usedPins.Add(Convert.ToByte((device as InputShiftRegister).DataPin));
                         usedPins.Add(Convert.ToByte((device as InputShiftRegister).LatchPin));
-                        break;
-
-                    case DeviceType.LcdDisplay:
-                        if (ExcludeI2CDevices)
-                        {
-                            continue;
-                        }
-
-                        // Statically add correct I2C pins
-                        foreach (MobiFlightPin pin in Board.Pins.FindAll(x => x.isI2C))
-                        {
-                            if (usedPins.Contains(Convert.ToByte(pin.Pin))) continue;
-                            usedPins.Add(Convert.ToByte(pin.Pin));
-                        }
                         break;
 
                     case DeviceType.Output:
