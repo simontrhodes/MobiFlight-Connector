@@ -39,7 +39,7 @@ namespace MobiFlight
 		public OutputConfig.LcdDisplay  LcdDisplay              { get; set; }
 		public List<string>         BcdPins                     { get; set; }
         public OutputConfig.Servo   Servo { get; set; }
-        public OutputConfig.PWMDriver PWMDriver { get; set; }
+        public OutputConfig.PWMDriver PWMDriver { get; private set; }
         public OutputConfig.Stepper Stepper { get; set; }
         public OutputConfig.ShiftRegister ShiftRegister               { get; set; }
         public string       DisplayTrigger              { get; set; }
@@ -113,7 +113,7 @@ namespace MobiFlight
                 //==
                 this.Servo.Equals((obj as OutputConfigItem).Servo) &&
                 //==
-                this.PWMDriver.Equals((obj as OutputConfigItem).PWMDriver) &&
+                this.PWMDriver.Equals(((OutputConfigItem)obj).PWMDriver) &&
                 //===
                 // TODO: I will ignore this, because it is a deprecated feature
                 // this.BcdPins.Equals((obj as OutputConfigItem).BcdPins) &&

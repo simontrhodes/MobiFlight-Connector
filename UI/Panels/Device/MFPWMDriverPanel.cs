@@ -1,64 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Windows.Forms;
+using MobiFlight.Config;
 
 namespace MobiFlight.UI.Panels.Settings.Device
 {
     public partial class MFPWMDriverPanel : UserControl
     {
-       
-        public event EventHandler Changed;
+        private readonly PWMDriver _config;
+        private readonly bool _initialized;
 
-        private MobiFlight.Config.PWMDriver config;
-        bool initialized = false;
-
-        public MFPWMDriverPanel()
+        private MFPWMDriverPanel()
         {
             InitializeComponent();
-
         }
 
-        public MFPWMDriverPanel(MobiFlight.Config.PWMDriver config, List<MobiFlightPin> Pins) : this()
+        public MFPWMDriverPanel(PWMDriver config) : this()
         {
-            this.config = config;
+            _config = config;
             NameTextBox.Text = config.Name;
             AddressComboBox.SelectedItem = "0x" + config.I2CAddress.ToString("X2");
 
-            initialized = true;
+            _initialized = true;
         }
+
+        public event EventHandler Changed;
 
         private void value_Changed(object sender, EventArgs e)
         {
-            if (!initialized) return;
-            setValues();
+            if (!_initialized) return;
+            SetValues();
             if (Changed != null)
-                Changed(config, new EventArgs());
+                Changed(_config, EventArgs.Empty);
         }
 
-        private void setValues()
+        private void SetValues()
         {
-            config.Name = NameTextBox.Text;
-            config.I2CAddress = byte.Parse(AddressComboBox.Text.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber);
-
-        }
-        private void displayError(Control control, String message)
-        {
-            errorProvider.SetIconAlignment(control, ErrorIconAlignment.TopRight);
-            errorProvider.SetError(
-                    control,
-                    message);
-            MessageBox.Show(message, i18n._tr("Hint"));
-        }
-        private void removeError(Control control)
-        {
-            errorProvider.SetError(
-                    control,
-                    "");
+            _config.Name = NameTextBox.Text;
+            _config.I2CAddress = byte.Parse(AddressComboBox.Text.Replace("0x", ""), NumberStyles.HexNumber);
         }
 
         private void AddressComboBox_SelectedValueChanged(object sender, EventArgs e)

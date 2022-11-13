@@ -2,7 +2,7 @@
 
 namespace MobiFlight.UI.Panels
 {
-    partial class DisplayPWMPinPanel
+    sealed partial class DisplayPWMPinPanel
     {
         /// <summary> 
         /// Erforderliche Designervariable.

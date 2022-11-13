@@ -4,10 +4,8 @@ using System.Windows.Forms;
 
 namespace MobiFlight.UI.Panels
 {
-    public partial class DisplayPWMPinPanel : UserControl
+    public sealed partial class DisplayPWMPinPanel : UserControl
     {
-        public event EventHandler<MoveTriggeredEventArgs> OnMoveTriggered;
-
         public DisplayPWMPinPanel()
         {
             InitializeComponent();
@@ -16,14 +14,17 @@ namespace MobiFlight.UI.Panels
             panel1.Visible = true;
         }
 
-        internal void syncFromConfig(OutputConfigItem config)
+        public event EventHandler<MoveTriggeredEventArgs> OnMoveTriggered;
+
+        internal void SyncFromConfig(OutputConfigItem config)
         {
-            string pin = config.PWMDriver.Pin;
+            var pin = config.PWMDriver.Pin;
             if (string.IsNullOrEmpty(pin))
                 return;
 
             if (!ComboBoxHelper.SetSelectedItem(displayPWMPinComboBox, pin))
-                Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriver Pin ComboBox", LogSeverity.Error);
+                Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriver Pin ComboBox",
+                    LogSeverity.Error);
 
             if (string.IsNullOrEmpty(config.PWMDriver.SimLower) ||
                 string.IsNullOrEmpty(config.PWMDriver.SimUpper) ||
@@ -36,10 +37,9 @@ namespace MobiFlight.UI.Panels
             PWMLower.Value = int.Parse(config.PWMDriver.PWMLower);
             PWMUpper.Value = int.Parse(config.PWMDriver.PWMUpper);
             SetTrackBar();
-            
         }
 
-        virtual internal OutputConfigItem syncToConfig(OutputConfigItem config)
+        internal OutputConfigItem SyncToConfig(OutputConfigItem config)
         {
             if (displayPWMPinComboBox.Text != null)
             {
@@ -49,6 +49,7 @@ namespace MobiFlight.UI.Panels
                 config.PWMDriver.PWMLower = PWMLower.Value.ToString();
                 config.PWMDriver.PWMUpper = PWMUpper.Value.ToString();
             }
+
             return config;
         }
 
@@ -63,48 +64,48 @@ namespace MobiFlight.UI.Panels
 
             displayPWMPinComboBox.Enabled = pins.Count > 0;
             displayPWMPinComboBox.Width = displayPWMPinComboBox.MinimumSize.Width;
-
         }
 
-               
-       private void SetTrackBar()
+
+        private void SetTrackBar()
         {
-            int Min = (int) SimLower.Value;
-            int Max = (int) SimUpper.Value;
-            
-            if(Min>Max)
+            var min = (int)SimLower.Value;
+            var max = (int)SimUpper.Value;
+
+            if (min > max)
             {
-                MessageBox.Show("Sim range lower value must be less than sim range upper value.");
+                MessageBox.Show(ProjectMessages.ProjectMessages
+                    .DisplayPWMPinPanel_SetTrackBar_Sim_lower_less_than_sim_upper_);
                 return;
             }
 
             int moveValue;
-            tickLeft.Text = Min.ToString();
-            tickRight.Text = Max.ToString();
+            tickLeft.Text = min.ToString();
+            tickRight.Text = max.ToString();
 
-            trackBar1.Minimum = Min;
-            trackBar1.Maximum = Max;
-            if((Max - Min)!=0)
-                moveValue = Min + ((Max - Min) / 2);
+            trackBar1.Minimum = min;
+            trackBar1.Maximum = max;
+            if (max - min != 0)
+                moveValue = min + (max - min) / 2;
             else
-                moveValue = Min;
-            
+                moveValue = min;
+
             trackBar1.Value = moveValue;
         }
 
         private void displayPWMPinComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _ = (sender as ComboBox).SelectedItem.ToString();
+            _ = ((ComboBox)sender).SelectedItem.ToString();
         }
+
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void PinSelectPanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
+
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(trackBar1, trackBar1.Value.ToString());
@@ -119,7 +120,7 @@ namespace MobiFlight.UI.Panels
             toolTip1.ShowAlways = true;
         }
 
-        private void SimLower_TextChanged(object sender, EventArgs e) 
+        private void SimLower_TextChanged(object sender, EventArgs e)
         {
             SetTrackBar();
         }
@@ -129,27 +130,28 @@ namespace MobiFlight.UI.Panels
             SetTrackBar();
         }
 
-        public void buttonMove_Click(object sender, EventArgs e)
+        private void buttonMove_Click(object sender, EventArgs e)
         {
             if (OnMoveTriggered == null)
                 return;
-            
-            MoveTriggeredEventArgs eventArgs = new MoveTriggeredEventArgs();
 
-            eventArgs.Pin = displayPWMPinComboBox.Text;
-            eventArgs.SimLower = (int) SimLower.Value;
-            eventArgs.SimUpper = (int)SimUpper.Value;
-            eventArgs.PWMLower = (int)PWMLower.Value;
-            eventArgs.PWMUpper = (int)PWMUpper.Value;
-            eventArgs.Move = trackBar1.Value;
+            var eventArgs = new MoveTriggeredEventArgs
+            {
+                Pin = displayPWMPinComboBox.Text,
+                SimLower = (int)SimLower.Value,
+                SimUpper = (int)SimUpper.Value,
+                PWMLower = (int)PWMLower.Value,
+                PWMUpper = (int)PWMUpper.Value,
+                Move = trackBar1.Value
+            };
+
             OnMoveTriggered(this, eventArgs);
-            
         }
-
     }
-    public class MoveTriggeredEventArgs 
+
+    public class MoveTriggeredEventArgs
     {
-        public String Pin { get; set; }
+        public string Pin { get; set; }
         public int SimLower { get; set; }
         public int SimUpper { get; set; }
         public int PWMLower { get; set; }
