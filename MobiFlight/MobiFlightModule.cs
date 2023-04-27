@@ -46,8 +46,8 @@ namespace MobiFlight
         AnalogInput,         // 11
         InputShiftRegister,  // 12
         MultiplexerDriver,   // 13  Not a proper device, but index required for update events
-        InputMultiplexer, 	 // 15
-        PWMDriver            // 16
+        InputMultiplexer, 	 // 14
+        PWMDriver            // 15
     }
 
     public class MobiFlightModule : IModule, IOutputModule
@@ -85,7 +85,7 @@ namespace MobiFlight
             AnalogChange,           // 28
             InputShiftRegisterChange, // 29
             InputMultiplexerChange, // 30
-            SetPWMDriver,           // 31
+            SetPWMDriver,           // 32
             DebugPrint=0xFF         // 255 for Debug Print from Firmware to log/terminal
         };
 
