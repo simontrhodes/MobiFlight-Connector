@@ -47,9 +47,9 @@
             this.PinSelectContainer = new System.Windows.Forms.Panel();
             this.MultiSelectPinSelectContainer = new System.Windows.Forms.Panel();
             this.PinSelectPanel = new System.Windows.Forms.Panel();
-            this.MultiPinSelectPanel = new MobiFlight.UI.Panels.PinSelectPanel();
             this.LabelPinSelectContainer = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.MultiPinSelectPanel = new MobiFlight.UI.Panels.PinSelectPanel();
             this.displayPinBrightnessPanel.SuspendLayout();
             this.displayPinBrightnessLabelPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.displayPinBrightnessTrackBar)).BeginInit();
@@ -66,10 +66,6 @@
             // 
             this.displayPortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.displayPortComboBox.FormattingEnabled = true;
-            this.displayPortComboBox.Items.AddRange(new object[] {
-            resources.GetString("displayPortComboBox.Items"),
-            resources.GetString("displayPortComboBox.Items1"),
-            resources.GetString("displayPortComboBox.Items2")});
             resources.ApplyResources(this.displayPortComboBox, "displayPortComboBox");
             this.displayPortComboBox.Name = "displayPortComboBox";
             this.displayPortComboBox.SelectedIndexChanged += new System.EventHandler(this.displayPortComboBox_SelectedIndexChanged_1);
@@ -147,10 +143,6 @@
             // 
             this.displayPinComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.displayPinComboBox.FormattingEnabled = true;
-            this.displayPinComboBox.Items.AddRange(new object[] {
-            resources.GetString("displayPinComboBox.Items"),
-            resources.GetString("displayPinComboBox.Items1"),
-            resources.GetString("displayPinComboBox.Items2")});
             resources.ApplyResources(this.displayPinComboBox, "displayPinComboBox");
             this.displayPinComboBox.Name = "displayPinComboBox";
             this.displayPinComboBox.SelectedIndexChanged += new System.EventHandler(this.displayPinComboBox_SelectedIndexChanged_1);
@@ -190,11 +182,6 @@
             resources.ApplyResources(this.PinSelectPanel, "PinSelectPanel");
             this.PinSelectPanel.Name = "PinSelectPanel";
             // 
-            // MultiPinSelectPanel
-            // 
-            resources.ApplyResources(this.MultiPinSelectPanel, "MultiPinSelectPanel");
-            this.MultiPinSelectPanel.Name = "MultiPinSelectPanel";
-            // 
             // LabelPinSelectContainer
             // 
             this.LabelPinSelectContainer.Controls.Add(this.label3);
@@ -205,6 +192,11 @@
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+            // 
+            // MultiPinSelectPanel
+            // 
+            resources.ApplyResources(this.MultiPinSelectPanel, "MultiPinSelectPanel");
+            this.MultiPinSelectPanel.Name = "MultiPinSelectPanel";
             // 
             // DisplayPinPanel
             // 

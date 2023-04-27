@@ -480,4 +480,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+/Build/mobiflight-setup.exe
 /MobiFlightConnector.csproj.bak

@@ -95,8 +95,6 @@ namespace MobiFlight.Modifier
         {
             string result = value.ToString();
 
-            if (!Active) return result;
-
             // we have to use the US culture because "." must be used as decimal separator
             string exp = Expression.Replace("$", value.ToString());
 
@@ -113,7 +111,7 @@ namespace MobiFlight.Modifier
             }
             catch (Exception e)
             {
-                Log.Instance.log("Transformation.Apply : Exception on NCalc evaluate", LogSeverity.Warn);
+                Log.Instance.log($"Exception on NCalc evaluate: {e.Message}", LogSeverity.Warn);
                 throw new Exception(i18n._tr("uiMessageErrorOnParsingExpression"));
             }
 
@@ -132,8 +130,6 @@ namespace MobiFlight.Modifier
 
         protected string Apply(string value)
         {
-            if (!Active) return value;
-
             if (SubStrStart > value.Length) return "";
 
             int length = (SubStrEnd - SubStrStart);

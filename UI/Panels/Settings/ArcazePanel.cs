@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SimpleSolutions.Usb;
 using System.Xml.Serialization;
+using MobiFlight.Base;
 
 namespace MobiFlight.UI.Panels.Settings
 {
@@ -134,8 +135,8 @@ namespace MobiFlight.UI.Panels.Settings
             if (IgnoreArcazeModuleSettingsChangeEvents) return;
 
             ArcazeModuleSettings settingsToSave = null;
-            if (serial.Contains("/"))
-                serial = serial.Split('/')[1].Trim();
+            if (SerialNumber.IsRawSerial(serial))
+                serial = SerialNumber.ExtractSerial(serial);
 
             foreach (ArcazeModuleSettings settings in moduleSettings)
             {
@@ -180,8 +181,8 @@ namespace MobiFlight.UI.Panels.Settings
 
             foreach (ArcazeModuleSettings settings in moduleSettings)
             {
-                if (serial.Contains("/"))
-                    serial = serial.Split('/')[1].Trim();
+                if (SerialNumber.IsRawSerial(serial))
+                    serial = SerialNumber.ExtractSerial(serial);
 
                 if (settings.serial != serial) continue;
 
@@ -220,11 +221,11 @@ namespace MobiFlight.UI.Panels.Settings
                 System.IO.StringWriter w = new System.IO.StringWriter();
                 SerializerObj.Serialize(w, moduleSettings);
                 Properties.Settings.Default.ModuleSettings = w.ToString();
-                Log.Instance.log("Serialized Arcaze Extension Module Settings: " + Properties.Settings.Default.ModuleSettings, LogSeverity.Debug);
+                Log.Instance.log($"Serialized Arcaze extension module settings: {Properties.Settings.Default.ModuleSettings}.", LogSeverity.Debug);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.Instance.log("Exception on serializing arcaze extension module settings: " + e.Message, LogSeverity.Debug);
+                Log.Instance.log($"Exception on serializing Arcaze extension module settings: {ex.Message}", LogSeverity.Error);
             }
 
             if (ArcazeModuleTreeView.SelectedNode != null)
@@ -261,9 +262,9 @@ namespace MobiFlight.UI.Panels.Settings
                     moduleSettings = (List<ArcazeModuleSettings>)SerializerObj.Deserialize(w);
                     string test = w.ToString();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Log.Instance.log("Exception on Deserializing arcaze extension module settings: " + e.Message, LogSeverity.Debug);
+                    Log.Instance.log($"Exception on deserializing Arcaze extension module settings: {ex.Message}", LogSeverity.Error);
                 }
             }
 

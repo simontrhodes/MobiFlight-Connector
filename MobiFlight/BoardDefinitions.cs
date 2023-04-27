@@ -14,6 +14,18 @@ namespace MobiFlight
         private static readonly List<Board> boards = new List<Board>();
 
         /// <summary>
+        /// Finds a board definition by matching against USB drive volume label. This does not check for the
+        /// presence of a secondary file on the drive to confirm it is a supported USB drive. It is assumed
+        /// for the initial identification purposes that the drive name is sufficient.
+        /// </summary>
+        /// <param name="volumeLabel">The volume label to match</param>
+        /// <returns>The first board definition matching the volumeLabel, or null if none found.</returns>
+        public static Board GetBoardByUsbVolumeLabel(String volumeLabel)
+        {
+            return boards.Find(board => board.UsbDriveSettings?.VolumeLabel == volumeLabel);
+        }
+
+        /// <summary>
         /// Finds a board definition by matching against the USB VID/PID.
         /// </summary>
         /// <param name="hardwareIdPattern">A RegEx of the VID/PID to match against.</param>
@@ -71,6 +83,7 @@ namespace MobiFlight
                 try
                 {
                     var board = JsonConvert.DeserializeObject<Board>(File.ReadAllText(definitionFile));
+                    board.Migrate();
                     boards.Add(board);
                     Log.Instance.log($"Loaded board definition for {board.Info.MobiFlightType} ({board.Info.FriendlyName})", LogSeverity.Info);
                 }

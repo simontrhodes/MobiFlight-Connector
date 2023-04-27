@@ -66,7 +66,7 @@ namespace MobiFlight.SimConnectMSFS
                 m_oSimConnect?.ReceiveMessage();
             } catch(Exception e)
             {
-                Log.Instance.log("SimConnectCache::ReceiveSimConnectMessage Exception > " + e.Message, LogSeverity.Debug);
+                Log.Instance.log(e.Message, LogSeverity.Debug);
                 Disconnect();
             }
         }
@@ -223,8 +223,6 @@ namespace MobiFlight.SimConnectMSFS
 
         private void SimConnectCache_OnRecvClientData(SimConnect sender, SIMCONNECT_RECV_CLIENT_DATA data)
         {
-            
-
             if (data.dwRequestID != 0)
             {
                 var simData = (ClientDataValue)(data.dwData[0]);
@@ -257,7 +255,7 @@ namespace MobiFlight.SimConnectMSFS
 #if DEBUG
                 // this only for debug compilation
                 // it slows down the client immensly.
-                Log.Instance.log("SimConnectCache::OnRecvClientData > " + simData.Data, LogSeverity.Debug);
+                Log.Instance.log($"Received {simData.Data}.", LogSeverity.Debug);
 #endif
             }
         }
@@ -279,10 +277,10 @@ namespace MobiFlight.SimConnectMSFS
         {
             SIMCONNECT_EXCEPTION eException = (SIMCONNECT_EXCEPTION)data.dwException;
             if (eException == SIMCONNECT_EXCEPTION.ALREADY_CREATED) {
-                Log.Instance.log("SimConnectCache::Exception " + eException.ToString(), LogSeverity.Debug);
+                Log.Instance.log(eException.ToString(), LogSeverity.Debug);
             }
             else
-                Log.Instance.log("SimConnectCache::Exception " + eException.ToString(), LogSeverity.Error);
+                Log.Instance.log(eException.ToString(), LogSeverity.Error);
         }
 
         public bool Disconnect()
@@ -332,7 +330,7 @@ namespace MobiFlight.SimConnectMSFS
 
             if (eventItem == null)
             {
-                Log.Instance.log("SimConnectCache::setEventID: Unknown event ID: " + eventID, LogSeverity.Error);
+                Log.Instance.log($"Unknown event ID: {eventID}.", LogSeverity.Error);
                 return;
             }
             m_oSimConnect?.TransmitClientEvent(
@@ -403,7 +401,7 @@ namespace MobiFlight.SimConnectMSFS
         private void ClearSimVars()
         {            
             SimVars.Clear();
-            Log.Instance.log("SimConnectCache::ClearSimVars . SimVars Cleared", LogSeverity.Debug);
+            Log.Instance.log("SimVars Cleared.", LogSeverity.Debug);
         }
 
         #region Not Implemented Yet

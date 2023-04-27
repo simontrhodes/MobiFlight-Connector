@@ -1,14 +1,10 @@
-﻿using System;
+﻿using MobiFlight.Base;
+using MobiFlight.UI.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MobiFlight.UI.Dialogs;
-using MobiFlight.Base;
 
 namespace MobiFlight.UI.Panels
 {
@@ -214,7 +210,7 @@ namespace MobiFlight.UI.Panels
                     SelectedGuids.Clear();
                     foreach (DataGridViewRow row in (sender as DataGridView).SelectedRows)
                     {
-                        DataRow currentRow = (row.DataBoundItem as DataRowView).Row;
+                        DataRow currentRow = (row.DataBoundItem as DataRowView)?.Row;
                         if (currentRow != null)
                             SelectedGuids.Add(currentRow["guid"].ToString());
                     }
@@ -260,7 +256,9 @@ namespace MobiFlight.UI.Panels
                 // duplicate it
                 // duplicate row 
                 // link to new config item 
-                DataRow currentRow = (row.DataBoundItem as DataRowView).Row;
+                DataRow currentRow = (row.DataBoundItem as DataRowView)?.Row;
+                if (currentRow == null) continue; 
+                
                 DataRow newRow = configDataTable.NewRow();
 
                 foreach (DataColumn col in configDataTable.Columns)
@@ -379,12 +377,12 @@ namespace MobiFlight.UI.Panels
 
                         // the row had been saved but no config object has been created
                         // TODO: move this logic to an appropriate event, e.g. when leaving the gridrow focus of the new row
-                        if ((dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["settings"].GetType() == typeof(System.DBNull))
+                        if (row["settings"].GetType() == typeof(System.DBNull))
                         {
-                            (dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["settings"] = new OutputConfigItem();
+                            row["settings"] = new OutputConfigItem();
                         }
 
-                        cfg = ((dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["settings"] as OutputConfigItem);
+                        cfg = row["settings"] as OutputConfigItem;
 
                         EditConfigWithWizard(
                                  row,
@@ -409,7 +407,7 @@ namespace MobiFlight.UI.Panels
                 // handle clicks on header cells or row-header cells
                 if (dgv.CurrentRow.Index < 0 || dgv.CurrentCell.ColumnIndex < 0) return;
 
-                if ((dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["description"] != null)
+                if ((dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView)?.Row["description"] != null)
                 {
                     bool Active = (bool)(dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["active"];
                     String Description = (dataGridViewConfig.Rows[dgv.CurrentRow.Index].DataBoundItem as DataRowView).Row["description"].ToString();
@@ -556,13 +554,12 @@ namespace MobiFlight.UI.Panels
                     row["fsuipcOffset"] = "0x" + cfgItem.FSUIPC.Offset.ToString("X4");
                     if (cfgItem.DisplaySerial != null && cfgItem.DisplaySerial != "-")
                     {
-                        row["arcazeSerial"] = cfgItem.DisplaySerial.ToString().Split('/')[0];
+                        row["arcazeSerial"] = SerialNumber.ExtractDeviceName(cfgItem.DisplaySerial);
                     
                         row["OutputType"] = cfgItem.DisplayType;
 
                         // only exception for the type label
-                        if (cfgItem.DisplayType == "Pin" || 
-                            cfgItem.DisplayType == MobiFlightOutput.TYPE)
+                        if (cfgItem.DisplayType == MobiFlightOutput.TYPE)
                             row["OutputType"] = "LED / Output";
 
                         switch (cfgItem.DisplayType)
@@ -570,7 +567,6 @@ namespace MobiFlight.UI.Panels
                             case MobiFlightLedModule.TYPE:
                                 row["OutputName"] = cfgItem.LedModule.DisplayLedAddress;
                                 break;
-                            case "Pin":
                             case MobiFlightOutput.TYPE:
                                 row["OutputName"] = cfgItem.Pin.DisplayPin;
                                 break;
@@ -693,7 +689,9 @@ namespace MobiFlight.UI.Panels
                 // ignore new rows since they cannot be copied nor deleted
                 if (row.IsNewRow) continue;
 
-                DataRow currentRow = (row.DataBoundItem as DataRowView).Row;
+                DataRow currentRow = (row.DataBoundItem as DataRowView)?.Row;
+                if (currentRow == null) continue; 
+                
                 bool Active = (bool)currentRow["active"];
                 String Description = currentRow["description"] as String;
                 OutputConfigItem cfg = currentRow["settings"] as OutputConfigItem;
@@ -707,9 +705,6 @@ namespace MobiFlight.UI.Panels
             // do somehting here
             foreach (DataGridViewRow row in dataGridViewConfig.SelectedRows)
             {
-                // ignore new rows since they cannot be copied nor deleted
-                //if (row.IsNewRow) continue;
-
                 int index = row.Index;
                 PasteFromClipboard(index+1);
                 return;

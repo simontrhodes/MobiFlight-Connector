@@ -170,32 +170,59 @@ namespace MobiFlight.ProjectMessages {
         /// <summary>
         ///   Looks up a localized string similar to Arcaze Pin.
         /// </summary>
-        internal static string LabelPrecondition_ArcazePin {
+        internal static string Label_Precondition_ArcazePin {
             get {
-                return ResourceManager.GetString("LabelPrecondition_ArcazePin", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_ArcazePin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose config.
+        /// </summary>
+        internal static string Label_Precondition_choose_config {
+            get {
+                return ResourceManager.GetString("Label_Precondition_choose_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose variable.
+        /// </summary>
+        internal static string Label_Precondition_choose_variable {
+            get {
+                return ResourceManager.GetString("Label_Precondition_choose_variable", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Config item.
         /// </summary>
-        internal static string LabelPrecondition_ConfigItem {
+        internal static string Label_Precondition_ConfigItem {
             get {
-                return ResourceManager.GetString("LabelPrecondition_ConfigItem", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_ConfigItem", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to none.
         /// </summary>
-        internal static string LabelPrecondition_None {
+        internal static string Label_Precondition_None {
             get {
-                return ResourceManager.GetString("LabelPrecondition_None", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_None", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are still changes not uploaded to your modules. You will loose these changes if you close the form. Do you really want to continue?.
+        ///   Looks up a localized string similar to MobiFlight Variable.
+        /// </summary>
+        internal static string Label_Precondition_Variable {
+            get {
+                return ResourceManager.GetString("Label_Precondition_Variable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are still changes not uploaded to your modules. You will lose these changes if you close the form. Do you really want to continue?.
         /// </summary>
         internal static string MFModuleConfigChanged {
             get {
@@ -743,6 +770,24 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error on downloading HubHop presets. Please check the Log for more information..
+        /// </summary>
+        internal static string uiMessageHubHopUpdateError {
+            get {
+                return ResourceManager.GetString("uiMessageHubHopUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HubHop presets download was successful..
+        /// </summary>
+        internal static string uiMessageHubHopUpdateSuccessful {
+            get {
+                return ResourceManager.GetString("uiMessageHubHopUpdateSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please check your Arduino IDE installation. The path cannot be used, avrdude has not been found..
         /// </summary>
         internal static string uiMessageInvalidArduinoIdePath {
@@ -938,6 +983,15 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No active X-Plane connection.
+        /// </summary>
+        internal static string uiMessageNoXplaneConnection {
+            get {
+                return ResourceManager.GetString("uiMessageNoXplaneConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value must be a number and greater than 0..
         /// </summary>
         internal static string uiMessagePanelsStepperInputRevolutionsMustBeGreaterThan0 {
@@ -970,6 +1024,24 @@ namespace MobiFlight.ProjectMessages {
         internal static string uiMessageProblemLoadingConfig {
             get {
                 return ResourceManager.GetString("uiMessageProblemLoadingConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to uninstall the MobiFlight firmware? All your data will be removed from the board..
+        /// </summary>
+        internal static string uiMessageResetConfirm {
+            get {
+                return ResourceManager.GetString("uiMessageResetConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Board.
+        /// </summary>
+        internal static string uiMessageResetHint {
+            get {
+                return ResourceManager.GetString("uiMessageResetHint", resourceCulture);
             }
         }
         
@@ -1064,7 +1136,7 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to disable the automatic upload to new arduinos?
+        ///   Looks up a localized string similar to Do you want to disable the automatic upload to new modules?
         ///You can always enable it later again in the settings menu..
         /// </summary>
         internal static string uiMessageUpdateArduinoFwAutoDisableYesNo {
@@ -1074,7 +1146,7 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arduino boards found that are compatible with MobiFlight. To be able to use them they require the latest MobiFlight Firmware.
+        ///   Looks up a localized string similar to Modules found that are compatible with MobiFlight. To be able to use them they require the latest MobiFlight Firmware.
         ///
         ///Upload the MobiFlight Firmware now!.
         /// </summary>
@@ -1162,6 +1234,15 @@ namespace MobiFlight.ProjectMessages {
         internal static string uiMessageUploadConfigurationTooLong {
             get {
                 return ResourceManager.GetString("uiMessageUploadConfigurationTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value must be a valid number..
+        /// </summary>
+        internal static string uiMessageValidationMustBeNumber {
+            get {
+                return ResourceManager.GetString("uiMessageValidationMustBeNumber", resourceCulture);
             }
         }
         

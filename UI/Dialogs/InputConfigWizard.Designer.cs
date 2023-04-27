@@ -38,6 +38,8 @@
             this.displayTabPage = new System.Windows.Forms.TabPage();
             this.groupBoxInputSettings = new System.Windows.Forms.GroupBox();
             this.displayTypeGroupBox = new System.Windows.Forms.GroupBox();
+            this.ScanForInputButton = new System.Windows.Forms.Button();
+            this.DeviceNotAvailableWarningLabel = new System.Windows.Forms.Label();
             this.inputPinDropDown = new System.Windows.Forms.ComboBox();
             this.arcazeSerialLabel = new System.Windows.Forms.Label();
             this.inputModuleNameComboBox = new System.Windows.Forms.ComboBox();
@@ -70,9 +72,9 @@
             // 
             // tabControlFsuipc
             // 
+            this.tabControlFsuipc.Controls.Add(this.displayTabPage);
             this.tabControlFsuipc.Controls.Add(this.preconditionTabPage);
             this.tabControlFsuipc.Controls.Add(this.configRefTabPage);
-            this.tabControlFsuipc.Controls.Add(this.displayTabPage);
             resources.ApplyResources(this.tabControlFsuipc, "tabControlFsuipc");
             this.tabControlFsuipc.Name = "tabControlFsuipc";
             this.tabControlFsuipc.SelectedIndex = 0;
@@ -119,6 +121,8 @@
             // 
             // displayTypeGroupBox
             // 
+            this.displayTypeGroupBox.Controls.Add(this.ScanForInputButton);
+            this.displayTypeGroupBox.Controls.Add(this.DeviceNotAvailableWarningLabel);
             this.displayTypeGroupBox.Controls.Add(this.inputPinDropDown);
             this.displayTypeGroupBox.Controls.Add(this.arcazeSerialLabel);
             this.displayTypeGroupBox.Controls.Add(this.inputModuleNameComboBox);
@@ -127,6 +131,18 @@
             resources.ApplyResources(this.displayTypeGroupBox, "displayTypeGroupBox");
             this.displayTypeGroupBox.Name = "displayTypeGroupBox";
             this.displayTypeGroupBox.TabStop = false;
+            // 
+            // ScanForInputButton
+            // 
+            resources.ApplyResources(this.ScanForInputButton, "ScanForInputButton");
+            this.ScanForInputButton.Name = "ScanForInputButton";
+            this.ScanForInputButton.UseVisualStyleBackColor = true;
+            this.ScanForInputButton.Click += new System.EventHandler(this.ScanForInputButton_Click);
+            // 
+            // DeviceNotAvailableWarningLabel
+            // 
+            resources.ApplyResources(this.DeviceNotAvailableWarningLabel, "DeviceNotAvailableWarningLabel");
+            this.DeviceNotAvailableWarningLabel.Name = "DeviceNotAvailableWarningLabel";
             // 
             // inputPinDropDown
             // 
@@ -278,5 +294,7 @@
         private Panels.Config.ConfigRefPanel configRefPanel;
         private System.Windows.Forms.ComboBox inputPinDropDown;
         private Panels.Config.PreconditionPanel preconditionPanel;
+        private System.Windows.Forms.Label DeviceNotAvailableWarningLabel;
+        private System.Windows.Forms.Button ScanForInputButton;
     }
 }

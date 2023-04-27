@@ -170,27 +170,54 @@ namespace MobiFlight.ProjectMessages {
         /// <summary>
         ///   Looks up a localized string similar to Pin.
         /// </summary>
-        internal static string LabelPrecondition_ArcazePin {
+        internal static string Label_Precondition_ArcazePin {
             get {
-                return ResourceManager.GetString("LabelPrecondition_ArcazePin", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_ArcazePin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wähle Config.
+        /// </summary>
+        internal static string Label_Precondition_choose_config {
+            get {
+                return ResourceManager.GetString("Label_Precondition_choose_config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wähle Variable.
+        /// </summary>
+        internal static string Label_Precondition_choose_variable {
+            get {
+                return ResourceManager.GetString("Label_Precondition_choose_variable", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Config Eintrag.
         /// </summary>
-        internal static string LabelPrecondition_ConfigItem {
+        internal static string Label_Precondition_ConfigItem {
             get {
-                return ResourceManager.GetString("LabelPrecondition_ConfigItem", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_ConfigItem", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Keine.
         /// </summary>
-        internal static string LabelPrecondition_None {
+        internal static string Label_Precondition_None {
             get {
-                return ResourceManager.GetString("LabelPrecondition_None", resourceCulture);
+                return ResourceManager.GetString("Label_Precondition_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MobiFlight Variable.
+        /// </summary>
+        internal static string Label_Precondition_Variable {
+            get {
+                return ResourceManager.GetString("Label_Precondition_Variable", resourceCulture);
             }
         }
         
@@ -735,6 +762,24 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update der HubHop Presets war nicht erfolgreich. Bitte checke das Log für weitere Details..
+        /// </summary>
+        internal static string uiMessageHubHopUpdateError {
+            get {
+                return ResourceManager.GetString("uiMessageHubHopUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update der HubHop Presets war erfolgreich..
+        /// </summary>
+        internal static string uiMessageHubHopUpdateSuccessful {
+            get {
+                return ResourceManager.GetString("uiMessageHubHopUpdateSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitte Prüfe den Pfad zur Arduino IDE. Das Tool avrdude konnte nicht gefunden werden..
         /// </summary>
         internal static string uiMessageInvalidArduinoIdePath {
@@ -930,6 +975,15 @@ namespace MobiFlight.ProjectMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keine aktive X-Plane Verbindung.
+        /// </summary>
+        internal static string uiMessageNoXplaneConnection {
+            get {
+                return ResourceManager.GetString("uiMessageNoXplaneConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Der Wert muss eine Zahl sein und größer als 0..
         /// </summary>
         internal static string uiMessagePanelsStepperInputRevolutionsMustBeGreaterThan0 {
@@ -962,6 +1016,24 @@ namespace MobiFlight.ProjectMessages {
         internal static string uiMessageProblemLoadingConfig {
             get {
                 return ResourceManager.GetString("uiMessageProblemLoadingConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Möchtest Du wirklich die MobiFlight Firmware deinstallieren? Alle Deine Daten werden vom Board gelöscht..
+        /// </summary>
+        internal static string uiMessageResetConfirm {
+            get {
+                return ResourceManager.GetString("uiMessageResetConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Board zurücksetzen.
+        /// </summary>
+        internal static string uiMessageResetHint {
+            get {
+                return ResourceManager.GetString("uiMessageResetHint", resourceCulture);
             }
         }
         
@@ -1145,6 +1217,15 @@ namespace MobiFlight.ProjectMessages {
         internal static string uiMessageUploadConfigurationTooLong {
             get {
                 return ResourceManager.GetString("uiMessageUploadConfigurationTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Der Wert muss eine gültige Zahl sein..
+        /// </summary>
+        internal static string uiMessageValidationMustBeNumber {
+            get {
+                return ResourceManager.GetString("uiMessageValidationMustBeNumber", resourceCulture);
             }
         }
         

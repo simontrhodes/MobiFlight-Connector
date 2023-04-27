@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Management;
 using System.Xml.Linq;
 using System.Globalization;
+using MobiFlight.Config;
+using System.IO;
 
 namespace MobiFlight
 {
@@ -45,7 +47,7 @@ namespace MobiFlight
         public event EventHandler LookupFinished;
 
 
-        private List<MobiFlightModuleInfo> connectedArduinoModules = null;
+        private List<MobiFlightModuleInfo> connectedComModules = null;
         Boolean isFirstTimeLookup = false;
 
         private bool _lookingUpModules = false;
@@ -71,11 +73,73 @@ namespace MobiFlight
             return result;
         }
 
+        /// <summary>
+        /// Returns a list of connected USB drives that are supported with MobiFlight and are in flash mode already,
+        /// as opposed to being connected as COM port.
+        /// </summary>
+        /// <returns>The list of connected USB drives supported by MobiFlight.</returns>
+        public static List<MobiFlightModuleInfo> FindConnectedUsbDevices()
+        {
+            var result = new List<MobiFlightModuleInfo>();
+
+            foreach (var drive in DriveInfo.GetDrives())
+            {
+                // Issue 1089: Network drives take *forever* to return the drive info slowing down startup. Only check removable drives.
+                if (drive.DriveType != DriveType.Removable)
+                {
+                    Log.Instance.log($"Drive {drive.Name} ({drive.DriveType}) isn't a removable drive, skipping.", LogSeverity.Debug);
+                    continue;
+                }
+
+                // Issue 1074: Failing to check for IsReady caused an IOException on certain machines
+                // when trying to read the volume label when the drive wasn't actually ready.
+                if (!drive.IsReady)
+                {
+                    Log.Instance.log($"Drive {drive.Name} isn't ready, skipping.", LogSeverity.Debug);
+                    continue;
+                }
+
+                Board candidateBoard;
+                try 
+                {
+                    candidateBoard = BoardDefinitions.GetBoardByUsbVolumeLabel(drive.VolumeLabel);
+                }
+                catch (Exception ex)
+                {
+                    // Per the MSDN code sample for the DriveInfo object, Name and DriveType should be valid
+                    // at all times so it's safe to use them in the log message.
+                    Log.Instance.log($"Unable to get volume label for drive {drive.Name} ({drive.DriveType}): {ex.Message}", LogSeverity.Error);
+                    continue;
+                }
+
+                if (candidateBoard != null)
+                {
+                    Log.Instance.log($"Drive {drive.Name} ({drive.DriveType}) is a candidate device: {candidateBoard.Info.FriendlyName}", LogSeverity.Debug);
+                    result.Add(new MobiFlightModuleInfo()
+                    {
+                        Board = candidateBoard,
+                        HardwareId = drive.Name,
+                        Name = drive.VolumeLabel,
+                        // It's important that this is the drive letter for the connected USB device. This is
+                        // used elsewhere in the flashing code to know that it wasn't connected via a COM
+                        // port and to skip the COM port toggle before flashing.
+                        Port = drive.RootDirectory.FullName
+                    });
+                }
+                else
+                {
+                    Log.Instance.log($"Drive {drive.Name} ({drive.DriveType}) was a candidate but no matching board was found for volume label {drive.VolumeLabel}.", LogSeverity.Info);
+                }
+            }
+
+            return result;
+        }
+
         public bool updateConnectedModuleName(MobiFlightModule m)
         {
-            if (connectedArduinoModules == null) return false;
+            if (connectedComModules == null) return false;
 
-            foreach (MobiFlightModuleInfo info in connectedArduinoModules)
+            foreach (MobiFlightModuleInfo info in connectedComModules)
             {
                 if (info.Serial != m.Serial) continue;
 
@@ -88,16 +152,16 @@ namespace MobiFlight
 
         public List<MobiFlightModuleInfo> GetDetectedArduinoModules()
         {
-            if (connectedArduinoModules == null)
+            if (connectedComModules == null)
                     return new List<MobiFlightModuleInfo>();
 
-            connectedArduinoModules.Sort(
+            connectedComModules.Sort(
                 (item1, item2) => {
                     if (item1.Type == "Ignored" && item2.Type != "Ignored") return 1;
                     if (item1.Type != "Ignored" && item2.Type == "Ignored") return -1;
                     return item1.Name.CompareTo(item2.Name);
                 });
-            return connectedArduinoModules;
+            return connectedComModules;
         }
 
         public async Task<IEnumerable<MobiFlightModule>> GetModulesAsync()
@@ -121,85 +185,98 @@ namespace MobiFlight
             var regex = new Regex(@"(?<id>VID_\S*)"); // Pattern to match the VID/PID of the connected devices
 
             // Code from https://stackoverflow.com/questions/45165299/wmi-get-list-of-all-serial-com-ports-including-virtual-ports
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE ClassGuid=\"{4d36e978-e325-11ce-bfc1-08002be10318}\"");
-            foreach (ManagementObject queryObj in searcher.Get())
+            try
             {
-                // At this point we have a list of possibly valid connected devices. Since everything at this point
-                // depends on the VID/PID extract that to start. USB devices seem to consistently have two hardwareID
-                // entries, in this order:
-                //
-                // USB\VID_1B4F&PID_9206&REV_0100&MI_00
-                // USB\VID_1B4F&PID_9206&MI_00
-                //
-                // Either will work with how the BoardDefinitions class and existing board definition files do regular expression
-                // lookups so just grab the first one in the array every time. Note the use of '?' to handle the (never seen)
-                // case where no hardware IDs are available.
-                var rawHardwareID = (queryObj["HardwareID"] as string[])?[0];
-
-                if (String.IsNullOrEmpty(rawHardwareID))
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE ClassGuid=\"{4d36e978-e325-11ce-bfc1-08002be10318}\"");
+                foreach (ManagementObject queryObj in searcher.Get())
                 {
-                    Log.Instance.log($"Skipping module with no available VID/PID", LogSeverity.Debug);
-                    continue;
+                    // At this point we have a list of possibly valid connected devices. Since everything at this point
+                    // depends on the VID/PID extract that to start. USB devices seem to consistently have two hardwareID
+                    // entries, in this order:
+                    //
+                    // USB\VID_1B4F&PID_9206&REV_0100&MI_00
+                    // USB\VID_1B4F&PID_9206&MI_00
+                    //
+                    // Either will work with how the BoardDefinitions class and existing board definition files do regular expression
+                    // lookups so just grab the first one in the array every time. Note the use of '?' to handle the (never seen)
+                    // case where no hardware IDs are available.
+                    var rawHardwareID = (queryObj["HardwareID"] as string[])?[0];
+
+                    if (String.IsNullOrEmpty(rawHardwareID))
+                    {
+                        Log.Instance.log($"Skipping module with no available VID/PID.", LogSeverity.Debug);
+                        continue;
+                    }
+
+                    // Historically MobiFlight expects a straight VID/PID string without a leading USB\ or FTDI\ or \COMPORT so get
+                    // pick that out of the raw hardware ID.
+                    var match = regex.Match(rawHardwareID);
+                    if (!match.Success)
+                    {
+                        Log.Instance.log($"Skipping device with no available VID/PID ({rawHardwareID}).", LogSeverity.Debug);
+                        continue;
+                    }
+
+                    // Get the matched hardware ID and use it going forward to identify the board.
+                    var hardwareId = match.Groups["id"].Value;
+
+                    Log.Instance.log($"Checking for compatible module: {hardwareId}.", LogSeverity.Debug);
+                    var board = BoardDefinitions.GetBoardByHardwareId(hardwareId);
+
+                    // If no matching board definition is found at this point then it's an incompatible board and just keep going.
+                    if (board == null)
+                    {
+                        Log.Instance.log($"Incompatible module skipped: {hardwareId}.", LogSeverity.Debug);
+                        continue;
+                    }
+
+                    // The board is a known type so grab the COM port for it. Every USB device seen so far has the
+                    // COM port in the full name of the device surrounded by (), for example:
+                    //
+                    // USB Serial Device (COM22)
+                    var portNameMatch = Regex.Match(queryObj["Caption"].ToString(), portNameRegEx); // Find the COM port.
+                    var portName = portNameMatch?.Value.Trim(new char[] { '(', ')' }); // Remove the surrounding ().
+
+                    if (portName == null)
+                    {
+                        Log.Instance.log($"Device has no port information: {hardwareId}.", LogSeverity.Error);
+                        continue;
+                    }
+
+                    // Safety check to ensure duplicate entires in the registry don't result in duplicate entires in the list.
+                    if (result.Any(p => p.Name == portName))
+                    {
+                        Log.Instance.log($"Duplicate entry for port: {board.Info.FriendlyName} {portName}.", LogSeverity.Error);
+                        continue;
+                    }
+
+                    result.Add(new PortDetails
+                    {
+                        Board = board,
+                        HardwareId = hardwareId,
+                        Name = portName
+                    });
+
+                    Log.Instance.log($"Found potentially compatible module ({board.Info.FriendlyName}): {hardwareId}@{portName}.", LogSeverity.Debug);
                 }
-
-                // Historically MobiFlight expects a straight VID/PID string without a leading USB\ or FTDI\ or \COMPORT so get
-                // pick that out of the raw hardware ID.
-                var match = regex.Match(rawHardwareID);
-                if (!match.Success)
-                {
-                    Log.Instance.log($"Skipping device with no available VID/PID ({rawHardwareID})", LogSeverity.Debug);
-                    continue;
-                }
-
-                // Get the matched hardware ID and use it going forward to identify the board.
-                var hardwareId = match.Groups["id"].Value;
-
-                Log.Instance.log($"Checking for compatible module: {hardwareId}", LogSeverity.Debug);
-                var board = BoardDefinitions.GetBoardByHardwareId(hardwareId);
-
-                // If no matching board definition is found at this point then it's an incompatible board and just keep going.
-                if (board == null)
-                {
-                    Log.Instance.log($"Incompatible module skipped: {hardwareId}", LogSeverity.Debug);
-                    continue;
-                }
-
-                // The board is a known type so grab the COM port for it. Every USB device seen so far has the
-                // COM port in the full name of the device surrounded by (), for example:
-                //
-                // USB Serial Device (COM22)
-                var portNameMatch = Regex.Match(queryObj["Caption"].ToString(), portNameRegEx); // Find the COM port.
-                var portName = portNameMatch?.Value.Trim(new char[]{ '(', ')'}); // Remove the surrounding ().
-
-                if (portName == null)
-                {
-                    Log.Instance.log($"Arduino device has no port information: {hardwareId}", LogSeverity.Debug);
-                    continue;
-                }
-
-                // Safety check to ensure duplicate entires in the registry don't result in duplicate entires in the list.
-                if (result.Any(p => p.Name == portName))
-                {
-                    Log.Instance.log($"Duplicate entry for port: {board.Info.FriendlyName} {portName}", LogSeverity.Debug);
-                    continue;
-                }
-
-                result.Add(new PortDetails
-                {
-                    Board = board,
-                    HardwareId = hardwareId,
-                    Name = portName
-                });
-
-                Log.Instance.log($"Found potentially compatible module ({board.Info.FriendlyName}): {hardwareId}@{portName}", LogSeverity.Debug);
             }
-
+            catch (ManagementException ex)
+            {
+                // Issue #1122: A corrupted WMI registry caused exceptions when attempting to enumerate connected devices with searcher.Get().
+                // Running "winmgmt /resetrepository" fixed it.
+                Log.Instance.log($"Unable to read connected devices. This is usually caused by a corrupted WMI registry. Run 'winmgmt /resetrepository' from an elevated command line to resolve the issue. ({ex.Message})", LogSeverity.Error);
+            }
+            catch (Exception ex)
+            {
+                Log.Instance.log($"Unable to read connected devices: {ex.Message}", LogSeverity.Error);
+            }
             return result;
         }
 
-        private async  Task<List<MobiFlightModuleInfo>> LookupAllConnectedArduinoModulesAsync()
+
+        private async  Task<List<MobiFlightModuleInfo>> LookupAllConnectedComModulesAsync()
         {
-            Log.Instance.log("MobiFlightCache.LookupAllConnectedArduinoModulesAsync: Start", LogSeverity.Debug);
+            Log.Instance.log("Start looking up connected modules.", LogSeverity.Debug);
             List<MobiFlightModuleInfo> result = new List<MobiFlightModuleInfo>();
             string[] connectedPorts = SerialPort.GetPortNames();
 
@@ -218,17 +295,17 @@ namespace MobiFlight
 
                 if (!connectedPorts.Contains(port.Name))
                 {
-                    Log.Instance.log("MobiFlightCache.LookupAllConnectedArduinoModulesAsync: Port not connected ("+ port.Name +")", LogSeverity.Debug);
+                    Log.Instance.log($"Port not connected {port.Name}.", LogSeverity.Debug);
                     continue;
                 }
                 if (connectingPorts.Contains(port.Name))
                 {
-                    Log.Instance.log("MobiFlightCache.LookupAllConnectedArduinoModulesAsync: Port already connecting (" + port.Name + ")", LogSeverity.Debug);
+                    Log.Instance.log($"Port already connecting {port.Name}.", LogSeverity.Debug);
                     continue;
                 }
                 if (ignoredComPorts.Contains(port.Name))
                 {
-                    Log.Instance.log("MobiFlightCache.LookupAllConnectedArduinoModulesAsync: Port is ignored by user (" + port.Name + ")", LogSeverity.Info);
+                    Log.Instance.log($"Skipping {port.Name} since it is in the list of ports to ignore.", LogSeverity.Info);
                     result.Add(new MobiFlightModuleInfo()
                     {
                         Port = port.Name,
@@ -246,14 +323,14 @@ namespace MobiFlight
                 tasks.Add(Task.Run(() =>
                 {
                     MobiFlightModule tmp = new MobiFlightModule(port.Name, port.Board);
-                    ModuleConnecting?.Invoke(this, "Scanning Arduinos", progressValue);
+                    ModuleConnecting?.Invoke(this, "Scanning modules", progressValue);
                     tmp.Connect();
                     MobiFlightModuleInfo devInfo = tmp.GetInfo() as MobiFlightModuleInfo;
                     // Store the hardware ID for later use
                     devInfo.HardwareId = port.HardwareId;
 
                     tmp.Disconnect();
-                    ModuleConnecting?.Invoke(this, "Scanning Arduinos", progressValue + 5);
+                    ModuleConnecting?.Invoke(this, "Scanning modules", progressValue + 5);
 
                     result.Add(devInfo);
 
@@ -263,7 +340,7 @@ namespace MobiFlight
 
             var infos = await Task.WhenAll(tasks);
   
-            Log.Instance.log("MobiFlightCache.LookupAllConnectedArduinoModulesAsync: End", LogSeverity.Debug);
+            Log.Instance.log($"End looking up connected modules.", LogSeverity.Debug);
 
             _lookingUpModules = false;
             return result;
@@ -285,16 +362,16 @@ namespace MobiFlight
                 disconnect(); 
             }
             
-            if (connectedArduinoModules == null)
+            if (connectedComModules == null)
             {
-                connectedArduinoModules = await LookupAllConnectedArduinoModulesAsync();
+                connectedComModules = await LookupAllConnectedComModulesAsync();
                 isFirstTimeLookup = true;
             }
 
-            Log.Instance.log("MobiFlightCache.connect: Clearing modules",LogSeverity.Debug);
+            Log.Instance.log("Clearing modules.",LogSeverity.Debug);
             Modules.Clear();
 
-            foreach (MobiFlightModuleInfo devInfo in connectedArduinoModules)
+            foreach (MobiFlightModuleInfo devInfo in connectedComModules)
             {
                 if (!devInfo.HasMfFirmware()) continue;
 
@@ -338,7 +415,7 @@ namespace MobiFlight
 
         public void UnregisterModule(MobiFlightModule m, MobiFlightModuleInfo devInfo)
         {
-            Log.Instance.log("MobiFlightCache.UnregisterModule(" + m.Name + ":" + m.Port + ")", LogSeverity.Debug);
+            Log.Instance.log($"Unregistering module {m.Name}:{m.Port}.", LogSeverity.Debug);
 
             foreach(var module in Modules.Values)
             {
@@ -352,7 +429,7 @@ namespace MobiFlight
 
         private void RegisterModule(MobiFlightModule m, MobiFlightModuleInfo devInfo, bool replace = false)
         {
-            Log.Instance.log("MobiFlightCache.RegisterModule("+m.Name+":"+ m.Port +")", LogSeverity.Debug);
+            Log.Instance.log($"Registering module {m.Name}:{m.Port}.", LogSeverity.Debug);
             
             // Additional protection added for edge cases where this gets called after a failed firmware update, which resulted
             // in the exception reported in issue 611.
@@ -372,7 +449,7 @@ namespace MobiFlight
                 }
                 else
                 {
-                    Log.Instance.log("Duplicate serial number found: " + devInfo.Serial + ". Module won't be added.", LogSeverity.Error);
+                    Log.Instance.log($"Duplicate serial number found {devInfo.Serial}. Module won't be added.", LogSeverity.Error);
                     return;
                 }
             } else
@@ -396,7 +473,7 @@ namespace MobiFlight
         /// <returns>returns true if all modules were disconnected properly</returns>    
         public bool disconnect()
         {
-            Log.Instance.log("MobiFlightCache.disconnect()", LogSeverity.Debug);
+            Log.Instance.log("Disconnecting all modules.", LogSeverity.Debug);
             if (isConnected())
             {
                 foreach (MobiFlightModule module in Modules.Values)
@@ -571,7 +648,7 @@ namespace MobiFlight
             }
         }
 
-        public void setStepper(string serial, string address, string value, int inputRevolutionSteps, int outputRevolutionSteps, bool CompassMode)
+        public void setStepper(string serial, string address, string value, int inputRevolutionSteps, int outputRevolutionSteps, bool CompassMode, Int16 speed = 0, Int16 acceleration = 0)
         {
             try
             {
@@ -594,6 +671,10 @@ namespace MobiFlight
                 {
                     module.GetStepper(address).CompassMode = CompassMode;
                 }
+
+                if (speed>0) { module.GetStepper(address).Speed = speed; }
+                if (acceleration > 0) { module.GetStepper(address).Acceleration = acceleration; }
+
                 module.SetStepper(address, iValue, inputRevolutionSteps);
             }
             catch (Exception e)
@@ -749,14 +830,14 @@ namespace MobiFlight
 
         public MobiFlightModule RefreshModule(MobiFlightModule module)
         {
-            MobiFlightModuleInfo oldDevInfo = connectedArduinoModules.Find(delegate(MobiFlightModuleInfo devInfo)
+            MobiFlightModuleInfo oldDevInfo = connectedComModules.Find(delegate(MobiFlightModuleInfo devInfo)
             {
                 return devInfo.Port == module.Port;
             }
             );
 
-            if (oldDevInfo != null) connectedArduinoModules.Remove(oldDevInfo);
-            connectedArduinoModules.Add(module.ToMobiFlightModuleInfo());
+            if (oldDevInfo != null) connectedComModules.Remove(oldDevInfo);
+            connectedComModules.Add(module.ToMobiFlightModuleInfo());
 
             if (module.HasMfFirmware())
                 RegisterModule(module, module.ToMobiFlightModuleInfo(), true);
@@ -824,6 +905,19 @@ namespace MobiFlight
                 }
             }
 
+            return result;
+        }
+
+        public Dictionary<String, List<BaseDevice>> FindAllConnectedSteppers()
+        {
+            var result = new Dictionary<String, List<BaseDevice>>();
+            foreach (var module in Modules.Values)
+            {
+                var stepperList = module.GetConnectedOutputDevices().Where(p => p.Type == DeviceType.Stepper).ToList();
+                if (stepperList.Count == 0) continue;
+                
+                result.Add(module.Name, stepperList);
+            }
             return result;
         }
     }

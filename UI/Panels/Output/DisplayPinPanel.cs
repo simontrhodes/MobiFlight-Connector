@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobiFlight.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace MobiFlight.UI.Panels
 
             MultiPinSelectPanel.Visible = false;
             singlePinSelectFlowLayoutPanel.Visible = true;
+            displayPinBrightnessPanel.Visible = displayPinBrightnessPanel.Enabled = displayPortComboBox.Visible = displayPortComboBox.Enabled = false;
             PinSelectContainer.Height = singlePinSelectFlowLayoutPanel.Height;
         }
 
@@ -51,7 +53,6 @@ namespace MobiFlight.UI.Panels
             // when there are no ports, because then
             // we are in the context of MobiFlight
             displayPinBrightnessPanel.Visible = displayPinBrightnessPanel.Enabled = displayPortComboBox.Visible = displayPortComboBox.Enabled = ports.Count > 0;
-            
         }
         internal void SetPins(List<ListItem> pins)
         {
@@ -88,23 +89,20 @@ namespace MobiFlight.UI.Panels
         {
 
             String serial = config.DisplaySerial;
-            if (serial != null && serial.Contains('/'))
-            {
-                serial = serial.Split('/')[1].Trim();
-            }
+            serial = SerialNumber.ExtractSerial(serial);
 
             if (config.Pin.DisplayPin != null && config.Pin.DisplayPin != "")
             {
                 string port = "";
                 string pin = config.Pin.DisplayPin;
 
-                if (serial != null && serial.IndexOf(Joystick.SerialPrefix) == 0)
+                if (SerialNumber.IsJoystickSerial(serial))
                 {
                     // disable multi-select option
                     _MultiSelectOptions(false);
                     pin = config.Pin.DisplayPin;
                 }
-                else if (serial != null && serial.IndexOf("SN") != 0)
+                else if (!SerialNumber.IsMobiFlightSerial(serial))
                 {
                     // these are Arcaze Boards.
                     // Arcaze Boards only have "single output"
@@ -129,6 +127,11 @@ namespace MobiFlight.UI.Panels
 
                 // preselect normal pin drop downs
                 if (!ComboBoxHelper.SetSelectedItem(displayPortComboBox, port)) { /* TODO: provide error message */ }
+
+                if (displayPinComboBox.Items.Count == 0) {
+                    displayPinComboBox.Items.Add(pin);
+                }
+
                 if (!ComboBoxHelper.SetSelectedItem(displayPinComboBox, pin)) { /* TODO: provide error message */ }
 
                 int range = displayPinBrightnessTrackBar.Maximum - displayPinBrightnessTrackBar.Minimum;

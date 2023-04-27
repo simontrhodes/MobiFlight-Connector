@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobiFlight.Config.Compatibility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,7 @@ namespace MobiFlight.Config
         {
             String[] items = value.Split(BaseDevice.End);
 
-            // Need to set aside the MultiplexerDriver reference (for subsequent devices) when we find it 
+            // Need to set aside the MultiplexerDriver reference (for subsequent client devices) when we find it 
             MobiFlight.Config.MultiplexerDriver multiplexerDriver = null;
 
             foreach (String item in items)
@@ -115,15 +116,22 @@ namespace MobiFlight.Config
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
 
-                        case DeviceType.StepperDeprecated:
-                            currentItem = new MobiFlight.Config.Stepper();
-                            currentItem.FromInternal(item + BaseDevice.End);
-                            (currentItem as Stepper).BtnPin = "0"; // set this explicitly to 0 because the default used to be 5.
-                            break;
-
                         case DeviceType.Stepper:
                             currentItem = new MobiFlight.Config.Stepper();
                             currentItem.FromInternal(item + BaseDevice.End);
+                            break;
+
+                        case DeviceType.StepperDeprecatedV1:
+                            currentItem = new MobiFlight.Config.Compatibility.StepperDeprecatedV2();
+                            currentItem.FromInternal(item + BaseDevice.End);
+                            (currentItem as StepperDeprecatedV2).BtnPin = "0"; // set this explicitly to 0 because the default used to be 5.
+                            currentItem = new MobiFlight.Config.Stepper(currentItem as MobiFlight.Config.Compatibility.StepperDeprecatedV2);
+                            break;
+
+                        case DeviceType.StepperDeprecatedV2:
+                            currentItem = new MobiFlight.Config.Compatibility.StepperDeprecatedV2();
+                            currentItem.FromInternal(item + BaseDevice.End);
+                            currentItem = new MobiFlight.Config.Stepper(currentItem as MobiFlight.Config.Compatibility.StepperDeprecatedV2);
                             break;
 
                         case DeviceType.LedModule:
@@ -147,28 +155,21 @@ namespace MobiFlight.Config
                             break;
 
                         case DeviceType.InputMultiplexer:
+                            // If the multiplexerDriver is to be implicitly defined by clients:
                             // Build multiplexerDriver if none found yet 
                             if (multiplexerDriver == null) {
+                                // Store it, so another clients will not create a new one
                                 multiplexerDriver = new MobiFlight.Config.MultiplexerDriver();
-                                // multiplexerDriver is not yet init'ed with pin numbers: the FromInternal() of the client
-                                // (in this case InputMultiplexer) will provide them
-                                // Treat the MultiplexerDriver as a regular device (add it to the items list), except it won't be shown in the GUI tree.
+                                // The MultiplexerDriver is registered as a "ghost" device in Config's items list; it won't be shown in the GUI tree.
                                 Items.Add(multiplexerDriver);
+                            //} else {
+                            //    multiplexerDriver.registerClient();
                             }
+                            multiplexerDriver.FromInternal(InputMultiplexer.GetMultiplexerDriverConfig(item + BaseDevice.End));
+
                             currentItem = new MobiFlight.Config.InputMultiplexer(multiplexerDriver);
                             currentItem.FromInternal(item + BaseDevice.End);
-
                             break;
-
-                        // MultiplexerDriver data is bound to be included (very redundantly) in client devices;
-                        // therefore, even if there is an internal device object, there is no config message
-                        // corresponding to a MultiplexerDriver item.
-                        // If there was, we would do this:
-                        //case DeviceType.MultiplexerDriver:
-                        //    currentItem = new MobiFlight.Config.MultiplexerDriver();
-                        //    currentItem.FromInternal(item + BaseDevice.End);
-                        //    multiplexerDriver = currentItem as MobiFlight.Config.MultiplexerDriver;
-                        //    break;
 
                         case DeviceType.AnalogInput:
                             currentItem = new MobiFlight.Config.AnalogInput();
@@ -180,6 +181,18 @@ namespace MobiFlight.Config
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
 
+                        // If the multiplexerDriver is to be explicitly defined by its own config line,
+                        // following 'case' is required:
+
+                        //case DeviceType.MultiplexerDriver:
+                            //if (multiplexerDriver == null) {
+                            //  multiplexerDriver = new MobiFlight.Config.MultiplexerDriver();
+                            //  currentItem = multiplexerDriver;
+                            //  currentItem.FromInternal(item + BaseDevice.End);
+	                        //} else {
+	                        //  multiplexerDriver.registerClient();
+                            //}
+                            //break;
                     }
 
                     if (currentItem != null)
