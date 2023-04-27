@@ -1328,8 +1328,7 @@ namespace MobiFlight
                         break;
 
                     case DeviceType.LcdDisplay: 
-                         DeviceType.PWMDriver:
-                   
+                    case DeviceType.PWMDriver: 
                         if (ExcludeI2CDevices)
                         {
                             continue;
