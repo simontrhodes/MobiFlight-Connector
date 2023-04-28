@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using MobiFlight.Config;
 using CommandMessenger.Transport.Serial;
+using MobiFlight.UI.Panels.Settings.Device;
 
 namespace MobiFlight
 {
@@ -14,6 +15,7 @@ namespace MobiFlight
     {
         public string Serial { get; set; }
         public string DeviceId { get; set; }
+        public string DeviceLabel { get; set; }
         public string Name { get; set; }
         public DeviceType Type { get; set; }
         public int? ExtPin { get; set; }
@@ -373,11 +375,7 @@ namespace MobiFlight
                             servoModules.Add(device.Name, new MobiFlightServo() { CmdMessenger = _cmdMessenger, Name = device.Name, ServoNumber = servoModules.Count });
                             break;
                         
-                        case DeviceType.PWMDriver:
-                            device.Name = GenerateUniqueDeviceName(PWMDriverModules.Keys.ToArray(), device.Name);
-                            int.TryParse((device as Config.PWMDriver).NumModules, out submodules);
-                            PWMDriverModules.Add(device.Name, new MobiFlightPWMDriver() { CmdMessenger = _cmdMessenger, Name = device.Name, NumberOfPWMDrivers = submodules, PWMDriverNumber = PWMDriverModules.Count });
-                            break;
+                        
                         
                         case DeviceType.Output:
                             device.Name = GenerateUniqueDeviceName(outputs.Keys.ToArray(), device.Name);
@@ -413,6 +411,21 @@ namespace MobiFlight
                             device.Name = GenerateUniqueDeviceName(analogInputs.Keys.ToArray(), device.Name);
                             analogInputs.Add(device.Name, new MobiFlightAnalogInput() { Name = device.Name });
                             break;
+                        case DeviceType.PWMDriver:
+                            device.Name = GenerateUniqueDeviceName(PWMDriverModules.Keys.ToArray(), device.Name);
+                            int PWMDriversubmodules = 1;
+                            if (!int.TryParse((device as Config.PWMDriver).NumModules, out PWMDriversubmodules))
+                            {
+                                Log.Instance.log(
+                                    $"Can't parse {Board.Info.FriendlyName} ({Port}) > [{(device as Config.PWMDriver).Name}]." +
+                                    $"NumModules: {(device as Config.PWMDriver).NumModules}, " +
+                                    $"using default {PWMDriversubmodules}",
+                                    LogSeverity.Error);
+                                break;
+                            }
+                            PWMDriverModules.Add(device.Name, new MobiFlightPWMDriver() { CmdMessenger = _cmdMessenger, Name = device.Name, NumberOfPWMDrivers = PWMDriversubmodules, PWMDriverNumber = PWMDriverModules.Count });
+                            break;
+                        
                         case DeviceType.ShiftRegister:
                             device.Name = GenerateUniqueDeviceName(shiftRegisters.Keys.ToArray(), device.Name);
                             int submodules = 1;
@@ -1017,7 +1030,6 @@ namespace MobiFlight
             {
                 result.Add(PWMDriver);
             }
-
 
             foreach (MobiFlightLcdDisplay lcdDisplay in lcdDisplays.Values)
             {

@@ -16,7 +16,7 @@ namespace MobiFlight.UI.Panels
 
         public event EventHandler<MoveTriggeredEventArgs> OnMoveTriggered;
 
-        internal void SyncFromConfig(OutputConfigItem config)
+        internal void syncFromConfig(OutputConfigItem config)
         {
             var pin = config.PWMDriver.Pin;
             if (string.IsNullOrEmpty(pin))
@@ -39,7 +39,7 @@ namespace MobiFlight.UI.Panels
             SetTrackBar();
         }
 
-        internal OutputConfigItem SyncToConfig(OutputConfigItem config)
+        internal OutputConfigItem syncToConfig(OutputConfigItem config)
         {
             if (displayPWMPinComboBox.Text != null)
             {

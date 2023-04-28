@@ -37,7 +37,7 @@ namespace MobiFlight.UI.Panels
 
         internal void EnablePWMSelect(bool enable)
         {
-            //PinPanel.Visible = Module.getPins().Contains((byte)(item as MobiFlightOutput).Pin);
+            //pwmPinPanel.Visible = Module.getPwmPins().Contains((byte)(item as MobiFlightOutput).Pin);
             PinPanel.Visible = enable;
         }
 
@@ -173,7 +173,7 @@ namespace MobiFlight.UI.Panels
                 String pin = (sender as ComboBox).SelectedItem.ToString();
                 foreach (var item in Module.GetConnectedDevices(pin))
                 {
-                    PinPanel.Enabled = PinPanel.Visible = Module.getPins()
+                    PinPanel.Enabled = PinPanel.Visible = Module.getPwmPins()
                                                 .Find(x => x.Pin == (byte)(item as MobiFlightOutput).Pin) != null;
                     return;
                 }

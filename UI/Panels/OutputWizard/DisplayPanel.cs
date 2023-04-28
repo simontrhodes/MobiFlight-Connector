@@ -589,7 +589,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
             stepperPanel.SetAdresses(stepper);
             
-            displayPWMDriverPanel.SetAdresses(PWMDrivers);
+            displayPWMDriverPanel.SetSelectedAddress(PWMDrivers);
             
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged -= shiftRegistersComboBox_selectedIndexChanged;
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged += new EventHandler(shiftRegistersComboBox_selectedIndexChanged);
@@ -889,7 +889,6 @@ namespace MobiFlight.UI.Panels.OutputWizard
         {
             DisplayTypePanel.Visible = OutputTypeIsDisplay();
             groupBoxDisplaySettings.Visible = OutputTypeIsDisplay();
-            testSettingsGroupBox.Visible = OutputTypeIsDisplay();
 
             InputActionTypePanel.Visible = OutputTypeIsInputAction();
             inputActionGroupBox.Visible = OutputTypeIsInputAction();
