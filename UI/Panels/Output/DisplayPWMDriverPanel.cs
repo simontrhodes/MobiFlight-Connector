@@ -35,7 +35,8 @@ namespace MobiFlight.UI.Panels
             UpdatePinList();
 
             if (config.PWMDriver.Pin == null) return;
-            var cfg = (OutputConfigItem)config.Clone();
+            
+            OutputConfigItem cfg = config.Clone() as OutputConfigItem;
             cfg.PWMDriver.Pin = config.PWMDriver.Pin;
             displayPWMPinPanel.syncFromConfig(cfg);
         }

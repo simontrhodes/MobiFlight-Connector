@@ -1,43 +1,44 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using MobiFlight.Config;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace MobiFlight.UI.Panels.Settings.Device
 {
     public partial class MFPWMDriverPanel : UserControl
     {
-        private readonly PWMDriver _config;
-        private readonly bool _initialized;
+        private MobiFlight.Config.PWMDriver config;
+        bool initialized = false;
 
-        private MFPWMDriverPanel()
+        public MFPWMDriverPanel()
         {
             InitializeComponent();
         }
 
-        public MFPWMDriverPanel(PWMDriver config) : this()
+        public MFPWMDriverPanel(MobiFlight.Config.PWMDriver config, List<MobiFlightPin> Pins) : this()
         {
-            _config = config;
+            this.config = config;
             NameTextBox.Text = config.Name;
             AddressComboBox.SelectedItem = "0x" + config.I2CAddress.ToString("X2");
 
-            _initialized = true;
+            initialized = true;
         }
 
         public event EventHandler Changed;
 
         private void value_Changed(object sender, EventArgs e)
         {
-            if (!_initialized) return;
+            if (!initialized) return;
             SetValues();
             if (Changed != null)
-                Changed(_config, EventArgs.Empty);
+                Changed(config, new EventArgs());
         }
 
         private void SetValues()
         {
-            _config.Name = NameTextBox.Text;
-            _config.I2CAddress = byte.Parse(AddressComboBox.Text.Replace("0x", ""), NumberStyles.HexNumber);
+            config.Name = NameTextBox.Text;
+            config.I2CAddress = byte.Parse(AddressComboBox.Text.Replace("0x", ""), NumberStyles.HexNumber);
         }
 
         private void AddressComboBox_SelectedValueChanged(object sender, EventArgs e)

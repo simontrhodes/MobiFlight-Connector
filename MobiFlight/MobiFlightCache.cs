@@ -748,17 +748,19 @@ namespace MobiFlight
 
             if (outputPin == null)
             {
-                throw new ConfigErrorException("ConfigErrorException_AddressNull");
+                throw new ConfigErrorException("ConfigErrorException_OutputPinNull");
             }
-
+            
             try
             {
-                MobiFlightModule module = Modules[serial];
-                module.SetPWMDriver(PWMDriverName, outputPin, value, inputLower, inputUpper, outputLower, outputUpper);
+                 if (!Modules.ContainsKey(serial)) return;
+                 
+                 MobiFlightModule module = Modules[serial];
+                 module.SetPWMDriver(PWMDriverName, outputPin, value, inputLower, inputUpper, outputLower, outputUpper);
             }
             catch (Exception e)
             {
-                throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WritePWMDriverOutput"), e);
+                 throw new ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WritePWMDriverOutput"), e);
             }
         }
         public void setShiftRegisterOutput(string serial, string shiftRegName, string outputPin, string value)

@@ -393,8 +393,8 @@ namespace MobiFlight.UI.Panels.Settings
                             break;
 
                         case DeviceType.PWMDriver:
-                            panel = new MFPWMDriverPanel(dev as MobiFlight.Config.PWMDriver);
-                            ((MFPWMDriverPanel)panel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            panel = new MFPWMDriverPanel(dev as MobiFlight.Config.PWMDriver, module.GetPins());
+                            (panel as MFPWMDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
 
                         case DeviceType.Servo:

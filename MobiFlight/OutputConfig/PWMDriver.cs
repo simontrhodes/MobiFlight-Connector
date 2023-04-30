@@ -1,8 +1,11 @@
+using System;
 using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace MobiFlight.OutputConfig
 {
-    public class PWMDriver
+    public class PWMDriver : IXmlSerializable, ICloneable
     {
         public PWMDriver()
         {
@@ -42,6 +45,11 @@ namespace MobiFlight.OutputConfig
                 MoveValue == driver.MoveValue;
         }
 
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+        
         public void ReadXml(XmlReader reader)
         {
             // ignore empty values

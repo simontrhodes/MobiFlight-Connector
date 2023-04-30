@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -1148,6 +1147,10 @@
       <DependentUpon>MFInputMultiplexerPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+	<EmbeddedResource Include="UI\Panels\Device\MFPWMDriverPanel.resx">
+      <DependentUpon>MFPWMDriverPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Device\MFMultiplexerDriverSubPanel.de.resx">
       <DependentUpon>MFMultiplexerDriverSubPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1212,6 +1215,10 @@
     <EmbeddedResource Include="UI\Panels\Output\DisplayLedDisplayPanel.de.resx">
       <DependentUpon>DisplayLedDisplayPanel.cs</DependentUpon>
     </EmbeddedResource>
+	<EmbeddedResource Include="UI\Panels\Output\DisplayPWMPinPanel.resx">
+      <DependentUpon>DisplayPWMPinPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\PinSelectPanel.resx">
       <DependentUpon>PinSelectPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -1220,6 +1227,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\DisplayPinPanel.de.resx">
       <DependentUpon>DisplayPinPanel.cs</DependentUpon>
+    </EmbeddedResource>
+	<EmbeddedResource Include="UI\Panels\Output\DisplayPWMDriverPanel.resx">
+      <DependentUpon>DisplayPWMDriverPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Settings\ArcazePanel.de.resx">
       <DependentUpon>ArcazePanel.cs</DependentUpon>

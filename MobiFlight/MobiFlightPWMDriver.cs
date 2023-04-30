@@ -7,24 +7,29 @@ namespace MobiFlight
     {
         public const string TYPE = "PWMDriver";
 
-        public const string LABEL_PREFIX = "Output";
-        private bool _initialized;
 
-        public CmdMessenger CmdMessenger;
-        public int PWMDriverNumber;
+        public CmdMessenger CmdMessenger { get; set; }
+        public int PWMDriverNumber { get; set; }
 
         public int Pin { get; set; }
 
         public int NumberOfPWMDrivers { get; set; }
 
+        private string _name = "PWMDriver";
+        
         public string Name { get; set; } = "PWMDriver";
 
-        public DeviceType Type => DeviceType.PWMDriver;
+        private DeviceType _type = DeviceType.PWMDriver;
 
+        public DeviceType Type { get; set; }
+        
         public void Stop()
         {
         }
 
+        public const string LABEL_PREFIX = "Output";
+        
+        private bool _initialized;
         private void Initialize()
         {
             if (_initialized) return;

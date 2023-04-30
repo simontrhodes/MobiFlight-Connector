@@ -22,17 +22,6 @@
 
         #region Vom Komponenten-Designer generierter Code
 
-
-        #endregion
-
-        private System.Windows.Forms.GroupBox PWMDriverSettingsGroupBox;
-        private System.Windows.Forms.GroupBox NameGroupBox;
-        private System.Windows.Forms.TextBox NameTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ErrorProvider errorProvider;
-        private System.Windows.Forms.ComboBox AddressComboBox;
-
-
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -114,10 +103,16 @@
 
         }
 
+        #endregion
 
+        private System.Windows.Forms.GroupBox PWMDriverSettingsGroupBox;
+        private System.Windows.Forms.GroupBox NameGroupBox;
+        private System.Windows.Forms.TextBox NameTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.ComboBox AddressComboBox;
 
 
     }
 
 }
-

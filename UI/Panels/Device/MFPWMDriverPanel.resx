@@ -222,18 +222,6 @@
   <data name="&gt;&gt;PWMDriverSettingsGroupBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;NameTextBox.Name" xml:space="preserve">
-    <value>NameTextBox</value>
-  </data>
-  <data name="&gt;&gt;NameTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;NameTextBox.Parent" xml:space="preserve">
-    <value>NameGroupBox</value>
-  </data>
-  <data name="&gt;&gt;NameTextBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="NameGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 60</value>
   </data>

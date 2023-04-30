@@ -39,7 +39,7 @@ namespace MobiFlight
 		public OutputConfig.LcdDisplay  LcdDisplay              { get; set; }
 		public List<string>         BcdPins                     { get; set; }
         public OutputConfig.Servo   Servo { get; set; }
-        public OutputConfig.PWMDriver PWMDriver { get; private set; }
+        public OutputConfig.PWMDriver PWMDriver                 { get; set; }
         public OutputConfig.Stepper Stepper { get; set; }
         public OutputConfig.ShiftRegister ShiftRegister               { get; set; }
         public string       DisplayTrigger              { get; set; }
@@ -354,6 +354,7 @@ namespace MobiFlight
             }
             else if (DisplayType == MobiFlightPWMDriver.TYPE)
             {
+                if (PWMDriver == null) PWMDriver = new OutputConfig.PWMDriver();
                 PWMDriver.WriteXml(writer);
             }
             else if (DisplayType == MobiFlightStepper.TYPE)

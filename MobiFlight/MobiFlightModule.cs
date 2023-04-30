@@ -1051,7 +1051,7 @@ namespace MobiFlight
             result[MobiFlightLedModule.TYPE] = ledModules.Count;
             result[MobiFlightStepper.TYPE] = stepperModules.Count;
             result[MobiFlightServo.TYPE] = servoModules.Count;
-            result[MobiFlightPWMDriver.TYPE] = servoModules.Count;
+            result[MobiFlightPWMDriver.TYPE] = PWMDriverModules.Count;
             result[MobiFlightLcdDisplay.TYPE] = lcdDisplays.Count;
             result[MobiFlightShiftRegister.TYPE] = shiftRegisters.Count;
             result[MobiFlightButton.TYPE] = buttons.Count;
