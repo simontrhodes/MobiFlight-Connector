@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MobiFlight.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MobiFlight.UI.Panels
@@ -9,6 +11,7 @@ namespace MobiFlight.UI.Panels
     {
         private const int PWMPinCount = 16;
         public bool WideStyle = false;
+        private MobiFlightModule Module;
 
         public DisplayPWMDriverPanel()
         {
@@ -26,10 +29,11 @@ namespace MobiFlight.UI.Panels
 
         public void syncFromConfig(OutputConfigItem config)
         {
+            
             // pre-select display stuff
             if (config.PWMDriver != null && config.PWMDriver.Address != null)
                 if (!ComboBoxHelper.SetSelectedItem(PWMDriversAddressesComboBox, config.PWMDriver.Address))
-                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriversAddressesComboBox",
+                    Log.Instance.log("_syncConfigToForm : Exception on selecting item in PWMDriversAddressesComboBox "+config.PWMDriver.Address,
                         LogSeverity.Error);
 
             UpdatePinList();

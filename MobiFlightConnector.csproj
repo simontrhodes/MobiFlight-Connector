@@ -653,6 +653,7 @@
     <Compile Include="MobiFlight\Config\Stepper.cs" />
     <Compile Include="MobiFlight\Config\Servo.cs" />
     <Compile Include="MobiFlight\Config\LedModule.cs" />
+	
     <Compile Include="UI\Forms\FirmwareUpdateProcess.cs">
       <SubType>Form</SubType>
     </Compile>
