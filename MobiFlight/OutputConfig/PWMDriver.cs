@@ -35,7 +35,8 @@ namespace MobiFlight.OutputConfig
         public override bool Equals(object obj)
         {
             return
-                obj != null && obj is PWMDriver driver &&
+                obj != null && 
+                obj is PWMDriver driver &&
                 Pin == driver.Pin &&
                 Address == driver.Address &&
                 SimLower == driver.SimLower &&
@@ -56,7 +57,8 @@ namespace MobiFlight.OutputConfig
             if (reader["PWMDriverAddress"] != null && reader["PWMDriverAddress"] != "")
                 Address = reader["PWMDriverAddress"];
 
-            if (reader["PWMDriverPin"] != null && reader["PWMDriverPin"] != "") Pin = reader["PWMDriverPin"];
+            if (reader["PWMDriverPin"] != null && reader["PWMDriverPin"] != "") 
+                Pin = reader["PWMDriverPin"];
 
             if (reader["PWMDriverSimLower"] != null && reader["PWMDriverSimLower"] != "")
                 SimLower = reader["PWMDriverSimLower"];

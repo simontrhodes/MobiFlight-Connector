@@ -334,7 +334,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
                                 break;
                             
                             case DeviceType.PWMDriver:
-                                displayTypeComboBox.Items.Add(DeviceType.PWMDriver.ToString("F"));
+                                //displayTypeOptions.Add(DeviceType.PWMDriver.ToString("F"));
+                                deviceTypeOptions.Add(new ListItem() { Value = MobiFlightPWMDriver.TYPE, Label = MobiFlightPWMDriver.TYPE });
                                 break;
                             
                             case DeviceType.LcdDisplay:
@@ -589,7 +590,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
             stepperPanel.SetAdresses(stepper);
             
-            displayPWMDriverPanel.SetSelectedAddress(PWMDrivers);
+            displayPWMDriverPanel.SetAddresses(PWMDrivers);
             
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged -= shiftRegistersComboBox_selectedIndexChanged;
             displayShiftRegisterPanel.shiftRegistersComboBox.SelectedIndexChanged += new EventHandler(shiftRegistersComboBox_selectedIndexChanged);

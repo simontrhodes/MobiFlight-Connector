@@ -12,17 +12,12 @@ namespace MobiFlight
         public int PWMDriverNumber { get; set; }
 
         public int Pin { get; set; }
-
         public int NumberOfPWMDrivers { get; set; }
 
-        private string _name = "PWMDriver";
-        
         public string Name { get; set; } = "PWMDriver";
 
-        private DeviceType _type = DeviceType.PWMDriver;
+        public DeviceType Type => DeviceType.PWMDriver;
 
-        public DeviceType Type { get; set; }
-        
         public void Stop()
         {
         }
