@@ -42,9 +42,8 @@ namespace MobiFlight
             int outputUpper)
         {
             if (!_initialized) Initialize();
-
+            
             var outputValue = Map(value, inputLower, inputUpper, outputLower, outputUpper);
-
 
             var command = new SendCommand((int)MobiFlightModule.Command.SetPWMDriver);
             command.AddArgument(PWMDriverNumber);

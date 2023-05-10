@@ -739,7 +739,7 @@ namespace MobiFlight
                 throw new MobiFlight.ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WritingDisplay"), e);
             }
         }
-        public void SetPWMDriver(string serial, string PWMDriverName, string outputPin, int value, int simLower, int simUpper, int pwmLower, int pwmUpper, bool forceMove = false)
+        public void SetPWMDriver(string serial, string PWMDriverName, string outputPin, string value, int simLower, int simUpper, int pwmLower, int pwmUpper, bool forceMove = false)
         {
             if (serial == null)
             {
@@ -750,13 +750,16 @@ namespace MobiFlight
             {
                 throw new ConfigErrorException("ConfigErrorException_OutputPinNull");
             }
+
+            if (!double.TryParse(value, out var dValue)) return;
+            var iValue = (int)dValue;
             
             try
             {
                  if (!Modules.ContainsKey(serial)) return;
                  
-                 MobiFlightModule module = Modules[serial];
-                 module.SetPWMDriver(PWMDriverName, outputPin, value, simLower, simUpper, pwmLower, pwmUpper, forceMove);
+                 var module = Modules[serial];
+                 module.SetPWMDriver(PWMDriverName, outputPin, iValue, simLower, simUpper, pwmLower, pwmUpper, forceMove);
             }
             catch (Exception e)
             {

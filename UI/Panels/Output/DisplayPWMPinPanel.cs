@@ -144,7 +144,7 @@ namespace MobiFlight.UI.Panels
                 SimUpper = int.Parse(SimUpper.Value.ToString()),
                 PWMLower = int.Parse(PWMLower.Value.ToString()),
                 PWMUpper = int.Parse(PWMUpper.Value.ToString()),
-                Move = trackBar1.Value
+                Move = trackBar1.Value.ToString()
             };
 
             OnMoveTriggered(this, eventArgs);
@@ -162,6 +162,6 @@ namespace MobiFlight.UI.Panels
         public int SimUpper { get; set; }
         public int PWMLower { get; set; }
         public int PWMUpper { get; set; }
-        public int Move { get; set; }
+        public string Move { get; set; }
     }
 }

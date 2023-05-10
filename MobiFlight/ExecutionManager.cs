@@ -836,7 +836,7 @@ namespace MobiFlight
                             serial,
                             cfg.PWMDriver.Address,
                             cfg.PWMDriver.Pin,
-                            int.Parse(value),
+                            value,
                             int.Parse(cfg.PWMDriver.SimLower),
                             int.Parse(cfg.PWMDriver.SimUpper),
                             int.Parse(cfg.PWMDriver.PWMLower),
