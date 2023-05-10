@@ -24,9 +24,9 @@ namespace MobiFlight.UI.Panels
 
         #region Vom Komponenten-Designer generierter Code
 
-        /// <summary> 
-        /// Erforderliche Methode für die Designerunterstützung. 
-        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -183,69 +183,35 @@ namespace MobiFlight.UI.Panels
             // PWMUpper
             // 
             resources.ApplyResources(this.PWMUpper, "PWMUpper");
-            this.PWMUpper.Maximum = new decimal(new int[] {
-            4095,
-            0,
-            0,
-            0});
+            this.PWMUpper.Maximum = new decimal(new int[] { 4095, 0, 0, 0 });
             this.PWMUpper.Name = "PWMUpper";
-            this.PWMUpper.Value = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            0});
+            this.PWMUpper.Value = new decimal(new int[] { 2000, 0, 0, 0 });
             // 
             // PWMLower
             // 
             resources.ApplyResources(this.PWMLower, "PWMLower");
-            this.PWMLower.Maximum = new decimal(new int[] {
-            4095,
-            0,
-            0,
-            0});
+            this.PWMLower.Maximum = new decimal(new int[] { 4095, 0, 0, 0 });
             this.PWMLower.Name = "PWMLower";
-            this.PWMLower.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
+            this.PWMLower.Value = new decimal(new int[] { 1000, 0, 0, 0 });
             // 
             // SimUpper
             // 
             resources.ApplyResources(this.SimUpper, "SimUpper");
-            this.SimUpper.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.SimUpper.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
+            this.SimUpper.Maximum = new decimal(new int[] { 2147483647, 0, 0, 0 });
+            this.SimUpper.Minimum = new decimal(new int[] { 2147483647, 0, 0, -2147483648 });
             this.SimUpper.Name = "SimUpper";
-            this.SimUpper.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.SimUpper.Value = new decimal(new int[] { 100, 0, 0, 0 });
             this.SimUpper.TextChanged += new System.EventHandler(this.SimUpper_TextChanged);
+            this.SimUpper.ValueChanged += new System.EventHandler(this.SimUpper_TextChanged);
             // 
             // SimLower
             // 
             resources.ApplyResources(this.SimLower, "SimLower");
-            this.SimLower.Maximum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            0});
-            this.SimLower.Minimum = new decimal(new int[] {
-            2147483647,
-            0,
-            0,
-            -2147483648});
+            this.SimLower.Maximum = new decimal(new int[] { 2147483647, 0, 0, 0 });
+            this.SimLower.Minimum = new decimal(new int[] { 2147483647, 0, 0, -2147483648 });
             this.SimLower.Name = "SimLower";
             this.SimLower.TextChanged += new System.EventHandler(this.SimLower_TextChanged);
+            this.SimLower.ValueChanged += new System.EventHandler(this.SimLower_TextChanged);
             // 
             // label2
             // 
@@ -282,7 +248,6 @@ namespace MobiFlight.UI.Panels
             ((System.ComponentModel.ISupportInitialize)(this.SimUpper)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SimLower)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion               

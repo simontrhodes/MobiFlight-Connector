@@ -31,21 +31,19 @@ namespace MobiFlight
             _initialized = true;
         }
 
-        private int Map(int value, int inputLower, int inputUpper, int outputLower, int outputUpper)
+        private static int Map(int value, int inputLower, int inputUpper, int outputLower, int outputUpper)
         {
             if (inputLower == outputLower && outputLower == outputUpper) return value;
             var relVal = (value - inputLower) / (float)(inputUpper - inputLower);
             return (int)Math.Round(relVal * (outputUpper - outputLower) + outputLower, 0);
         }
 
-        public void SetPWMDriver(string pin, string value, int inputLower, int inputUpper, int outputLower,
+        public void SetPWMDriver(string pin, int value, int inputLower, int inputUpper, int outputLower,
             int outputUpper)
         {
             if (!_initialized) Initialize();
 
-            var iValue = int.Parse(value);
-
-            var outputValue = Map(iValue, inputLower, inputUpper, outputLower, outputUpper);
+            var outputValue = Map(value, inputLower, inputUpper, outputLower, outputUpper);
 
 
             var command = new SendCommand((int)MobiFlightModule.Command.SetPWMDriver);

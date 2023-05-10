@@ -832,14 +832,11 @@ namespace MobiFlight
                         break;
 
                     case MobiFlightPWMDriver.TYPE:
-
-                        string outputValuePWMDriver = value;
-
-                        mobiFlightCache.setPWMDriver(
+                        mobiFlightCache.SetPWMDriver(
                             serial,
                             cfg.PWMDriver.Address,
                             cfg.PWMDriver.Pin,
-                            outputValuePWMDriver,
+                            int.Parse(value),
                             int.Parse(cfg.PWMDriver.SimLower),
                             int.Parse(cfg.PWMDriver.SimUpper),
                             int.Parse(cfg.PWMDriver.PWMLower),

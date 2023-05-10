@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace MobiFlight.UI.Panels.Settings.Device
 {
@@ -11,12 +9,12 @@ namespace MobiFlight.UI.Panels.Settings.Device
         private MobiFlight.Config.PWMDriver config;
         bool initialized = false;
 
-        public MFPWMDriverPanel()
+        private MFPWMDriverPanel()
         {
             InitializeComponent();
         }
 
-        public MFPWMDriverPanel(MobiFlight.Config.PWMDriver config, List<MobiFlightPin> Pins) : this()
+        public MFPWMDriverPanel(MobiFlight.Config.PWMDriver config) : this()
         {
             this.config = config;
             NameTextBox.Text = config.Name;
@@ -32,7 +30,7 @@ namespace MobiFlight.UI.Panels.Settings.Device
             if (!initialized) return;
             SetValues();
             if (Changed != null)
-                Changed(config, new EventArgs());
+                Changed(config, EventArgs.Empty);
         }
 
         private void SetValues()

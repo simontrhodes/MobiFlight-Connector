@@ -12,11 +12,7 @@ namespace MobiFlight.Config
 
         [XmlAttribute] public string NumModules = "16";
 
-        public PWMDriver()
-        {
-            Name = "PWMDriver";
-            _type = DeviceType.PWMDriver;
-        }
+        public PWMDriver() { Name = "PWMDriver"; _type = DeviceType.PWMDriver; }
 
         public override string ToInternal()
         {

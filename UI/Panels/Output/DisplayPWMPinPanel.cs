@@ -16,7 +16,7 @@ namespace MobiFlight.UI.Panels
 
         public event EventHandler<MoveTriggeredEventArgs> OnMoveTriggered;
 
-        internal void syncFromConfig(OutputConfigItem config)
+        internal void SyncFromConfig(OutputConfigItem config)
         {
             var pin = config.PWMDriver.Pin;
             if (string.IsNullOrEmpty(pin))
@@ -39,7 +39,7 @@ namespace MobiFlight.UI.Panels
             SetTrackBar();
         }
 
-        internal OutputConfigItem syncToConfig(OutputConfigItem config)
+        internal OutputConfigItem SyncToConfig(OutputConfigItem config)
         {
             if (displayPWMPinComboBox.Text != null)
             {
@@ -125,11 +125,13 @@ namespace MobiFlight.UI.Panels
             SetTrackBar();
         }
 
+        
         private void SimUpper_TextChanged(object sender, EventArgs e)
         {
             SetTrackBar();
         }
 
+        
         private void buttonMove_Click(object sender, EventArgs e)
         {
             if (OnMoveTriggered == null)
@@ -138,15 +140,19 @@ namespace MobiFlight.UI.Panels
             var eventArgs = new MoveTriggeredEventArgs
             {
                 Pin = displayPWMPinComboBox.Text,
-                SimLower = (int)SimLower.Value,
-                SimUpper = (int)SimUpper.Value,
-                PWMLower = (int)PWMLower.Value,
-                PWMUpper = (int)PWMUpper.Value,
+                SimLower = int.Parse(SimLower.Value.ToString()),
+                SimUpper = int.Parse(SimUpper.Value.ToString()),
+                PWMLower = int.Parse(PWMLower.Value.ToString()),
+                PWMUpper = int.Parse(PWMUpper.Value.ToString()),
                 Move = trackBar1.Value
             };
 
             OnMoveTriggered(this, eventArgs);
+            
         }
+
+
+       
     }
 
     public class MoveTriggeredEventArgs

@@ -34,8 +34,8 @@ namespace MobiFlight.OutputConfig
 
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
             return
-                obj != null && 
                 obj is PWMDriver driver &&
                 Pin == driver.Pin &&
                 Address == driver.Address &&
@@ -54,25 +54,25 @@ namespace MobiFlight.OutputConfig
         public void ReadXml(XmlReader reader)
         {
             // ignore empty values
-            if (reader["PWMDriverAddress"] != null && reader["PWMDriverAddress"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverAddress"]))
                 Address = reader["PWMDriverAddress"];
 
-            if (reader["PWMDriverPin"] != null && reader["PWMDriverPin"] != "") 
+            if (!string.IsNullOrEmpty(reader["PWMDriverPin"])) 
                 Pin = reader["PWMDriverPin"];
 
-            if (reader["PWMDriverSimLower"] != null && reader["PWMDriverSimLower"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverSimLower"]))
                 SimLower = reader["PWMDriverSimLower"];
 
-            if (reader["PWMDriverSimUpper"] != null && reader["PWMDriverSimUpper"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverSimUpper"]))
                 SimUpper = reader["PWMDriverSimUpper"];
 
-            if (reader["PWMDriverPWMLower"] != null && reader["PWMDriverPWMLower"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverPWMLower"]))
                 PWMLower = reader["PWMDriverPWMLower"];
 
-            if (reader["PWMDriverPWMUpper"] != null && reader["PWMDriverPWMUpper"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverPWMUpper"]))
                 PWMUpper = reader["PWMDriverPWMUpper"];
 
-            if (reader["PWMDriverMoveValue"] != null && reader["PWMDriverMoveValue"] != "")
+            if (!string.IsNullOrEmpty(reader["PWMDriverMoveValue"]))
                 MoveValue = reader["PWMDriverMoveValue"];
         }
 

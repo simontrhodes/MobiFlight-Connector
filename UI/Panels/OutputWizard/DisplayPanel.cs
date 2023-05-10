@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -111,6 +112,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
             stepperPanel.OnStepperSelected += StepperPanel_OnStepperSelected;
             // set the default profile for steppers
             stepperPanel.SetStepperProfile(MFStepperPanel.Profiles.Find(p => p.Value.id == 0).Value);
+
+            displayPWMDriverPanel.OnMoveTriggered += DisplayPWMPanel_OnMoveTriggered;
         }
 
         internal void syncFromConfig(OutputConfigItem cfg)
@@ -158,7 +161,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         break;
                     
                     case MobiFlightPWMDriver.TYPE:
-                        displayPWMDriverPanel.syncFromConfig(config);
+                        displayPWMDriverPanel.SyncFromConfig(config);
                         break;
                     
                     case MobiFlightShiftRegister.TYPE:
@@ -234,7 +237,7 @@ namespace MobiFlight.UI.Panels.OutputWizard
                         break;
                     
                     case MobiFlightPWMDriver.TYPE:
-                        displayPWMDriverPanel.syncToConfig(config);
+                        displayPWMDriverPanel.SyncToConfig(config);
                         break;
                     
                     case MobiFlightShiftRegister.TYPE:
@@ -338,7 +341,6 @@ namespace MobiFlight.UI.Panels.OutputWizard
                                 break;
                             
                             case DeviceType.PWMDriver:
-                                //displayTypeOptions.Add(DeviceType.PWMDriver.ToString("F"));
                                 deviceTypeOptions.Add(new ListItem() { Value = MobiFlightPWMDriver.TYPE, Label = MobiFlightPWMDriver.TYPE });
                                 break;
                             
@@ -785,23 +787,13 @@ namespace MobiFlight.UI.Panels.OutputWizard
 
         #endregion
         
-        private void PWMDriversAddressesComboBox(object sender, EventArgs e)
+        private void DisplayPWMPanel_OnMoveTriggered(object sender, MoveTriggeredEventArgs e)
         {
-            ComboBox cb = displayModuleNameComboBox;
-            String serial = SerialNumber.ExtractSerial(cb.SelectedItem.ToString());
-            MobiFlightModule module = _execManager.getMobiFlightModuleCache().GetModuleBySerial(serial);
-            bool pwmSupport = false;
+            string serial = SerialNumber.ExtractSerial(config.DisplaySerial);
 
-            int numModules = 0;
-            foreach (IConnectedDevice device in module.GetConnectedDevices())
-            {
-                if (device.Type != DeviceType.PWMDriver) continue;
-                if (device.Name != ((sender as ComboBox).SelectedItem as ListItem).Value) continue;
-                numModules = (device as MobiFlightPWMDriver).NumberOfPWMDrivers;
-            }
-            displayPWMDriverPanel.SetNumModules(numModules);
+            
+            _execManager.getMobiFlightModuleCache().SetPWMDriver(serial, config.PWMDriver.Address, e.Pin, e.Move,e.SimLower, e.SimUpper, e.PWMLower, e.PWMUpper, true);
         }
-        
         private void shiftRegistersComboBox_selectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = displayModuleNameComboBox;
@@ -819,6 +811,8 @@ namespace MobiFlight.UI.Panels.OutputWizard
             displayShiftRegisterPanel.SetNumModules(numModules);
         }
 
+        
+        
         private void portComboBox_Validating(object sender, CancelEventArgs e)
         {
             ComboBox cb = (sender as ComboBox);

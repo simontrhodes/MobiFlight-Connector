@@ -12,6 +12,6 @@ namespace MobiFlight
         bool SetServo(string name, int value, int min, int max, byte maxRotationPercent);
         bool SetStepper(string stepper, int value, int inputRevolutionSteps);
         bool SetLcdDisplay(string address, string value);
-        bool SetPWMDriver(string moduleID, string outputPin, string value, int inputLower, int inputUpper, int outputLower, int outputUpper);
+        bool SetPWMDriver(string moduleID, string outputPin, int value, int simLower, int simUpper, int pwmLower, int pwmUpper, bool forceMove = false);
     }
 }

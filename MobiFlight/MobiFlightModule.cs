@@ -850,17 +850,17 @@ namespace MobiFlight
             return stepperModules[stepper];
         }
 
-        public bool SetPWMDriver(string moduleID, string outputPin, string value, int inputLower, int inputUpper, int outputLower, int outputUpper)
+        public bool SetPWMDriver(string moduleID, string outputPin, int value, int simLower, int simUpper, int pwmLower, int pwmUpper, bool forceMove=false)
         {
-            String key = "PWMDriver_" + moduleID + outputPin;
-            string cachedValue = value;
+            var key = "PWMDriver_" + moduleID + outputPin;
+            
 
-            if (!KeepAliveNeeded() && lastValue.ContainsKey(key) &&
-                lastValue[key] == cachedValue) return false;
+            if (!forceMove && !KeepAliveNeeded() && lastValue.ContainsKey(key) &&
+                lastValue[key] == value.ToString()) return false;
             
-            lastValue[key] = cachedValue;
+            lastValue[key] = value.ToString();
             
-            PWMDriverModules[moduleID].SetPWMDriver(outputPin, value, inputLower, inputUpper, outputLower, outputUpper);
+            PWMDriverModules[moduleID].SetPWMDriver(outputPin, value, simLower, simUpper, pwmLower, pwmUpper);
             return true;
         }
         
