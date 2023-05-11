@@ -113,13 +113,6 @@ namespace MobiFlight.Tests
 
         [TestMethod()]
         [Ignore]
-        public void SetPWMDriverTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        [Ignore]
         public void SetServoTest()
         {
             Assert.Fail();

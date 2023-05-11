@@ -104,7 +104,6 @@
     <Compile Include="MobiFlight\OutputConfig\FsuipcOffsetTests.cs" />
     <Compile Include="MobiFlight\OutputConfig\LedModuleTests.cs" />
     <Compile Include="MobiFlight\OutputConfig\PinTests.cs" />
-    <Compile Include="MobiFlight\OutputConfig\PWMDriverTests.cs" />
     <Compile Include="MobiFlight\OutputConfig\ServoTests.cs" />
     <Compile Include="MobiFlight\OutputConfig\SimConnectValueTests.cs" />
     <Compile Include="MobiFlight\OutputConfig\StepperTests.cs" />
@@ -337,14 +336,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\MobiFlight\OutputConfig\OutputConfigItem\ReadXmlTest.ButtonInputAction.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\MobiFlight\OutputConfig\PWMDriver\ReadXmlTest.1.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\MobiFlight\OutputConfig\PWMDriver\WriteXmlTest.1.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
