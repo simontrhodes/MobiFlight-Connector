@@ -17,6 +17,8 @@ namespace MobiFlight.UI.Panels
         {
             InitializeComponent();
             displayPortComboBox.SelectedIndexChanged += displayPortComboBox_SelectedIndexChanged;
+            displayPinComboBox.SelectedIndexChanged += displayPinComboBox_SelectedIndexChanged;
+            MultiPinSelectPanel.SelectionChanged += MultiPinSelectPanel_SelectionChanged;
 
             MultiPinSelectPanel.Visible = false;
             singlePinSelectFlowLayoutPanel.Visible = true;
@@ -37,8 +39,7 @@ namespace MobiFlight.UI.Panels
 
         internal void EnablePWMSelect(bool enable)
         {
-            //pwmPinPanel.Visible = Module.getPwmPins().Contains((byte)(item as MobiFlightOutput).Pin);
-            PinPanel.Visible = enable;
+            pwmPinPanel.Visible = enable;
         }
 
         public void SetPorts(List<ListItem> ports)
@@ -66,7 +67,11 @@ namespace MobiFlight.UI.Panels
             displayPinComboBox.Enabled = pins.Count > 0;
             displayPinComboBox.Width = WideStyle ? displayPinComboBox.MaximumSize.Width : displayPinComboBox.MinimumSize.Width;
 
-
+            if (Module != null && pins.Count > 1)
+            {
+                // this is MobiFlight Outputs
+                _MultiSelectOptions(true);
+            }
             MultiPinSelectPanel?.SetPins(pins);
         }
         private void displayPortComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,7 +108,7 @@ namespace MobiFlight.UI.Panels
                     _MultiSelectOptions(false);
                     pin = config.Pin.DisplayPin;
                 }
-                else if (!SerialNumber.IsMobiFlightSerial(serial))
+                else if (SerialNumber.IsArcazeSerial(serial))
                 {
                     // these are Arcaze Boards.
                     // Arcaze Boards only have "single output"
@@ -112,7 +117,7 @@ namespace MobiFlight.UI.Panels
 
                     // disable multi-select option
                     _MultiSelectOptions(false);
-                } else {
+                } else if (SerialNumber.IsMobiFlightSerial(serial)) {
 
                     // this is MobiFlight Outputs
                     _MultiSelectOptions(true);
@@ -157,7 +162,7 @@ namespace MobiFlight.UI.Panels
 
             config.Pin.DisplayPinBrightness = (byte)(255 * ((displayPinBrightnessTrackBar.Value) / (double)(displayPinBrightnessTrackBar.Maximum)));
 
-            config.Pin.DisplayPinPWM = PinPanel.Enabled && displayPwmCheckBox.Checked;
+            config.Pin.DisplayPinPWM = pwmPinPanel.Enabled && displayPwmCheckBox.Checked;
 
             return config;
         }
@@ -174,7 +179,7 @@ namespace MobiFlight.UI.Panels
                 String pin = (sender as ComboBox).SelectedItem.ToString();
                 foreach (var item in Module.GetConnectedDevices(pin))
                 {
-                    PinPanel.Enabled = PinPanel.Visible = Module.getPwmPins()
+                    pwmPinPanel.Enabled = pwmPinPanel.Visible = Module.getPwmPins()
                                                 .Find(x => x.Pin == (byte)(item as MobiFlightOutput).Pin) != null;
                     return;
                 }
@@ -194,17 +199,17 @@ namespace MobiFlight.UI.Panels
                 singlePinSelectFlowLayoutPanel.Visible = true;
                 PinSelectContainer.Height = singlePinSelectFlowLayoutPanel.Height;
             }
-
         }
 
-        private void displayPortComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void MultiPinSelectPanel_SelectionChanged(object sender, List<ListItem> selectedPins)
         {
+            var pwmPins = Module.getPwmPins();
 
-        }
-
-        private void displayPinComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
+            pwmPinPanel.Enabled = pwmPinPanel.Visible
+                                = selectedPins.All(
+                                    pin => pwmPins.Find(
+                                        pwmPin => pwmPin.Pin == (Module.GetConnectedDevices(pin.Value).First() as MobiFlightOutput).Pin
+                                    ) != null);
         }
     }
 }
