@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms.Design;
 using CommandMessenger;
+using MobiFlight.Base;
 using Newtonsoft.Json.Linq;
 using SharpDX.DirectInput;
 
@@ -62,7 +63,7 @@ namespace MobiFlight
             _initialized = true;
         }
 
-        public void Display(int subModule, String value, byte points, byte mask)
+        public void Display(int subModule, String value, byte points, byte mask, bool reverse = false)
         {
             if (!_initialized) Initialize();
 
@@ -79,6 +80,13 @@ namespace MobiFlight
             // clamp and reverse the string
             if (value.Length > 8) value = value.Substring(0, 8);
 
+            if (reverse)
+            {
+                value = new string(value.ToCharArray().Reverse().ToArray());
+                points = points.Reverse();
+                mask = mask.Reverse();
+            }
+
             // cache hit
             if (_state[subModule] == null || !_state[subModule].DisplayRequiresUpdate(value, points, mask))
                 return;
@@ -92,6 +100,7 @@ namespace MobiFlight
             Log.Instance.log($"Command: SetModule <{(int)MobiFlightModule.Command.SetModule},{this.ModuleNumber},{subModule},{value},{points},{mask};>.", LogSeverity.Debug);
 
             // Send command
+            System.Threading.Thread.Sleep(1);
             CmdMessenger.SendCommand(command);
         }
 
