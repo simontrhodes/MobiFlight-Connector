@@ -46,8 +46,9 @@ namespace MobiFlight.Config
                 // Its data is embedded (redundantly) in mux client devices
 
                 String current = item.ToInternal();
-                
-                if ((message.Length + current.Length) > MaxMessageLength && message.Length > 0) {
+
+                if ((message.Length + current.Length) > MaxMessageLength && message.Length > 0)
+                {
                     result.Add(message);
                     message = "";
                 }
@@ -157,13 +158,14 @@ namespace MobiFlight.Config
                         case DeviceType.InputMultiplexer:
                             // If the multiplexerDriver is to be implicitly defined by clients:
                             // Build multiplexerDriver if none found yet 
-                            if (multiplexerDriver == null) {
+                            if (multiplexerDriver == null)
+                            {
                                 // Store it, so another clients will not create a new one
                                 multiplexerDriver = new MobiFlight.Config.MultiplexerDriver();
                                 // The MultiplexerDriver is registered as a "ghost" device in Config's items list; it won't be shown in the GUI tree.
                                 Items.Add(multiplexerDriver);
-                            //} else {
-                            //    multiplexerDriver.registerClient();
+                                //} else {
+                                //    multiplexerDriver.registerClient();
                             }
                             multiplexerDriver.FromInternal(InputMultiplexer.GetMultiplexerDriverConfig(item + BaseDevice.End));
 
@@ -181,16 +183,16 @@ namespace MobiFlight.Config
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
 
-                        // If the multiplexerDriver is to be explicitly defined by its own config line,
-                        // following 'case' is required:
+                            // If the multiplexerDriver is to be explicitly defined by its own config line,
+                            // following 'case' is required:
 
-                        //case DeviceType.MultiplexerDriver:
+                            //case DeviceType.MultiplexerDriver:
                             //if (multiplexerDriver == null) {
                             //  multiplexerDriver = new MobiFlight.Config.MultiplexerDriver();
                             //  currentItem = multiplexerDriver;
                             //  currentItem.FromInternal(item + BaseDevice.End);
-	                        //} else {
-	                        //  multiplexerDriver.registerClient();
+                            //} else {
+                            //  multiplexerDriver.registerClient();
                             //}
                             //break;
                     }
@@ -211,6 +213,13 @@ namespace MobiFlight.Config
                 {
                     if (throwException)
                         throw new FormatException("Config not valid. Type not valid", ex);
+                    else
+                        return this;
+                }
+                catch (Exception ex)
+                {
+                    if (throwException)
+                        throw new Exception("Config not valid.", ex);
                     else
                         return this;
                 }
