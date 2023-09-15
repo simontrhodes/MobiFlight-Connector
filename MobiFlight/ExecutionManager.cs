@@ -1244,7 +1244,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay(cfg.PWMDriver.SimLower, offCfg);
+                    ExecuteDisplay(offCfg.PWMDriver.SimLower, offCfg);
                     break;
 
                 case OutputConfig.LcdDisplay.Type:
@@ -1282,7 +1282,7 @@ namespace MobiFlight
                     break;
 
                 case MobiFlightPWMDriver.TYPE:
-                    ExecuteDisplay(cfg.PWMDriver.SimUpper, cfg);
+                    ExecuteDisplay(value.ToString() != "" ? value.ToString() :cfg.PWMDriver.SimUpper, cfg);
                     break;
 
                 case MobiFlightServo.TYPE:
