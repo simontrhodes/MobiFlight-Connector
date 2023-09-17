@@ -22,6 +22,10 @@
 
         #region Vom Komponenten-Designer generierter Code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -47,19 +51,11 @@
             // 
             // AddressComboBox
             // 
-            this.AddressComboBox.AutoCompleteCustomSource.AddRange(new string[] {
-            resources.GetString("AddressComboBox.AutoCompleteCustomSource"),
-            resources.GetString("AddressComboBox.AutoCompleteCustomSource1"),
-            resources.GetString("AddressComboBox.AutoCompleteCustomSource2"),
-            resources.GetString("AddressComboBox.AutoCompleteCustomSource3")});
+            this.AddressComboBox.AutoCompleteCustomSource.AddRange(new string[] { resources.GetString("AddressComboBox.AutoCompleteCustomSource"), resources.GetString("AddressComboBox.AutoCompleteCustomSource1"), resources.GetString("AddressComboBox.AutoCompleteCustomSource2"), resources.GetString("AddressComboBox.AutoCompleteCustomSource3") });
             this.AddressComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.AddressComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AddressComboBox.FormattingEnabled = true;
-            this.AddressComboBox.Items.AddRange(new object[] {
-            resources.GetString("AddressComboBox.Items"),
-            resources.GetString("AddressComboBox.Items1"),
-            resources.GetString("AddressComboBox.Items2"),
-            resources.GetString("AddressComboBox.Items3")});
+            this.AddressComboBox.Items.AddRange(new object[] { resources.GetString("AddressComboBox.Items"), resources.GetString("AddressComboBox.Items1"), resources.GetString("AddressComboBox.Items2"), resources.GetString("AddressComboBox.Items3") });
             resources.ApplyResources(this.AddressComboBox, "AddressComboBox");
             this.AddressComboBox.Name = "AddressComboBox";
             this.AddressComboBox.SelectedValueChanged += new System.EventHandler(this.AddressComboBox_SelectedValueChanged);
@@ -100,7 +96,6 @@
             this.NameGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion
