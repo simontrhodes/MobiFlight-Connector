@@ -75,6 +75,14 @@ namespace MobiFlight.Modifier
 
         public void ReadXml(XmlReader reader)
         {
+            // we have an empty tag
+            if (reader.LocalName=="modifiers" && reader.IsEmptyElement)
+            {
+                // advance to the next node
+                reader.Read();
+                return;
+            }
+
             do
             {
                 // advance to the next node
@@ -112,12 +120,20 @@ namespace MobiFlight.Modifier
                         break;
 
                     case "substring":
-                        var s = new Substring();
+                        var s = new Substring();    
                         s.ReadXml(reader);
                         modifiers.Add(s);
                         break;
                 }
             } while (reader.LocalName != "modifiers");
+
+            // are still on the closing tag
+            if (reader.LocalName == "modifiers" && reader.NodeType == XmlNodeType.EndElement)
+            {
+                // advance to the next node
+                reader.Read();
+                return;
+            }
         }
 
         public void WriteXml(XmlWriter writer)
