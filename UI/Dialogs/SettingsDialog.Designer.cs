@@ -43,6 +43,7 @@
             this.servoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LcdDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PWMDriverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.encoderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,6 +147,7 @@
             this.servoToolStripMenuItem,
             this.stepperToolStripMenuItem,
             this.LcdDisplayToolStripMenuItem,
+            this.PWMDriverToolStripMenuItem,
             this.toolStripMenuItem4,
             this.buttonToolStripMenuItem,
             this.encoderToolStripMenuItem,
@@ -177,6 +179,11 @@
             // 
             this.LcdDisplayToolStripMenuItem.Name = "LcdDisplayToolStripMenuItem";
             resources.ApplyResources(this.LcdDisplayToolStripMenuItem, "LcdDisplayToolStripMenuItem");
+            // 
+            // PWMDriverToolStripMenuItem
+            // 
+            this.PWMDriverToolStripMenuItem.Name = "PWMDriverToolStripMenuItem";
+            resources.ApplyResources(this.PWMDriverToolStripMenuItem, "PWMDriverToolStripMenuItem");
             // 
             // toolStripMenuItem4
             // 
@@ -341,6 +348,7 @@
         private System.Windows.Forms.ToolStripMenuItem ledSegmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem servoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stepperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;

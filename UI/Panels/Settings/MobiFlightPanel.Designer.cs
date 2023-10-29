@@ -550,7 +550,8 @@
         private System.Windows.Forms.ToolStripMenuItem addLedModuleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addOutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addLcdDisplayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addShiftRegisterToolStripMenuItem;        
+        private System.Windows.Forms.ToolStripMenuItem addShiftRegisterToolStripMenuItem;  
+        private System.Windows.Forms.ToolStripMenuItem addPWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton removeDeviceToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ImageList mfTreeViewImageList;
@@ -562,6 +563,7 @@
         private System.Windows.Forms.ToolStripMenuItem stepperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem LcdDisplayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ShiftRegisterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem buttonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem encoderToolStripMenuItem;
@@ -592,8 +594,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem ignoreCOMPortToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dontIgnoreCOMPortToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addPWMDriverToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem PWMDriverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton UpdateFirmwareToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;

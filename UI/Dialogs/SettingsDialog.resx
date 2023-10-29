@@ -300,6 +300,12 @@
   <data name="LcdDisplayToolStripMenuItem.Text" xml:space="preserve">
     <value>LCD Display</value>
   </data>
+  <data name="PWMDriverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 22</value>
+  </data>
+  <data name="PWMDriverToolStripMenuItem.Text" xml:space="preserve">
+    <value>PWM Driver</value>
+  </data>
   <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 6</value>
   </data>
@@ -751,6 +757,12 @@
     <value>LcdDisplayToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;LcdDisplayToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PWMDriverToolStripMenuItem.Name" xml:space="preserve">
+    <value>PWMDriverToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;PWMDriverToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">
