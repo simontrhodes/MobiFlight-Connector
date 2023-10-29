@@ -247,7 +247,6 @@
     <Compile Include="MobiFlight\Clipboard.cs" />
     <Compile Include="MobiFlight\ConfigExtensions.cs" />
     <Compile Include="MobiFlight\Config\Compatibility\LedModuleDeprecated.cs" />
-    <Compile Include="MobiFlight\Config\Compatibility\LedModuleDeprecated.cs" />
     <Compile Include="MobiFlight\Config\Compatibility\StepperDeprecatedV2.cs" />
     <Compile Include="MobiFlight\Config\InputMultiplexer.cs" />
     <Compile Include="MobiFlight\Config\CustomDevice.cs" />
@@ -647,6 +646,7 @@
     </Compile>
     <Compile Include="UI\Panels\Output\DisplayPWMDriverPanel.Designer.cs">
       <DependentUpon>DisplayPWMDriverPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Panels\Output\CustomDevicePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1446,6 +1446,7 @@
 	<EmbeddedResource Include="UI\Panels\Output\DisplayPWMDriverPanel.resx">
       <DependentUpon>DisplayPWMDriverPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\CustomDevicePanel.de.resx">
       <DependentUpon>CustomDevicePanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -1597,10 +1598,6 @@
     <EmbeddedResource Include="UI\Forms\FirmwareUpdateProcess.resx">
       <DependentUpon>FirmwareUpdateProcess.cs</DependentUpon>
       <SubType>Designer</SubType>
-    <Compile Include="MobiFlight\Config\CustomDevice.cs" />
-    <Compile Include="MobiFlight\Config\PWMDriver.cs" />
-    <Compile Include="MobiFlight\CustomDevices\CustomDevice.cs" />
-    <Compile Include="MobiFlight\CustomDevices\CustomDeviceDefinitions.cs" />
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Device\MFButtonPanel.de.resx">
       <DependentUpon>MFButtonPanel.cs</DependentUpon>
@@ -1729,7 +1726,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
+   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

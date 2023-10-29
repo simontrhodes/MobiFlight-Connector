@@ -394,7 +394,7 @@ namespace MobiFlight.UI.Panels.Settings
 
                         case DeviceType.PWMDriver:
                             panel = new MFPWMDriverPanel(dev as MobiFlight.Config.PWMDriver);
-                            ((MFPWMDriverPanel)panel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            (panel as MFPWMDriverPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
 
                         case DeviceType.Servo:
@@ -643,17 +643,7 @@ namespace MobiFlight.UI.Panels.Settings
                             throw new MaximumDeviceNumberReachedMobiFlightException(MobiFlightPWMDriver.TYPE, tempModule.Board.ModuleLimits.MaxPWMDrivers);
                         }
 
-                        //If no I2C pins available then there's no way to add an PWMDriver device so throw an error.
-                        if (!(availableI2Cpins?.Any() ?? false))
-                        {
-                            throw new I2CPinsNotDefinedException(MobiFlightPWMDriver.TYPE);
-                        }
-
-                        // Throw an error if any I2C pins are in use.
-                        if (firstInUseI2CPin != null)
-                        {
-                            throw new I2CPinInUseException(MobiFlightPWMDriver.TYPE, firstInUseI2CPin);
-                        }
+                        CheckIfI2CPinsAreAvailable(tempModule);
                         
                         cfgItem = new MobiFlight.Config.PWMDriver();
                         break;
