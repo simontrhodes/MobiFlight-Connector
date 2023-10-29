@@ -44,10 +44,11 @@ namespace MobiFlight
         public OutputConfig.Servo   Servo { get; set; }
         public OutputConfig.PWMDriver PWMDriver                 { get; set; }
         public OutputConfig.Stepper Stepper { get; set; }
-        public OutputConfig.ShiftRegister ShiftRegister               { get; set; }
-        public string       DisplayTrigger              { get; set; }
-        public PreconditionList   Preconditions       { get; set; }
-        public ConfigRefList      ConfigRefs          { get; set; }     
+        public OutputConfig.ShiftRegister ShiftRegister         { get; set; }
+        public OutputConfig.CustomDevice CustomDevice           { get; set; } = new OutputConfig.CustomDevice();
+        public string       DisplayTrigger                      { get; set; }
+        public PreconditionList   Preconditions                 { get; set; }
+        public ConfigRefList      ConfigRefs                    { get; set; }     
         
         public InputConfig.ButtonInputConfig ButtonInputConfig { get; set; }
 
@@ -108,6 +109,8 @@ namespace MobiFlight
                 // this.BcdPins.Equals((obj as OutputConfigItem).BcdPins) &&
                 //===
                 this.ShiftRegister.Equals((obj as OutputConfigItem).ShiftRegister) &&
+                //===
+                this.CustomDevice.Equals((obj as OutputConfigItem).CustomDevice) &&
                 //===
                 this.Preconditions.Equals((obj as OutputConfigItem).Preconditions) &&
                 //===
@@ -242,6 +245,10 @@ namespace MobiFlight
                 else if (DisplayType == MobiFlightShiftRegister.TYPE)
                 {
                     ShiftRegister.ReadXml(reader);
+                }
+                else if (DisplayType == MobiFlightCustomDevice.TYPE)
+                {
+                    CustomDevice.ReadXml(reader);
                 }
                 else if (DisplayType == "InputAction")
                 {
@@ -397,6 +404,10 @@ namespace MobiFlight
             {
                 ShiftRegister.WriteXml(writer);
             }
+            else if (DisplayType == MobiFlightCustomDevice.TYPE)
+            {
+                CustomDevice.WriteXml(writer);
+            }
             else if (DisplayType == "InputAction")
             {
                 if (ButtonInputConfig != null)
@@ -457,6 +468,7 @@ namespace MobiFlight
             clone.Stepper                   = Stepper.Clone() as OutputConfig.Stepper;
 
             clone.ShiftRegister             = ShiftRegister.Clone() as OutputConfig.ShiftRegister;
+            clone.CustomDevice              = CustomDevice.Clone() as OutputConfig.CustomDevice;
 
             clone.LcdDisplay                = this.LcdDisplay.Clone() as OutputConfig.LcdDisplay;
             clone.Preconditions             = Preconditions.Clone() as PreconditionList;

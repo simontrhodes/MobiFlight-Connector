@@ -28,6 +28,8 @@ namespace MobiFlight
     {
         public const string GenerateSerial = "1.3.0";
         public const string SetName = "1.6.0";
+        public const string LedModuleTypeTM1637 = "2.4.2";
+        public const string CustomDevices = "2.4.2";
     }
 
     // This is the list of recognized commands. These can be commands that can either be sent or received. 
@@ -38,7 +40,7 @@ namespace MobiFlight
         Button,              // 1
         EncoderSingleDetent, // 2 (retained for backwards compatibility, use Encoder for new configs)
         Output,              // 3
-        LedModule,           // 4
+        LedModuleDeprecated, // 4
         StepperDeprecatedV1, // 5
         Servo,               // 6
         LcdDisplay,          // 7
@@ -49,8 +51,10 @@ namespace MobiFlight
         InputShiftRegister,  // 12
         MultiplexerDriver,   // 13  Not a proper device, but index required for update events
         InputMultiplexer, 	 // 14
-        Stepper,              // 15
-        PWMDriver            // 16
+        Stepper,             // 15
+        LedModule,           // 16
+        CustomDevice,         // 17        
+        PWMDriver            // 18
     }
 
     public class MobiFlightModule : IModule, IOutputModule
@@ -89,7 +93,8 @@ namespace MobiFlight
             InputShiftRegisterChange, // 29
             InputMultiplexerChange, // 30
             SetStepperSpeedAccel,   // 31
-            SetPWMDriver,           // 32
+            SetCustomDevice,        // 32
+            SetPWMDriver,           // 33
             DebugPrint =0xFF         // 255 for Debug Print from Firmware to log/terminal
         };
 
@@ -225,6 +230,7 @@ namespace MobiFlight
         Dictionary<String, MobiFlightShiftRegister> shiftRegisters = new Dictionary<string, MobiFlightShiftRegister>();
         Dictionary<String, MobiFlightInputShiftRegister> inputShiftRegisters = new Dictionary<string, MobiFlightInputShiftRegister>();
         Dictionary<String, MobiFlightInputMultiplexer> inputMultiplexers = new Dictionary<string, MobiFlightInputMultiplexer>();
+        Dictionary<String, MobiFlightCustomDevice> customDevices = new Dictionary<string, MobiFlightCustomDevice>();
 
         Dictionary<String, int> buttonValues = new Dictionary<String, int>();
 
@@ -252,9 +258,9 @@ namespace MobiFlight
 
         public MobiFlightModule(MobiFlightModuleInfo moduleInfo)
         {
-            Name = "Default";
-            Version = null; // this is simply unknown, in case of an unflashed Arduino
-            Serial = null; // this is simply unknown, in case of an unflashed Arduino
+            Name = moduleInfo.Name ?? "Default";
+            Version = moduleInfo.Version;
+            Serial = moduleInfo.Serial;
             _comPort = moduleInfo.Port;
             Board = moduleInfo.Board;
             HardwareId = moduleInfo.HardwareId;
@@ -323,6 +329,7 @@ namespace MobiFlight
             inputMultiplexers.Clear();
             analogInputs.Clear();
             shiftRegisters.Clear();
+            customDevices.Clear();
 
             
             foreach (Config.BaseDevice device in Config.Items)
@@ -347,11 +354,14 @@ namespace MobiFlight
                             }
 
                             device.Name = GenerateUniqueDeviceName(ledModules.Keys.ToArray(), device.Name);
+                            var dev = device as Config.LedModule;
+                            
                             ledModules.Add(device.Name, new MobiFlightLedModule()
                             {
                                 CmdMessenger = _cmdMessenger,
                                 Name = device.Name,
                                 ModuleNumber = ledModules.Count,
+                                ModelType = dev.ModelType,
                                 SubModules = ledSubmodules,
                                 Brightness = (device as Config.LedModule).Brightness
                             });
@@ -374,8 +384,6 @@ namespace MobiFlight
                             device.Name = GenerateUniqueDeviceName(servoModules.Keys.ToArray(), device.Name);
                             servoModules.Add(device.Name, new MobiFlightServo() { CmdMessenger = _cmdMessenger, Name = device.Name, ServoNumber = servoModules.Count });
                             break;
-                        
-                        
                         
                         case DeviceType.Output:
                             device.Name = GenerateUniqueDeviceName(outputs.Keys.ToArray(), device.Name);
@@ -449,16 +457,26 @@ namespace MobiFlight
                             device.Name = GenerateUniqueDeviceName(inputMultiplexers.Keys.ToArray(), device.Name);
                             inputMultiplexers.Add(device.Name, new MobiFlightInputMultiplexer() { Name = device.Name });
                             break;
-                            // DeviceType.MultiplexerDriver does not belong here (a "multiplexerDrivers" collection doesn't even exist)
-                            // because all I/O devices here are only those meant to be linked to a user input event or output data,
-                            // while MultiplexerDrivers are not addressable by the user (and shouldn't show in the UI).
+                        // DeviceType.MultiplexerDriver does not belong here (a "multiplexerDrivers" collection doesn't even exist)
+                        // because all I/O devices here are only those meant to be linked to a user input event or output data,
+                        // while MultiplexerDrivers are not addressable by the user (and shouldn't show in the UI).
+
+                        case DeviceType.CustomDevice:
+                            device.Name = GenerateUniqueDeviceName(customDevices.Keys.ToArray(), device.Name);
+                            customDevices.Add(device.Name, new MobiFlightCustomDevice() {
+                                    CmdMessenger = _cmdMessenger,
+                                    DeviceNumber = customDevices.Count,
+                                    Name = device.Name,
+                                    CustomDevice = CustomDevices.CustomDeviceDefinitions.GetDeviceByType((device as Config.CustomDevice).CustomType)
+                            });
+                            break;
                     }
                 }
                 catch (Exception ex)
                 {
                     Log.Instance.log($"Unable to load config for {Board.Info.FriendlyName} ({Port}) > {device.Name}: {ex.Message}", LogSeverity.Error);
                 }
-            }
+            } 
         }
 
         public static string GenerateUniqueDeviceName(String[] Keys, String Name)
@@ -878,6 +896,20 @@ namespace MobiFlight
             return true;
         }
 
+        internal bool setCustomDevice(string deviceName, string messageType, string value)
+        {
+            String key = "CustomDevice_" + deviceName + messageType;
+            String cachedValue = value;
+
+            if (!KeepAliveNeeded() && lastValue.ContainsKey(key) &&
+                lastValue[key] == cachedValue) return false;
+
+            lastValue[key] = cachedValue;
+
+            customDevices[deviceName].Display(messageType, value);
+            return true;
+        }
+
         public bool Retrigger()
         {
             bool isOk = true;
@@ -1041,6 +1073,11 @@ namespace MobiFlight
                 result.Add(shiftRegister);
             }
 
+            foreach (MobiFlightCustomDevice customDevice in customDevices.Values)
+            {
+                result.Add(customDevice);
+            }
+
             return result;
         }
 
@@ -1059,6 +1096,16 @@ namespace MobiFlight
             result[MobiFlightAnalogInput.TYPE] = analogInputs.Count;
             result[MobiFlightInputShiftRegister.TYPE] = inputShiftRegisters.Count;
             result[MobiFlightInputMultiplexer.TYPE] = inputMultiplexers.Count;
+            result[MobiFlightCustomDevice.TYPE] = customDevices.Count;
+
+            foreach(var device in customDevices.Values)
+            {
+                var customDeviceType = device.CustomDevice.Info.Type;
+                var statisticsKey = $"CustomDevice.{customDeviceType}";
+                if (!result.ContainsKey(statisticsKey))
+                    result[statisticsKey] = 0;
+                result[statisticsKey]++;
+            }
 
             return result;
         }
@@ -1127,6 +1174,7 @@ namespace MobiFlight
             if (PWMDriverModules.Count > 0) result.Add(DeviceType.PWMDriver);
             if (lcdDisplays.Count > 0) result.Add(DeviceType.LcdDisplay);
             if (shiftRegisters.Count > 0) result.Add(DeviceType.ShiftRegister);
+            if (customDevices.Count > 0) result.Add(DeviceType.CustomDevice);
 
             return result;
         }
@@ -1187,6 +1235,7 @@ namespace MobiFlight
                     case DeviceType.PWMDriver:    
                     case DeviceType.ShiftRegister:
                     case DeviceType.LcdDisplay:
+                    case DeviceType.CustomDevice:
                         result.Add(dev);
                         break;
                 }
@@ -1305,7 +1354,11 @@ namespace MobiFlight
                 {
                     case DeviceType.LedModule:
                         usedPins.Add(Convert.ToByte((device as LedModule).ClkPin));
-                        usedPins.Add(Convert.ToByte((device as LedModule).ClsPin));
+                        if ((device as LedModule).ModelType == LedModule.MODEL_TYPE_MAX72xx)
+                        {
+                            if ((device as LedModule).ClsPin != "")
+                                usedPins.Add(Convert.ToByte((device as LedModule).ClsPin));
+                        }
                         usedPins.Add(Convert.ToByte((device as LedModule).DinPin));
                         break;
 
@@ -1376,6 +1429,10 @@ namespace MobiFlight
                         usedPins.Add(Convert.ToByte((device as InputMultiplexer).Selector.PinSx[3]));
                         break;
 
+                    case DeviceType.CustomDevice:
+                        (device as CustomDevice).ConfiguredPins.ForEach(p => usedPins.Add(Convert.ToByte((p))));
+                        break;
+
                     // If the multiplexerDriver is to be handled as a regular device
                     // but explicitly defined by its own config line, following 'case' is required:
                     //case DeviceType.MultiplexerDriver:
@@ -1391,7 +1448,10 @@ namespace MobiFlight
             }
 
             // Mark all the used pins as used in the result list.
-            usedPins.ForEach(pin => ResultPins.Find(resultPin => resultPin.Pin == pin).Used = true);
+            foreach (byte pinNo in usedPins) {
+                MobiFlightPin pin = ResultPins.Find(resultPin => resultPin.Pin == pinNo);
+                if (pin != null) pin.Used = true;
+            }
 
             if (FreeOnly)
                 ResultPins = ResultPins.FindAll(x => x.Used == false);

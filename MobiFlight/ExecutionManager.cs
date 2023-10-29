@@ -1,21 +1,14 @@
+using MobiFlight.Base;
+using MobiFlight.FSUIPC;
+using MobiFlight.InputConfig;
+using MobiFlight.SimConnectMSFS;
+using MobiFlight.xplane;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
-using MobiFlight;
-using MobiFlight.FSUIPC;
-using MobiFlight.Base;
-using MobiFlight.SimConnectMSFS;
-using MobiFlight.Config;
-using MobiFlight.OutputConfig;
-using MobiFlight.InputConfig;
-using MobiFlight.xplane;
-using System.Globalization;
-using Newtonsoft.Json.Linq;
-using FSUIPC;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace MobiFlight
 {
@@ -33,6 +26,7 @@ namespace MobiFlight
         public event EventHandler OnSimCacheClosed;
         public event EventHandler OnSimCacheConnected;
         public event EventHandler OnSimCacheConnectionLost;
+        public event EventHandler<string> OnSimAircraftChanged;
 
         public event EventHandler OnModulesConnected;
         public event EventHandler OnModulesDisconnected;
@@ -103,17 +97,20 @@ namespace MobiFlight
             fsuipcCache.ConnectionLost += new EventHandler(FsuipcCache_ConnectionLost);
             fsuipcCache.Connected += new EventHandler(FsuipcCache_Connected);
             fsuipcCache.Closed += new EventHandler(FsuipcCache_Closed);
+            fsuipcCache.AircraftChanged += new EventHandler<string>(sim_AirCraftChanged);
 
 #if SIMCONNECT
             simConnectCache.SetHandle(handle);
             simConnectCache.ConnectionLost += new EventHandler(simConnect_ConnectionLost);
             simConnectCache.Connected += new EventHandler(simConnect_Connected);
             simConnectCache.Closed += new EventHandler(simConnect_Closed);
+            simConnectCache.AircraftChanged += new EventHandler<string>(sim_AirCraftChanged);
 #endif
 
             xplaneCache.ConnectionLost += new EventHandler(simConnect_ConnectionLost);
             xplaneCache.Connected += new EventHandler(simConnect_Connected);
             xplaneCache.Closed += new EventHandler(simConnect_Closed);
+            xplaneCache.AircraftChanged += new EventHandler<string>(sim_AirCraftChanged);
 
 #if ARCAZE
             arcazeCache.Connected += new EventHandler(ArcazeCache_Connected);
@@ -147,6 +144,12 @@ namespace MobiFlight
             midiBoardManager.OnButtonPressed += new ButtonEventHandler(mobiFlightCache_OnButtonPressed);
             midiBoardManager.Connected += (o, e) => { midiBoardManager.Startup(); };
             midiBoardManager.Connect();            
+        }
+
+        private void sim_AirCraftChanged(object sender, string e)
+        {
+            Log.Instance.log($"Aircraft change detected: [{e}] ({sender.ToString()})", LogSeverity.Info);
+            OnSimAircraftChanged?.Invoke(sender, e);
         }
 
         internal Dictionary<String, MobiFlightVariable> GetAvailableVariables()
@@ -522,28 +525,28 @@ namespace MobiFlight
 
                 row.Cells["arcazeValueColumn"].Value = processedValue.ToString();
 
-                // check preconditions
-                if (!CheckPrecondition(cfg, processedValue))
+                try
                 {
-                    if (!cfg.Preconditions.ExecuteOnFalse)
+                    // check preconditions
+                    if (!CheckPrecondition(cfg, processedValue))
                     {
-                        row.ErrorText = i18n._tr("uiMessagePreconditionNotSatisfied");
-                        continue;
+                        if (!cfg.Preconditions.ExecuteOnFalse)
+                        {
+                            row.ErrorText = i18n._tr("uiMessagePreconditionNotSatisfied");
+                            continue;
+                        }
+                        else
+                        {
+                            processedValue.type = FSUIPCOffsetType.String;
+                            processedValue.String = cfg.Preconditions.FalseCaseValue;
+                        }
                     }
                     else
                     {
-                        processedValue.type = FSUIPCOffsetType.String;
-                        processedValue.String = cfg.Preconditions.FalseCaseValue;
+                        if (row.ErrorText == i18n._tr("uiMessagePreconditionNotSatisfied"))
+                            row.ErrorText = "";
                     }
-                }
-                else
-                {
-                    if (row.ErrorText == i18n._tr("uiMessagePreconditionNotSatisfied"))
-                        row.ErrorText = "";
-                }
-
-                try
-                {
+                
                     ExecuteDisplay(processedValue.ToString(), cfg);
                 }
                 catch(JoystickNotConnectedException jEx)
@@ -865,6 +868,10 @@ namespace MobiFlight
                         }
                         break;
 
+                    case OutputConfig.CustomDevice.Type:
+                        mobiFlightCache.Set(serial, cfg.CustomDevice, value, GetRefs(cfg.ConfigRefs));
+                        break;
+
                     case "InputAction":
                         int iValue = 0;
                         int.TryParse(value, out iValue);
@@ -1093,16 +1100,30 @@ namespace MobiFlight
                         OnSimAvailable?.Invoke(FlightSim.FlightSimType, null);
                     }
 
-                    Log.Instance.log("AutoConnect sim.", LogSeverity.Debug);
-
                     if (!fsuipcCache.IsConnected())
+                    {
+                        if (!simConnectCache.IsConnected() && !xplaneCache.IsConnected())
+                        {
+                            // we don't want to spam the log
+                            // in case we have an active connection
+                            // through a different type
+                            Log.Instance.log("Trying auto connect to sim via FSUIPC", LogSeverity.Debug);
+                        }
+                            
                         fsuipcCache.Connect();
+                    }
 #if SIMCONNECT
                     if (FlightSim.FlightSimType == FlightSimType.MSFS2020 && !simConnectCache.IsConnected())
+                    {
+                        Log.Instance.log("Trying auto connect to sim via SimConnect (WASM)", LogSeverity.Debug);
                         simConnectCache.Connect();
+                    }
 #endif
                     if (FlightSim.FlightSimType == FlightSimType.XPLANE && !xplaneCache.IsConnected())
+                    {
+                        Log.Instance.log("Trying auto connect to sim via XPlane", LogSeverity.Debug);
                         xplaneCache.Connect();
+                    }
                     // we return here to prevent the disabling of the timer
                     // so that autostart-feature can work properly
                     _autoConnectTimerRunning = false;
@@ -1451,24 +1472,24 @@ namespace MobiFlight
                     continue;
                 }
 
-                // if there are preconditions check and skip if necessary
-                if (tuple.Item1.Preconditions.Count > 0)
-                {
-                    if (!CheckPrecondition(tuple.Item1, currentValue))
-                    {
-                        tuple.Item2.ErrorText = i18n._tr("uiMessagePreconditionNotSatisfied");
-                        continue;
-                    }
-                    else
-                    {
-                        tuple.Item2.ErrorText = "";
-                    }
-                }
-#if SIMCONNECT
-                Log.Instance.log($"{msgEventLabel} => executing \"{row["description"]}\"", LogSeverity.Info);
-
                 try
                 {
+                    // if there are preconditions check and skip if necessary
+                    if (tuple.Item1.Preconditions.Count > 0)
+                    {
+                        if (!CheckPrecondition(tuple.Item1, currentValue))
+                        {
+                            tuple.Item2.ErrorText = i18n._tr("uiMessagePreconditionNotSatisfied");
+                            continue;
+                        }
+                        else
+                        {
+                            tuple.Item2.ErrorText = "";
+                        }
+                    }
+
+                    Log.Instance.log($"{msgEventLabel} => executing \"{row["description"]}\"", LogSeverity.Info);
+                
                     tuple.Item1.execute(
                         cacheCollection,
                         e,
@@ -1479,8 +1500,6 @@ namespace MobiFlight
                 {
                     Log.Instance.log($"Error excuting \"{row["description"]}\": {ex.Message}", LogSeverity.Error);
                 }
-#endif
-
             }
 
             //fsuipcCache.ForceUpdate();
