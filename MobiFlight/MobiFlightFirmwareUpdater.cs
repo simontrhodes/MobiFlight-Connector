@@ -175,9 +175,9 @@ namespace MobiFlight
                     p.Kill();
                     message = $"avrdude timed out! Something went wrong when flashing with command \n {p.StartInfo.FileName} {anyCommand}.";
                 }
-                Log.Instance.log(message, LogSeverity.Error);
+                
             }
-
+            Log.Instance.log(message, LogSeverity.Error);
             throw new Exception(message);
         }
 
